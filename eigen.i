@@ -28,7 +28,14 @@ namespace Eigen {};
 /* To avoid contaminating Eigen namespace, we use RubyEigen instead of Eigen. */
 namespace RubyEigen {
   using namespace Eigen;
+
+  /*
+     By redefining VectorXd and VectorXcd in SWIG scope, SWIG can interpret what the templates are.
+     The following templates appear in some decomposition classes.
+  */
   typedef RubyEigen::Matrix<RubyEigen::MatrixXd::Scalar, RubyEigen::Dynamic, 1> VectorXd;
+  typedef RubyEigen::Matrix<RubyEigen::MatrixXcd::Scalar, RubyEigen::Dynamic, 1> VectorXcd;
+
   typedef Matrix<bool, Dynamic, Dynamic> MatrixBool;
   typedef Matrix<bool, Dynamic, 1> VectorBool;
   typedef Array<bool, Dynamic, Dynamic> ArrayBool;
@@ -220,7 +227,6 @@ public:
 };
 
 
-
 class MatrixBool {
 public:
   MatrixBool(int, int);
@@ -301,7 +307,7 @@ public:
   T matrixU();
   T matrixV();
 
-  Eigen::JacobiSVD<T>::SingularValuesType singularValues();
+  VectorXd singularValues();
 
   T solve(VectorXd& m);
 };
