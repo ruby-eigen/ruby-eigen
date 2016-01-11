@@ -28,6 +28,7 @@ namespace Eigen {};
 /* To avoid contaminating Eigen namespace, we use RubyEigen instead of Eigen. */
 namespace RubyEigen {
   using namespace Eigen;
+  typedef RubyEigen::Matrix<RubyEigen::MatrixXd::Scalar, RubyEigen::Dynamic, 1> VectorXd;
   typedef Matrix<bool, Dynamic, Dynamic> MatrixBool;
   typedef Matrix<bool, Dynamic, 1> VectorBool;
   typedef Array<bool, Dynamic, Dynamic> ArrayBool;
@@ -35,21 +36,32 @@ namespace RubyEigen {
   typedef PartialPivLU<MatrixXd> PartialPivLUDouble;
   typedef FullPivLU<MatrixXd> FullPivLUDouble;
   typedef FullPivHouseholderQR<MatrixXd> FullPivHouseholderQRDouble;
-  typedef JacobiSVD<MatrixXd> JacobiSVDDouble;
-  typedef LDLT<MatrixXd> LDLTDouble;
-  typedef LLT<MatrixXd> LLTDouble;
+
 };
 
 %} /* inline end */
+
+%{
+namespace RubyEigen {
+  typedef JacobiSVD<MatrixXd> JacobiSVDDouble;
+  typedef JacobiSVD<MatrixXcd> JacobiSVDComplex;
+  typedef LDLT<MatrixXd>  LDLTDouble;
+  typedef LDLT<MatrixXcd> LDLTComplex;
+  typedef LLT<MatrixXd>   LLTDouble;
+  typedef LLT<MatrixXcd>  LLTComplex;
+};
+%}
 
 %template(StdVectorDouble) std::vector<double>;
 
 namespace RubyEigen {
 
+
 %rename(MatrixDouble) MatrixXd; 
 %rename(MatrixComplex) MatrixXcd;
 %rename(VectorDouble) VectorXd;
 %rename(VectorComplex) VectorXcd;
+
 
 %alias MatrixXd::operator== "__eq__";
 
@@ -67,7 +79,7 @@ public:
   int cols();
   int rows();
 
-  bool allFinite();
+  //  bool allFinite();
   bool hasNaN();
 
   void setRandom();
@@ -115,8 +127,8 @@ public:
 
   PartialPivLUDouble lu();
 
-  RubyEigen::LDLTDouble ldlt();
-  RubyEigen::LLTDouble llt();
+  RubyEigen::LDLT<RubyEigen::MatrixXd> ldlt();
+  RubyEigen::LLT<RubyEigen::MatrixXd> llt();
   
   %extend {
 
@@ -162,7 +174,7 @@ public:
       return Eigen::FullPivHouseholderQR<Eigen::MatrixXd>(*$self);
     }
 
-    JacobiSVDDouble svd() {
+    RubyEigen::JacobiSVD<MatrixXd> svd() {
       return Eigen::JacobiSVD<Eigen::MatrixXd>(*$self, Eigen::ComputeFullU | Eigen::ComputeFullV);
     }
   }
@@ -278,38 +290,52 @@ public:
   }
 };
 
-class JacobiSVDDouble {
+
+
+template<class T>
+class JacobiSVD {
 public:
-  JacobiSVDDouble();
-  ~JacobiSVDDouble();
+  JacobiSVD();
+  ~JacobiSVD();
 
-  MatrixXd matrixU();
-  MatrixXd matrixV();
+  T matrixU();
+  T matrixV();
 
-  RubyEigen::VectorXd singularValues();
+  Eigen::JacobiSVD<T>::SingularValuesType singularValues();
 
-  MatrixXd solve(VectorXd& m);
+  T solve(VectorXd& m);
 };
 
-class LDLTDouble {
-public:
-  LDLTDouble();
-  ~LDLTDouble();
+%template(JacobiSVDDouble) RubyEigen::JacobiSVD<RubyEigen::MatrixXd>;
+%template(JacobiSVDComplex) RubyEigen::JacobiSVD<RubyEigen::MatrixXcd>;
 
-  MatrixXd matrixL();
-  VectorXd vectorD();
+
+template<class T>
+class LDLT {
+public:
+  LDLT();
+  ~LDLT();
+
+  T matrixL();
+  RubyEigen::Matrix<T::Scalar, RubyEigen::Dynamic, 1> vectorD();
 
 };
 
+%template(LDLTDouble) RubyEigen::LDLT<RubyEigen::MatrixXd>;
+%template(LDLTComplex) RubyEigen::LDLT<RubyEigen::MatrixXcd>;
 
-class LLTDouble {
+template<class T>
+class LLT {
 public:
-  LLTDouble();
-  ~LLTDouble();
+  LLT();
+  ~LLT();
 
-  MatrixXd matrixL();
+  T matrixL();
 
 };
+
+%template(LLTDouble) RubyEigen::LLT<RubyEigen::MatrixXd>;
+%template(LLTComplex) RubyEigen::LLT<RubyEigen::MatrixXcd>;
 
 %include "eigen_array.i"
 
