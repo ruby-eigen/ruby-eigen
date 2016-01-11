@@ -1,2 +1,3 @@
 # ruby-eigen
-ruby binding for Eigen
+Ruby binding for Eigen using SWIG.
+It will be released soon.
