@@ -1,5 +1,5 @@
 require "test/unit"
-require "eigen/eigen"
+require "eigen"
 
 class TestEigen < Test::Unit::TestCase
 

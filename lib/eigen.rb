@@ -1,4 +1,4 @@
-require 'eigen'
+require 'eigen/eigen'
 
 class Eigen::MatrixDouble
   def self.[](*rows)    
