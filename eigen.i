@@ -19,7 +19,7 @@
 
 %}
 
-/* the following code appears in .cxx file and is also parsed by SWIG. See SWIG.html#SWIG_nn20 */
+/* The following code appears in .cxx file and is also parsed by SWIG. See SWIG.html#SWIG_nn20 */
 %inline %{
 
 /* to avoid SWIG warning */
@@ -41,11 +41,14 @@ namespace RubyEigen {
   typedef Array<bool, Dynamic, Dynamic> ArrayBool;
   typedef Array<bool, Dynamic, 1> VecBoolCWise;
 
-
 };
 
 %} /* inline end */
 
+/*
+   The following code appears only in .cxx file. The specialization of template classes
+   in SWIG context is done by using %template directive.
+*/
 %{
 namespace RubyEigen {
   typedef FullPivLU<MatrixXd> FullPivLUDouble;
@@ -62,7 +65,7 @@ namespace RubyEigen {
 };
 %}
 
-%template(StdVectorDouble) std::vector<double>;
+%template(StdVectorDouble__) std::vector<double>;
 
 namespace RubyEigen {
 
