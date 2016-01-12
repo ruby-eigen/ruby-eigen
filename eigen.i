@@ -40,9 +40,7 @@ namespace RubyEigen {
   typedef Matrix<bool, Dynamic, 1> VectorBool;
   typedef Array<bool, Dynamic, Dynamic> ArrayBool;
   typedef Array<bool, Dynamic, 1> VecBoolCWise;
-  typedef PartialPivLU<MatrixXd> PartialPivLUDouble;
-  typedef FullPivLU<MatrixXd> FullPivLUDouble;
-  typedef FullPivHouseholderQR<MatrixXd> FullPivHouseholderQRDouble;
+
 
 };
 
@@ -50,6 +48,11 @@ namespace RubyEigen {
 
 %{
 namespace RubyEigen {
+  typedef FullPivLU<MatrixXd> FullPivLUDouble;
+  typedef FullPivLU<MatrixXcd> FullPivLUComplex;
+  typedef PartialPivLU<MatrixXd> PartialPivLUDouble;
+  typedef FullPivHouseholderQR<MatrixXd> FullPivHouseholderQRDouble;
+  typedef FullPivHouseholderQR<MatrixXcd> FullPivHouseholderQRComplex;
   typedef JacobiSVD<MatrixXd> JacobiSVDDouble;
   typedef JacobiSVD<MatrixXcd> JacobiSVDComplex;
   typedef LDLT<MatrixXd>  LDLTDouble;
@@ -132,7 +135,7 @@ public:
   bool operator==(MatrixXd &m);
   bool isApprox(MatrixXd &m);
 
-  PartialPivLUDouble lu();
+  RubyEigen::PartialPivLU<RubyEigen::MatrixXd> lu();
 
   RubyEigen::LDLT<RubyEigen::MatrixXd> ldlt();
   RubyEigen::LLT<RubyEigen::MatrixXd> llt();
@@ -173,12 +176,12 @@ public:
       return (*$self).triangularView<Eigen::Lower>();
     }
 
-    FullPivLUDouble fullPivLu() {
+    RubyEigen::FullPivLU<MatrixXd> fullPivLu() {
       return (*self).fullPivLu();
     }
 
-    FullPivHouseholderQRDouble fullPivHouseholderQR() {
-      return Eigen::FullPivHouseholderQR<Eigen::MatrixXd>(*$self);
+    RubyEigen::FullPivHouseholderQR<MatrixXd> fullPivHouseholderQR() {
+      return RubyEigen::FullPivHouseholderQR<RubyEigen::MatrixXd>(*$self);
     }
 
     RubyEigen::JacobiSVD<MatrixXd> svd() {
@@ -244,58 +247,68 @@ public:
 };
 
 
-%alias FullPivLUDouble::permutationP "p";
-%alias FullPivLUDouble::permutationQ "q";
+%alias FullPivLU::permutationP "p";
+%alias FullPivLU::permutationQ "q";
 
-class FullPivLUDouble {
+template<class T>
+class FullPivLU {
 public:
-  FullPivLUDouble();
-  ~FullPivLUDouble();
+  FullPivLU();
+  ~FullPivLU();
 
-  MatrixXd permutationP();
-  MatrixXd permutationQ();
+  T permutationP();
+  T permutationQ();
 
-  MatrixXd solve(MatrixXd &b);
+  T solve(T &b);
 
   %extend {
 
-    MatrixXd u() {
+    T u() {
       return (*$self).matrixLU().triangularView<Eigen::Upper>();
     }
 
-    MatrixXd l() {
+    T l() {
       return (*$self).matrixLU().triangularView<Eigen::UnitLower>();
     }
   }
 };
 
+%template(FullPivLUDouble) RubyEigen::FullPivLU<RubyEigen::MatrixXd>;
+%template(FullPivLUComplex) RubyEigen::FullPivLU<RubyEigen::MatrixXcd>;
 
-class PartialPivLUDouble {
+template<class T>
+class PartialPivLU {
 public:
-  PartialPivLUDouble();
-  ~PartialPivLUDouble();
+  PartialPivLU();
+  ~PartialPivLU();
 };
 
-%alias FullPivHouseholderQRDouble::matrixQ "q";
-%alias FullPivHouseholderQRDouble::colsPermutation "p";
+%template(PartialPivLUDouble) RubyEigen::PartialPivLU<RubyEigen::MatrixXd>;
+%template(PartialPivLUComplex) RubyEigen::PartialPivLU<RubyEigen::MatrixXcd>;
 
-class FullPivHouseholderQRDouble {
+%alias FullPivHouseholderQR::matrixQ "q";
+%alias FullPivHouseholderQR::colsPermutation "p";
+
+template<class T>
+class FullPivHouseholderQR {
 public:
-  FullPivHouseholderQRDouble();
-  ~FullPivHouseholderQRDouble();
+  FullPivHouseholderQR();
+  ~FullPivHouseholderQR();
 
-  MatrixXd colsPermutation();
-  MatrixXd matrixQ();
+  T colsPermutation();
+  T matrixQ();
 
   %extend {
 
-    MatrixXd r() {
+    T r() {
       return (*$self).matrixQR().triangularView<Eigen::Upper>();
     }
 
   }
 };
 
+%template(FullPivHouseholderQRDouble) RubyEigen::FullPivHouseholderQR<RubyEigen::MatrixXd>;
+%template(FullPivHouseholderQRComplex) RubyEigen::FullPivHouseholderQR<RubyEigen::MatrixXcd>;
 
 
 template<class T>
