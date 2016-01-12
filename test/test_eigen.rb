@@ -43,12 +43,16 @@ class TestEigen < Test::Unit::TestCase
 
   def test_matrix05
     m = Eigen::MatrixDouble.new(2,2)
+
     m.setRandom
     lu = m.fullPivLu
-    assert_equal(m, lu.p.inverse * lu.l * lu. u * lu.q.inverse)
+    p, l, u, q = lu.p, lu.l, lu.u, lu.q
+    assert m.isApprox(p.inverse * l * u * q.inverse)
+
     m.setConstant(1)
     lu = m.fullPivLu
-    assert_equal(m, lu.p.inverse * lu.l * lu. u * lu.q.inverse)
+    p, l, u, q = lu.p, lu.l, lu.u, lu.q
+    assert m.isApprox(p.inverse * l * u * q.inverse)
   end
 
   def test_matrix06
