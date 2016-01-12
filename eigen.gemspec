@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.description = "Ruby bindings for Eigen, a C++ template library for linear algebra. Implemented using SWIG."
   s.authors     = ["TAMURA Takashi"]
   s.email       = ''
-  s.files       = ["lib/eigen.rb"]
+  s.files       = ["lib/eigen.rb", "ext/eigen/eigen_wrap.cxx"]
   s.extensions  = ["ext/eigen/extconf.rb"]
   s.homepage    = 'https://github.com/ruby-eigen/ruby-eigen'
   s.license     = 'MIT'
