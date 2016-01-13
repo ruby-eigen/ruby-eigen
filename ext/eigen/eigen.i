@@ -1,7 +1,10 @@
 %module eigen
 
+/* load macro */
 %include "rb_error_handle.i"
-%include "eigen_dense_matrix_methods_macro.i"
+%include "eigen_dense_matrix_vector_common_methods.i"
+%include "eigen_dense_matrix_common_methods.i"
+%include "eigen_dense_vector_common_methods.i"
 
 %include std_string.i
 %include std_vector.i
@@ -77,20 +80,7 @@ namespace RubyEigen {
 %alias MatrixXd::operator== "__eq__";
 %alias MatrixXcd::operator== "__eq__";
 
-class MatrixXcd {
-public:
-  MatrixXcd();
-  ~MatrixXcd();
-
-  /* complex matrix only */
-  RubyEigen::MatrixXd imag();
-  RubyEigen::MatrixXd real();
-
-  DENSE_MATRIX_Methods_Common(MatrixXcd, VectorXcd, std::complex<double>);
-};
-
 class MatrixXd {
-
 public:
   MatrixXd(int, int);
   ~MatrixXd();
@@ -109,166 +99,33 @@ public:
 
   Eigen::ArrayXXd array();
 
-  //  DENSE_MATRIX_Methods_Common(MatrixXd, VectorXd, double)
-
-  RubyEigen::VectorXd col(int);
-  RubyEigen::VectorXd row(int);
-
-  int cols();
-  int rows();
-
-  //  bool allFinite();
-  bool hasNaN();
-
-  void setRandom();
-  void setConstant(double);
-  void setIdentity();
-  void setOnes();
-  void setZero();
-
-  MatrixXd cwiseSqrt();
-  MatrixXd cwiseInverse();
-
-  MatrixXd cwiseProduct(MatrixXd &m);
-  MatrixXd cwiseQuotient(MatrixXd &m);
-
-  MatrixBool cwiseEqual(MatrixXd &m);
-  MatrixBool cwiseEqual(double);
-  MatrixBool cwiseNotEqual(MatrixXd &m);
-
-  VectorXd diagonal();
-  MatrixXd diagonal(int);
-
-  MatrixXd inverse();
-  double determinant();
-  double norm();
-  double operatorNorm();
-
-  double sum();
-  double prod();
-
-  void normalize();
-
-  MatrixXd transpose();
-  MatrixXd reverse();
-  MatrixXd replicate(int, int);
-
-  RubyEigen::VectorXcd eigenvalues();
-
-  MatrixXd operator+(const MatrixXd &m);
-  MatrixXd operator-(const MatrixXd &m);
-  MatrixXd operator-();
-  MatrixXd operator*(const MatrixXd &m);
-  MatrixXd operator*(double d);
-  MatrixXd operator/(double d);
-
-  bool operator==(MatrixXd &m);
-  bool isApprox(MatrixXd &m);
-  bool isApprox(MatrixXd &m, double);
-  bool isApproxToConstant(double);
-  bool isConstant(double);
-
-  bool isDiagonal();
-  bool isIdentity();
-  bool isLowerTriangular();
-  bool isLowerTriangular(double);
-  bool isUpperTriangular();
-  bool isUpperTriangular(double);
-
-  bool isMuchSmallerThan(double);
-  bool isMuchSmallerThan(double, double);
-  bool isMuchSmallerThan(MatrixXd& m);
-  bool isMuchSmallerThan(MatrixXd& m, double);
-
-  bool isOnes();
-  bool isOnes(double);
-  bool isZero();
-  bool isZero(double);
-
-  MatrixXd middleCols(int, int);
-  MatrixXd middleRows(int, int);
-
-  RubyEigen::PartialPivLU<RubyEigen::MatrixXd> lu();
-
-  RubyEigen::LDLT<RubyEigen::MatrixXd> ldlt();
-  RubyEigen::LLT<RubyEigen::MatrixXd> llt();
-  
-  %extend {
-
-    void __set_col__(int i, const std::vector<double> &v){
-      (*self).col(i) = Eigen::VectorXd::Map(v.data(), v.size());
-    }
-
-    void __set_row__(int i, const std::vector<double> &v){
-      (*self).row(i) = Eigen::VectorXd::Map(v.data(), v.size());
-    }
-
-    MatrixXd __mul_n__(MatrixXd &a, MatrixXd &b, MatrixXd &c, MatrixXd &d){
-      return (*$self) * a * b * c * d;
-    }
-
-    std::string to_s() {
-      std::ostrstream s;
-      s << (*$self) << std::ends;
-      return s.str();
-    }
-
-    double __getitem__(int i, int j) {
-      return (*$self)(i, j);
-    }
-
-    void __setitem__(int i, int j, double c) {
-      (*$self)(i, j) = c;
-    }
- 
-    MatrixXd triu() {
-      return (*$self).triangularView<Eigen::Upper>();
-    }
-
-    MatrixXd tril() {
-      return (*$self).triangularView<Eigen::Lower>();
-    }
-
-    RubyEigen::FullPivLU<MatrixXd> fullPivLu() {
-      return (*self).fullPivLu();
-    }
-
-    RubyEigen::FullPivHouseholderQR<MatrixXd> fullPivHouseholderQR() {
-      return RubyEigen::FullPivHouseholderQR<RubyEigen::MatrixXd>(*$self);
-    }
-
-    RubyEigen::JacobiSVD<MatrixXd> svd() {
-      return Eigen::JacobiSVD<Eigen::MatrixXd>(*$self, Eigen::ComputeFullU | Eigen::ComputeFullV);
-    }
-  }
-
+  DENSE_MATRIX_VECTOR_Common_Methods(MatrixXd, double)
+  DENSE_MATRIX_Common_Methods(MatrixXd, VectorXd, double)
 
 }; /* end class MatrixXd */
+
+class MatrixXcd {
+public:
+  MatrixXcd();
+  ~MatrixXcd();
+
+  /* complex matrix only */
+  RubyEigen::MatrixXd imag();
+  RubyEigen::MatrixXd real();
+
+  DENSE_MATRIX_VECTOR_Common_Methods(MatrixXcd, std::complex<double>)
+  DENSE_MATRIX_Common_Methods(MatrixXcd, VectorXcd, std::complex<double>)
+
+};
+
 
 class VectorXd {
 public:
   VectorXd(int);
   ~VectorXd();
 
-  /* vector only */
-  bool isOrthogonal(VectorXd& v);
-  bool isOrthogonal(VectorXd& v, double);
-  double squaredNorm();
-  double stableNorm();
-
-  VectorXd segment(int, int);
-
-  %extend {
-
-    double __getitem__(int i) {
-      return (*$self)(i);
-    }
-
-    void __setitem__(int i, double c) {
-      (*$self)(i) = c;
-    }
-
-  }
+  DENSE_MATRIX_VECTOR_Common_Methods(VectorXd, double)
+  DENSE_VECTOR_Common_Methods(VectorXd, double)
 
 };
 
@@ -277,17 +134,8 @@ public:
   VectorXcd(int);
   ~VectorXcd();
 
-  %extend {
-
-    std::complex<double> __getitem__(int i) {
-      return (*$self)(i);
-    }
-
-    void __setitem__(int i, std::complex<double> c) {
-      (*$self)(i) = c;
-    }
-
-  }
+  DENSE_MATRIX_VECTOR_Common_Methods(VectorXcd, std::complex<double>)
+  DENSE_VECTOR_Common_Methods(VectorXcd, std::complex<double>)
 
 };
 
