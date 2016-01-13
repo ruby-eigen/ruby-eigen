@@ -5,18 +5,20 @@ Ruby binding for Eigen using SWIG. At an early development stage.
 
 ### On Mac OS X
 
+For Homebrew
+
     $ brew install eigen
-    $ gem install ruby-eigen
+    $ gem install rake-compiler
+    $ gem install ruby-eigen -- --with-eigen-include=/usr/local/include/eigen3
 
-when compile failed, try
+For MacPorts
 
-    $ gem install ruby-eigen -- --with-eigen-include=/absolute_path/include/eigen3
+    $ sudo port install eigen3
+    $ gem install rake-compiler
+    $ gem install ruby-eigen -- --with-eigen-include=/opt/local/include/eigen3
 
 ### On Ubuntu
 
     $ sudo apt-get install libeigen3-dev
-    $ gem install ruby-eigen
-
-when compile failed, try
-
-    $ gem install ruby-eigen -- --with-eigen-include=/absolute_path/include/eigen3
+    $ gem install rake-compiler
+    $ gem install ruby-eigen -- --with-eigen-include=/usr/include/eigen3
