@@ -7,6 +7,7 @@ class TestEigen < Test::Unit::TestCase
     m = Eigen::MatrixDouble.new(2,2)
     m[1,0] = 2
     assert_equal(m[1,0], 2)
+    assert m.eigenvalues()[0].is_a?(Complex)
   end
 
   def test_matrix
@@ -70,6 +71,7 @@ class TestEigen < Test::Unit::TestCase
     assert  ( m * qr.p ).isApprox( qr.q * qr.r )
     
     m.svd().matrixU 
+
   end
 
 end
