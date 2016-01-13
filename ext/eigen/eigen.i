@@ -1,6 +1,7 @@
 %module eigen
 
 %include "rb_error_handle.i"
+%include "eigen_dense_matrix_methods_macro.i"
 
 %include std_string.i
 %include std_vector.i
@@ -75,13 +76,37 @@ namespace RubyEigen {
 
 %alias MatrixXd::operator== "__eq__";
 
+class MatrixXcd {
+public:
+  MatrixXcd();
+  ~MatrixXcd();
+
+  DENSE_MATRIX_Methods_Common(MatrixXcd, VectorXcd, std::complex<double>);
+};
+
 class MatrixXd {
 
 public:
   MatrixXd(int, int);
   ~MatrixXd();
 
+
+  /* MatrixXd only */
+
+  MatrixXd cwiseAbs();
+  MatrixXd cwiseAbs2();
+
+  MatrixXd cwiseMax(MatrixXd &m);
+  MatrixXd cwiseMax(double);
+  MatrixXd cwiseMin(MatrixXd &m);
+  MatrixXd cwiseMin(double);
+
+  double maxCoeff();
+  double minCoeff();
+
   Eigen::ArrayXXd array();
+
+  //  DENSE_MATRIX_Methods_Common(MatrixXd, VectorXd, double)
 
   RubyEigen::VectorXd col(int);
   RubyEigen::VectorXd row(int);
@@ -98,19 +123,11 @@ public:
   void setOnes();
   void setZero();
 
-  /* component wise op */
-  MatrixXd cwiseAbs();
-  MatrixXd cwiseAbs2();
   MatrixXd cwiseSqrt();
   MatrixXd cwiseInverse();
 
   MatrixXd cwiseProduct(MatrixXd &m);
   MatrixXd cwiseQuotient(MatrixXd &m);
-
-  MatrixXd cwiseMax(MatrixXd &m);
-  MatrixXd cwiseMax(double);
-  MatrixXd cwiseMin(MatrixXd &m);
-  MatrixXd cwiseMin(double);
 
   MatrixBool cwiseEqual(MatrixXd &m);
   MatrixBool cwiseEqual(double);
@@ -123,8 +140,6 @@ public:
   double determinant();
   double norm();
   double operatorNorm();
-  double maxCoeff();
-  double minCoeff();
 
   double sum();
   double prod();
@@ -177,6 +192,7 @@ public:
     imag
     real
   */
+
 
   RubyEigen::PartialPivLU<RubyEigen::MatrixXd> lu();
 
@@ -231,6 +247,7 @@ public:
       return Eigen::JacobiSVD<Eigen::MatrixXd>(*$self, Eigen::ComputeFullU | Eigen::ComputeFullV);
     }
   }
+
 
 }; /* end class MatrixXd */
 
