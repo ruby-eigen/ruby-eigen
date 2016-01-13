@@ -1,4 +1,4 @@
-%define DENSE_MATRIX_VECTOR_Common_Methods(TYPE, V_TYPE, s_type)
+%define DENSE_MATRIX_VECTOR_Common_Methods(TYPE, O_TYPE, s_type)
 
   //  bool allFinite();
   bool hasNaN();
@@ -25,6 +25,7 @@
   TYPE operator-(const TYPE &m);
   TYPE operator-();
   TYPE operator*(const TYPE &m);
+  O_TYPE operator*(const O_TYPE &m);
   TYPE operator*(s_type d);
   TYPE operator/(s_type d);
 
@@ -43,5 +44,7 @@
   bool isOnes(double);
   bool isZero();
   bool isZero(double);
+
+  TYPE adjoint();
 
 %enddef

@@ -20,6 +20,7 @@
   void normalize();
 
   TYPE transpose();
+  TYPE conjugate();
   TYPE reverse();
   TYPE replicate(int, int);
 
@@ -34,8 +35,6 @@
 
   TYPE middleCols(int, int);
   TYPE middleRows(int, int);
-
-  V_TYPE operator*(const V_TYPE &m);
 
   RubyEigen::PartialPivLU<RubyEigen:: ## TYPE> lu();
 

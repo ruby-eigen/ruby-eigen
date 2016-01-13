@@ -99,6 +99,8 @@ public:
 
   Eigen::ArrayXXd array();
 
+  RubyEigen::MatrixXd real();
+
   DENSE_MATRIX_VECTOR_Common_Methods(MatrixXd, VectorXd, double)
   DENSE_MATRIX_Common_Methods(MatrixXd, VectorXd, double)
 
@@ -111,6 +113,7 @@ public:
 
   /* complex matrix only */
   RubyEigen::MatrixXd imag();
+
   RubyEigen::MatrixXd real();
 
   DENSE_MATRIX_VECTOR_Common_Methods(MatrixXcd, VectorXcd, std::complex<double>)
@@ -124,8 +127,10 @@ public:
   VectorXd(int);
   ~VectorXd();
 
-  DENSE_MATRIX_VECTOR_Common_Methods(MatrixXd, VectorXd, double)
-  DENSE_VECTOR_Common_Methods(MatrixXd, VectorXd, double)
+  RubyEigen::VectorXd real();
+
+  DENSE_MATRIX_VECTOR_Common_Methods(VectorXd, MatrixXd, double)
+  DENSE_VECTOR_Common_Methods(VectorXd, MatrixXd, double)
 
 };
 
@@ -134,8 +139,13 @@ public:
   VectorXcd(int);
   ~VectorXcd();
 
-  DENSE_MATRIX_VECTOR_Common_Methods(MatrixXcd, VectorXcd, std::complex<double>)
-  DENSE_VECTOR_Common_Methods(MatrixXcd, VectorXcd, std::complex<double>)
+  /* complex matrix only */
+  RubyEigen::VectorXd imag();
+
+  RubyEigen::VectorXd real();
+
+  DENSE_MATRIX_VECTOR_Common_Methods(VectorXcd, MatrixXcd, std::complex<double>)
+  DENSE_VECTOR_Common_Methods(VectorXcd, MatrixXcd, std::complex<double>)
 
 };
 

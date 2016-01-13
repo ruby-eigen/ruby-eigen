@@ -1,11 +1,11 @@
-%define DENSE_VECTOR_Common_Methods(TYPE, V_TYPE, s_type)
+%define DENSE_VECTOR_Common_Methods(TYPE, O_TYPE, s_type)
 
-  bool isOrthogonal(V_TYPE& v);
-  bool isOrthogonal(V_TYPE& v, double);
+  bool isOrthogonal(TYPE& v);
+  bool isOrthogonal(TYPE& v, double);
   double squaredNorm();
   double stableNorm();
 
-  V_TYPE segment(int, int);
+  TYPE segment(int, int);
 
   %extend {
 
@@ -15,6 +15,12 @@
 
     void __setitem__(int i, s_type c) {
       (*$self)(i) = c;
+    }
+
+    std::string to_s() {
+      std::ostrstream s;
+      s << (*$self) << std::ends;
+      return s.str();
     }
 
   }
