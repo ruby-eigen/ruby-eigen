@@ -1,7 +1,7 @@
-%define DENSE_MATRIX_Methods_Common(TYPE, v_type, s_type)
+%define DENSE_MATRIX_Methods_Common(TYPE, V_TYPE, s_type)
 
-  RubyEigen:: ## v_type col(int);
-  RubyEigen:: ## v_type row(int);
+  RubyEigen:: ## V_TYPE col(int);
+  RubyEigen:: ## V_TYPE row(int);
 
   int cols();
   int rows();
@@ -27,7 +27,7 @@
   MatrixBool cwiseEqual(s_type);
   MatrixBool cwiseNotEqual(TYPE &m);
 
-  v_type diagonal();
+  V_TYPE diagonal();
   TYPE diagonal(int);
 
   TYPE inverse();
@@ -87,11 +87,11 @@
   %extend {
 
     void __set_col__(int i, const std::vector<s_type> &v){
-      (*self).col(i) = Eigen:: ## v_type ## ::Map(v.data(), v.size());
+      (*self).col(i) = Eigen:: ## V_TYPE ## ::Map(v.data(), v.size());
     }
 
     void __set_row__(int i, const std::vector<s_type> &v){
-      (*self).row(i) = Eigen:: ## v_type ## ::Map(v.data(), v.size());
+      (*self).row(i) = Eigen:: ## V_TYPE ## ::Map(v.data(), v.size());
     }
 
     TYPE __mul_n__(TYPE &a, TYPE &b, TYPE &c, TYPE &d){
