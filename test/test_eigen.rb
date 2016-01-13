@@ -74,4 +74,14 @@ class TestEigen < Test::Unit::TestCase
 
   end
 
+  def test_matrix07
+    m = Eigen::MatrixDouble.new(1,2)
+    v = Eigen::VectorDouble.new(2)
+    m * v
+    v * m
+
+    vc = Eigen::VectorComplex.new(2)
+    vc.setRandom
+    vc.segment(0,1)
+  end
 end
