@@ -1,5 +1,6 @@
 require "rake/extensiontask"
 require 'rake/testtask'
+require 'rake/clean'
 
 Rake::ExtensionTask.new "eigen" do |ext|
   ext.lib_dir = "lib/eigen"
