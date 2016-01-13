@@ -75,6 +75,7 @@ namespace RubyEigen {
 %rename(VectorComplex) VectorXcd;
 
 %alias MatrixXd::operator== "__eq__";
+%alias MatrixXcd::operator== "__eq__";
 
 class MatrixXcd {
 public:
