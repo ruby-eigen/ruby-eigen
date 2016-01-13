@@ -82,6 +82,10 @@ public:
   MatrixXcd();
   ~MatrixXcd();
 
+  /* complex matrix only */
+  RubyEigen::MatrixXd imag();
+  RubyEigen::MatrixXd real();
+
   DENSE_MATRIX_Methods_Common(MatrixXcd, VectorXcd, std::complex<double>);
 };
 
@@ -91,9 +95,7 @@ public:
   MatrixXd(int, int);
   ~MatrixXd();
 
-
-  /* MatrixXd only */
-
+  /* real matrix only */
   MatrixXd cwiseAbs();
   MatrixXd cwiseAbs2();
 
@@ -185,15 +187,6 @@ public:
 
   MatrixXd middleCols(int, int);
   MatrixXd middleRows(int, int);
-
-  /*
-    colwise
-    rowwise
-
-    imag
-    real
-  */
-
 
   RubyEigen::PartialPivLU<RubyEigen::MatrixXd> lu();
 
@@ -342,6 +335,7 @@ public:
   }
 };
 
+
 %template(FullPivLUDouble) RubyEigen::FullPivLU<RubyEigen::MatrixXd>;
 %template(FullPivLUComplex) RubyEigen::FullPivLU<RubyEigen::MatrixXcd>;
 
@@ -354,6 +348,7 @@ public:
 
 %template(PartialPivLUDouble) RubyEigen::PartialPivLU<RubyEigen::MatrixXd>;
 %template(PartialPivLUComplex) RubyEigen::PartialPivLU<RubyEigen::MatrixXcd>;
+
 
 %alias FullPivHouseholderQR::matrixQ "q";
 %alias FullPivHouseholderQR::colsPermutation "p";
@@ -411,6 +406,7 @@ public:
 
 %template(LDLTDouble) RubyEigen::LDLT<RubyEigen::MatrixXd>;
 %template(LDLTComplex) RubyEigen::LDLT<RubyEigen::MatrixXcd>;
+
 
 template<class T>
 class LLT {
