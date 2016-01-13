@@ -1,5 +1,5 @@
 # ruby-eigen
-Ruby binding for Eigen using SWIG. At an early development stage.
+Ruby binding for Eigen, a C++ template library for linear algebra, implemented using SWIG.
 
 ## How to install
 
