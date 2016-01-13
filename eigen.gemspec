@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = 'ruby-eigen'
   s.version     = '0.0.8'
-  s.date        = '2016-01-12'
+  s.date        = '2016-01-13'
   s.summary     = "Ruby bindings for Eigen"
   s.description = "Ruby bindings for Eigen, a C++ template library for linear algebra. Implemented using SWIG."
   s.authors     = ["Takashi Tamura"]
