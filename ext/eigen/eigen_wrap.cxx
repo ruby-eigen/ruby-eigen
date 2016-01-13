@@ -4650,11 +4650,21 @@ SWIGINTERN double RubyEigen_VectorXd___getitem__(RubyEigen::VectorXd *self,int i
 SWIGINTERN void RubyEigen_VectorXd___setitem__(RubyEigen::VectorXd *self,int i,double c){
       (*self)(i) = c;
     }
+SWIGINTERN std::string RubyEigen_VectorXd_to_s(RubyEigen::VectorXd *self){
+      std::ostrstream s;
+      s << (*self) << std::ends;
+      return s.str();
+    }
 SWIGINTERN std::complex< double > RubyEigen_VectorXcd___getitem__(RubyEigen::VectorXcd *self,int i){
       return (*self)(i);
     }
 SWIGINTERN void RubyEigen_VectorXcd___setitem__(RubyEigen::VectorXcd *self,int i,std::complex< double > c){
       (*self)(i) = c;
+    }
+SWIGINTERN std::string RubyEigen_VectorXcd_to_s(RubyEigen::VectorXcd *self){
+      std::ostrstream s;
+      s << (*self) << std::ends;
+      return s.str();
     }
 SWIGINTERN RubyEigen::MatrixXd RubyEigen_MatrixBool_select(RubyEigen::MatrixBool *self,RubyEigen::MatrixXd const &a,RubyEigen::MatrixXd const &b){
       return (*self).select(a, b);
@@ -9262,6 +9272,38 @@ fail:
 
 
 SWIGINTERN VALUE
+_wrap_MatrixDouble_real(int argc, VALUE *argv, VALUE self) {
+  RubyEigen::MatrixXd *arg1 = (RubyEigen::MatrixXd *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  SwigValueWrapper< RubyEigen::MatrixXd > result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_RubyEigen__MatrixXd, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), Ruby_Format_TypeError( "", "RubyEigen::MatrixXd *","real", 1, self )); 
+  }
+  arg1 = reinterpret_cast< RubyEigen::MatrixXd * >(argp1);
+  {
+    try {
+      result = (arg1)->real();
+    }
+    catch (const RubyEigen::EigenRuntimeError &e) {
+      /* this rb_raise is called inside SWIG functions. That's ok. */
+      rb_raise(rb_eEigenRuntimeError, "%s", e.what());
+    }
+  }
+  vresult = SWIG_NewPointerObj((new RubyEigen::MatrixXd(static_cast< const RubyEigen::MatrixXd& >(result))), SWIGTYPE_p_RubyEigen__MatrixXd, SWIG_POINTER_OWN |  0 );
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
 _wrap_MatrixDouble_hasNaN(int argc, VALUE *argv, VALUE self) {
   RubyEigen::MatrixXd *arg1 = (RubyEigen::MatrixXd *) 0 ;
   void *argp1 = 0 ;
@@ -9963,6 +10005,49 @@ fail:
 SWIGINTERN VALUE
 _wrap_MatrixDouble___mul____SWIG_1(int argc, VALUE *argv, VALUE self) {
   RubyEigen::MatrixXd *arg1 = (RubyEigen::MatrixXd *) 0 ;
+  RubyEigen::VectorXd *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 ;
+  int res2 = 0 ;
+  RubyEigen::VectorXd result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_RubyEigen__MatrixXd, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), Ruby_Format_TypeError( "", "RubyEigen::MatrixXd *","operator *", 1, self )); 
+  }
+  arg1 = reinterpret_cast< RubyEigen::MatrixXd * >(argp1);
+  res2 = SWIG_ConvertPtr(argv[0], &argp2, SWIGTYPE_p_RubyEigen__MatrixT_RubyEigen__MatrixXd__Scalar_RubyEigen__Dynamic_1_t,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), Ruby_Format_TypeError( "", "RubyEigen::VectorXd const &","operator *", 2, argv[0] )); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, Ruby_Format_TypeError("invalid null reference ", "RubyEigen::VectorXd const &","operator *", 2, argv[0])); 
+  }
+  arg2 = reinterpret_cast< RubyEigen::VectorXd * >(argp2);
+  {
+    try {
+      result = (arg1)->operator *((RubyEigen::VectorXd const &)*arg2);
+    }
+    catch (const RubyEigen::EigenRuntimeError &e) {
+      /* this rb_raise is called inside SWIG functions. That's ok. */
+      rb_raise(rb_eEigenRuntimeError, "%s", e.what());
+    }
+  }
+  vresult = SWIG_NewPointerObj((new RubyEigen::VectorXd(static_cast< const RubyEigen::VectorXd& >(result))), SWIGTYPE_p_RubyEigen__MatrixT_RubyEigen__MatrixXd__Scalar_RubyEigen__Dynamic_1_t, SWIG_POINTER_OWN |  0 );
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_MatrixDouble___mul____SWIG_2(int argc, VALUE *argv, VALUE self) {
+  RubyEigen::MatrixXd *arg1 = (RubyEigen::MatrixXd *) 0 ;
   double arg2 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
@@ -10031,12 +10116,26 @@ SWIGINTERN VALUE _wrap_MatrixDouble___mul__(int nargs, VALUE *args, VALUE self) 
     int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_RubyEigen__MatrixXd, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_RubyEigen__MatrixT_RubyEigen__MatrixXd__Scalar_RubyEigen__Dynamic_1_t, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_MatrixDouble___mul____SWIG_1(nargs, args, self);
+      }
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_RubyEigen__MatrixXd, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
       {
         int res = SWIG_AsVal_double(argv[1], NULL);
         _v = SWIG_CheckState(res);
       }
       if (_v) {
-        return _wrap_MatrixDouble___mul____SWIG_1(nargs, args, self);
+        return _wrap_MatrixDouble___mul____SWIG_2(nargs, args, self);
       }
     }
   }
@@ -10044,6 +10143,7 @@ SWIGINTERN VALUE _wrap_MatrixDouble___mul__(int nargs, VALUE *args, VALUE self) 
 fail:
   Ruby_Format_OverloadedError( argc, 3, "MatrixDouble.__mul__", 
     "    RubyEigen::MatrixXd MatrixDouble.__mul__(RubyEigen::MatrixXd const &m)\n"
+    "    RubyEigen::MatrixXd MatrixDouble.__mul__(RubyEigen::VectorXd const &m)\n"
     "    RubyEigen::MatrixXd MatrixDouble.__mul__(double d)\n");
   
   return Qnil;
@@ -10881,6 +10981,38 @@ fail:
 
 
 SWIGINTERN VALUE
+_wrap_MatrixDouble_adjoint(int argc, VALUE *argv, VALUE self) {
+  RubyEigen::MatrixXd *arg1 = (RubyEigen::MatrixXd *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  SwigValueWrapper< RubyEigen::MatrixXd > result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_RubyEigen__MatrixXd, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), Ruby_Format_TypeError( "", "RubyEigen::MatrixXd *","adjoint", 1, self )); 
+  }
+  arg1 = reinterpret_cast< RubyEigen::MatrixXd * >(argp1);
+  {
+    try {
+      result = (arg1)->adjoint();
+    }
+    catch (const RubyEigen::EigenRuntimeError &e) {
+      /* this rb_raise is called inside SWIG functions. That's ok. */
+      rb_raise(rb_eEigenRuntimeError, "%s", e.what());
+    }
+  }
+  vresult = SWIG_NewPointerObj((new RubyEigen::MatrixXd(static_cast< const RubyEigen::MatrixXd& >(result))), SWIGTYPE_p_RubyEigen__MatrixXd, SWIG_POINTER_OWN |  0 );
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
 _wrap_MatrixDouble_col(int argc, VALUE *argv, VALUE self) {
   RubyEigen::MatrixXd *arg1 = (RubyEigen::MatrixXd *) 0 ;
   int arg2 ;
@@ -11381,6 +11513,38 @@ _wrap_MatrixDouble_transpose(int argc, VALUE *argv, VALUE self) {
   {
     try {
       result = (arg1)->transpose();
+    }
+    catch (const RubyEigen::EigenRuntimeError &e) {
+      /* this rb_raise is called inside SWIG functions. That's ok. */
+      rb_raise(rb_eEigenRuntimeError, "%s", e.what());
+    }
+  }
+  vresult = SWIG_NewPointerObj((new RubyEigen::MatrixXd(static_cast< const RubyEigen::MatrixXd& >(result))), SWIGTYPE_p_RubyEigen__MatrixXd, SWIG_POINTER_OWN |  0 );
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_MatrixDouble_conjugate(int argc, VALUE *argv, VALUE self) {
+  RubyEigen::MatrixXd *arg1 = (RubyEigen::MatrixXd *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  SwigValueWrapper< RubyEigen::MatrixXd > result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_RubyEigen__MatrixXd, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), Ruby_Format_TypeError( "", "RubyEigen::MatrixXd *","conjugate", 1, self )); 
+  }
+  arg1 = reinterpret_cast< RubyEigen::MatrixXd * >(argp1);
+  {
+    try {
+      result = (arg1)->conjugate();
     }
     catch (const RubyEigen::EigenRuntimeError &e) {
       /* this rb_raise is called inside SWIG functions. That's ok. */
@@ -13310,6 +13474,49 @@ fail:
 SWIGINTERN VALUE
 _wrap_MatrixComplex___mul____SWIG_1(int argc, VALUE *argv, VALUE self) {
   RubyEigen::MatrixXcd *arg1 = (RubyEigen::MatrixXcd *) 0 ;
+  RubyEigen::VectorXcd *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 ;
+  int res2 = 0 ;
+  RubyEigen::VectorXcd result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_RubyEigen__MatrixXcd, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), Ruby_Format_TypeError( "", "RubyEigen::MatrixXcd *","operator *", 1, self )); 
+  }
+  arg1 = reinterpret_cast< RubyEigen::MatrixXcd * >(argp1);
+  res2 = SWIG_ConvertPtr(argv[0], &argp2, SWIGTYPE_p_RubyEigen__MatrixT_RubyEigen__MatrixXcd__Scalar_RubyEigen__Dynamic_1_t,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), Ruby_Format_TypeError( "", "RubyEigen::VectorXcd const &","operator *", 2, argv[0] )); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, Ruby_Format_TypeError("invalid null reference ", "RubyEigen::VectorXcd const &","operator *", 2, argv[0])); 
+  }
+  arg2 = reinterpret_cast< RubyEigen::VectorXcd * >(argp2);
+  {
+    try {
+      result = (arg1)->operator *((RubyEigen::VectorXcd const &)*arg2);
+    }
+    catch (const RubyEigen::EigenRuntimeError &e) {
+      /* this rb_raise is called inside SWIG functions. That's ok. */
+      rb_raise(rb_eEigenRuntimeError, "%s", e.what());
+    }
+  }
+  vresult = SWIG_NewPointerObj((new RubyEigen::VectorXcd(static_cast< const RubyEigen::VectorXcd& >(result))), SWIGTYPE_p_RubyEigen__MatrixT_RubyEigen__MatrixXcd__Scalar_RubyEigen__Dynamic_1_t, SWIG_POINTER_OWN |  0 );
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_MatrixComplex___mul____SWIG_2(int argc, VALUE *argv, VALUE self) {
+  RubyEigen::MatrixXcd *arg1 = (RubyEigen::MatrixXcd *) 0 ;
   std::complex< double > arg2 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
@@ -13378,12 +13585,26 @@ SWIGINTERN VALUE _wrap_MatrixComplex___mul__(int nargs, VALUE *args, VALUE self)
     int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_RubyEigen__MatrixXcd, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_RubyEigen__MatrixT_RubyEigen__MatrixXcd__Scalar_RubyEigen__Dynamic_1_t, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_MatrixComplex___mul____SWIG_1(nargs, args, self);
+      }
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_RubyEigen__MatrixXcd, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
       {
         int res = SWIG_AsVal_std_complex_Sl_double_Sg_(argv[1], NULL);
         _v = SWIG_CheckState(res);
       }
       if (_v) {
-        return _wrap_MatrixComplex___mul____SWIG_1(nargs, args, self);
+        return _wrap_MatrixComplex___mul____SWIG_2(nargs, args, self);
       }
     }
   }
@@ -13391,6 +13612,7 @@ SWIGINTERN VALUE _wrap_MatrixComplex___mul__(int nargs, VALUE *args, VALUE self)
 fail:
   Ruby_Format_OverloadedError( argc, 3, "MatrixComplex.__mul__", 
     "    RubyEigen::MatrixXcd MatrixComplex.__mul__(RubyEigen::MatrixXcd const &m)\n"
+    "    RubyEigen::MatrixXcd MatrixComplex.__mul__(RubyEigen::VectorXcd const &m)\n"
     "    RubyEigen::MatrixXcd MatrixComplex.__mul__(std::complex< double > d)\n");
   
   return Qnil;
@@ -14228,6 +14450,38 @@ fail:
 
 
 SWIGINTERN VALUE
+_wrap_MatrixComplex_adjoint(int argc, VALUE *argv, VALUE self) {
+  RubyEigen::MatrixXcd *arg1 = (RubyEigen::MatrixXcd *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  RubyEigen::MatrixXcd result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_RubyEigen__MatrixXcd, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), Ruby_Format_TypeError( "", "RubyEigen::MatrixXcd *","adjoint", 1, self )); 
+  }
+  arg1 = reinterpret_cast< RubyEigen::MatrixXcd * >(argp1);
+  {
+    try {
+      result = (arg1)->adjoint();
+    }
+    catch (const RubyEigen::EigenRuntimeError &e) {
+      /* this rb_raise is called inside SWIG functions. That's ok. */
+      rb_raise(rb_eEigenRuntimeError, "%s", e.what());
+    }
+  }
+  vresult = SWIG_NewPointerObj((new RubyEigen::MatrixXcd(static_cast< const RubyEigen::MatrixXcd& >(result))), SWIGTYPE_p_RubyEigen__MatrixXcd, SWIG_POINTER_OWN |  0 );
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
 _wrap_MatrixComplex_col(int argc, VALUE *argv, VALUE self) {
   RubyEigen::MatrixXcd *arg1 = (RubyEigen::MatrixXcd *) 0 ;
   int arg2 ;
@@ -14728,6 +14982,38 @@ _wrap_MatrixComplex_transpose(int argc, VALUE *argv, VALUE self) {
   {
     try {
       result = (arg1)->transpose();
+    }
+    catch (const RubyEigen::EigenRuntimeError &e) {
+      /* this rb_raise is called inside SWIG functions. That's ok. */
+      rb_raise(rb_eEigenRuntimeError, "%s", e.what());
+    }
+  }
+  vresult = SWIG_NewPointerObj((new RubyEigen::MatrixXcd(static_cast< const RubyEigen::MatrixXcd& >(result))), SWIGTYPE_p_RubyEigen__MatrixXcd, SWIG_POINTER_OWN |  0 );
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_MatrixComplex_conjugate(int argc, VALUE *argv, VALUE self) {
+  RubyEigen::MatrixXcd *arg1 = (RubyEigen::MatrixXcd *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  RubyEigen::MatrixXcd result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_RubyEigen__MatrixXcd, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), Ruby_Format_TypeError( "", "RubyEigen::MatrixXcd *","conjugate", 1, self )); 
+  }
+  arg1 = reinterpret_cast< RubyEigen::MatrixXcd * >(argp1);
+  {
+    try {
+      result = (arg1)->conjugate();
     }
     catch (const RubyEigen::EigenRuntimeError &e) {
       /* this rb_raise is called inside SWIG functions. That's ok. */
@@ -15892,6 +16178,38 @@ free_RubyEigen_VectorXd(void *self) {
 }
 
 SWIGINTERN VALUE
+_wrap_VectorDouble_real(int argc, VALUE *argv, VALUE self) {
+  RubyEigen::VectorXd *arg1 = (RubyEigen::VectorXd *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  RubyEigen::VectorXd result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_RubyEigen__MatrixT_RubyEigen__MatrixXd__Scalar_RubyEigen__Dynamic_1_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), Ruby_Format_TypeError( "", "RubyEigen::VectorXd *","real", 1, self )); 
+  }
+  arg1 = reinterpret_cast< RubyEigen::VectorXd * >(argp1);
+  {
+    try {
+      result = (arg1)->real();
+    }
+    catch (const RubyEigen::EigenRuntimeError &e) {
+      /* this rb_raise is called inside SWIG functions. That's ok. */
+      rb_raise(rb_eEigenRuntimeError, "%s", e.what());
+    }
+  }
+  vresult = SWIG_NewPointerObj((new RubyEigen::VectorXd(static_cast< const RubyEigen::VectorXd& >(result))), SWIGTYPE_p_RubyEigen__MatrixT_RubyEigen__MatrixXd__Scalar_RubyEigen__Dynamic_1_t, SWIG_POINTER_OWN |  0 );
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
 _wrap_VectorDouble_hasNaN(int argc, VALUE *argv, VALUE self) {
   RubyEigen::VectorXd *arg1 = (RubyEigen::VectorXd *) 0 ;
   void *argp1 = 0 ;
@@ -16593,6 +16911,49 @@ fail:
 SWIGINTERN VALUE
 _wrap_VectorDouble___mul____SWIG_1(int argc, VALUE *argv, VALUE self) {
   RubyEigen::VectorXd *arg1 = (RubyEigen::VectorXd *) 0 ;
+  RubyEigen::MatrixXd *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 ;
+  int res2 = 0 ;
+  SwigValueWrapper< RubyEigen::MatrixXd > result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_RubyEigen__MatrixT_RubyEigen__MatrixXd__Scalar_RubyEigen__Dynamic_1_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), Ruby_Format_TypeError( "", "RubyEigen::VectorXd *","operator *", 1, self )); 
+  }
+  arg1 = reinterpret_cast< RubyEigen::VectorXd * >(argp1);
+  res2 = SWIG_ConvertPtr(argv[0], &argp2, SWIGTYPE_p_RubyEigen__MatrixXd,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), Ruby_Format_TypeError( "", "RubyEigen::MatrixXd const &","operator *", 2, argv[0] )); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, Ruby_Format_TypeError("invalid null reference ", "RubyEigen::MatrixXd const &","operator *", 2, argv[0])); 
+  }
+  arg2 = reinterpret_cast< RubyEigen::MatrixXd * >(argp2);
+  {
+    try {
+      result = (arg1)->operator *((RubyEigen::MatrixXd const &)*arg2);
+    }
+    catch (const RubyEigen::EigenRuntimeError &e) {
+      /* this rb_raise is called inside SWIG functions. That's ok. */
+      rb_raise(rb_eEigenRuntimeError, "%s", e.what());
+    }
+  }
+  vresult = SWIG_NewPointerObj((new RubyEigen::MatrixXd(static_cast< const RubyEigen::MatrixXd& >(result))), SWIGTYPE_p_RubyEigen__MatrixXd, SWIG_POINTER_OWN |  0 );
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_VectorDouble___mul____SWIG_2(int argc, VALUE *argv, VALUE self) {
+  RubyEigen::VectorXd *arg1 = (RubyEigen::VectorXd *) 0 ;
   double arg2 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
@@ -16661,12 +17022,26 @@ SWIGINTERN VALUE _wrap_VectorDouble___mul__(int nargs, VALUE *args, VALUE self) 
     int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_RubyEigen__MatrixT_RubyEigen__MatrixXd__Scalar_RubyEigen__Dynamic_1_t, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_RubyEigen__MatrixXd, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_VectorDouble___mul____SWIG_1(nargs, args, self);
+      }
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_RubyEigen__MatrixT_RubyEigen__MatrixXd__Scalar_RubyEigen__Dynamic_1_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
       {
         int res = SWIG_AsVal_double(argv[1], NULL);
         _v = SWIG_CheckState(res);
       }
       if (_v) {
-        return _wrap_VectorDouble___mul____SWIG_1(nargs, args, self);
+        return _wrap_VectorDouble___mul____SWIG_2(nargs, args, self);
       }
     }
   }
@@ -16674,6 +17049,7 @@ SWIGINTERN VALUE _wrap_VectorDouble___mul__(int nargs, VALUE *args, VALUE self) 
 fail:
   Ruby_Format_OverloadedError( argc, 3, "VectorDouble.__mul__", 
     "    RubyEigen::VectorXd VectorDouble.__mul__(RubyEigen::VectorXd const &m)\n"
+    "    RubyEigen::VectorXd VectorDouble.__mul__(RubyEigen::MatrixXd const &m)\n"
     "    RubyEigen::VectorXd VectorDouble.__mul__(double d)\n");
   
   return Qnil;
@@ -17511,6 +17887,38 @@ fail:
 
 
 SWIGINTERN VALUE
+_wrap_VectorDouble_adjoint(int argc, VALUE *argv, VALUE self) {
+  RubyEigen::VectorXd *arg1 = (RubyEigen::VectorXd *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  RubyEigen::VectorXd result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_RubyEigen__MatrixT_RubyEigen__MatrixXd__Scalar_RubyEigen__Dynamic_1_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), Ruby_Format_TypeError( "", "RubyEigen::VectorXd *","adjoint", 1, self )); 
+  }
+  arg1 = reinterpret_cast< RubyEigen::VectorXd * >(argp1);
+  {
+    try {
+      result = (arg1)->adjoint();
+    }
+    catch (const RubyEigen::EigenRuntimeError &e) {
+      /* this rb_raise is called inside SWIG functions. That's ok. */
+      rb_raise(rb_eEigenRuntimeError, "%s", e.what());
+    }
+  }
+  vresult = SWIG_NewPointerObj((new RubyEigen::VectorXd(static_cast< const RubyEigen::VectorXd& >(result))), SWIGTYPE_p_RubyEigen__MatrixT_RubyEigen__MatrixXd__Scalar_RubyEigen__Dynamic_1_t, SWIG_POINTER_OWN |  0 );
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
 _wrap_VectorDouble_isOrthogonal__SWIG_0(int argc, VALUE *argv, VALUE self) {
   RubyEigen::VectorXd *arg1 = (RubyEigen::VectorXd *) 0 ;
   RubyEigen::VectorXd *arg2 = 0 ;
@@ -17874,6 +18282,47 @@ fail:
 }
 
 
+
+/*
+  Document-method: Eigen::VectorDouble.to_s
+
+  call-seq:
+    to_s -> std::string
+
+Convert class to a String representation.
+*/
+SWIGINTERN VALUE
+_wrap_VectorDouble_to_s(int argc, VALUE *argv, VALUE self) {
+  RubyEigen::VectorXd *arg1 = (RubyEigen::VectorXd *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  std::string result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_RubyEigen__MatrixT_RubyEigen__MatrixXd__Scalar_RubyEigen__Dynamic_1_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), Ruby_Format_TypeError( "", "RubyEigen::VectorXd *","to_s", 1, self )); 
+  }
+  arg1 = reinterpret_cast< RubyEigen::VectorXd * >(argp1);
+  {
+    try {
+      result = RubyEigen_VectorXd_to_s(arg1);
+    }
+    catch (const RubyEigen::EigenRuntimeError &e) {
+      /* this rb_raise is called inside SWIG functions. That's ok. */
+      rb_raise(rb_eEigenRuntimeError, "%s", e.what());
+    }
+  }
+  vresult = SWIG_From_std_string(static_cast< std::string >(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
 static swig_class SwigClassVectorComplex;
 
 #ifdef HAVE_RB_DEFINE_ALLOC_FUNC
@@ -17929,6 +18378,70 @@ free_RubyEigen_VectorXcd(void *self) {
     RubyEigen::VectorXcd *arg1 = (RubyEigen::VectorXcd *)self;
     delete arg1;
 }
+
+SWIGINTERN VALUE
+_wrap_VectorComplex_imag(int argc, VALUE *argv, VALUE self) {
+  RubyEigen::VectorXcd *arg1 = (RubyEigen::VectorXcd *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  RubyEigen::VectorXd result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_RubyEigen__MatrixT_RubyEigen__MatrixXcd__Scalar_RubyEigen__Dynamic_1_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), Ruby_Format_TypeError( "", "RubyEigen::VectorXcd *","imag", 1, self )); 
+  }
+  arg1 = reinterpret_cast< RubyEigen::VectorXcd * >(argp1);
+  {
+    try {
+      result = (arg1)->imag();
+    }
+    catch (const RubyEigen::EigenRuntimeError &e) {
+      /* this rb_raise is called inside SWIG functions. That's ok. */
+      rb_raise(rb_eEigenRuntimeError, "%s", e.what());
+    }
+  }
+  vresult = SWIG_NewPointerObj((new RubyEigen::VectorXd(static_cast< const RubyEigen::VectorXd& >(result))), SWIGTYPE_p_RubyEigen__MatrixT_RubyEigen__MatrixXd__Scalar_RubyEigen__Dynamic_1_t, SWIG_POINTER_OWN |  0 );
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_VectorComplex_real(int argc, VALUE *argv, VALUE self) {
+  RubyEigen::VectorXcd *arg1 = (RubyEigen::VectorXcd *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  RubyEigen::VectorXd result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_RubyEigen__MatrixT_RubyEigen__MatrixXcd__Scalar_RubyEigen__Dynamic_1_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), Ruby_Format_TypeError( "", "RubyEigen::VectorXcd *","real", 1, self )); 
+  }
+  arg1 = reinterpret_cast< RubyEigen::VectorXcd * >(argp1);
+  {
+    try {
+      result = (arg1)->real();
+    }
+    catch (const RubyEigen::EigenRuntimeError &e) {
+      /* this rb_raise is called inside SWIG functions. That's ok. */
+      rb_raise(rb_eEigenRuntimeError, "%s", e.what());
+    }
+  }
+  vresult = SWIG_NewPointerObj((new RubyEigen::VectorXd(static_cast< const RubyEigen::VectorXd& >(result))), SWIGTYPE_p_RubyEigen__MatrixT_RubyEigen__MatrixXd__Scalar_RubyEigen__Dynamic_1_t, SWIG_POINTER_OWN |  0 );
+  return vresult;
+fail:
+  return Qnil;
+}
+
 
 SWIGINTERN VALUE
 _wrap_VectorComplex_hasNaN(int argc, VALUE *argv, VALUE self) {
@@ -18632,6 +19145,49 @@ fail:
 SWIGINTERN VALUE
 _wrap_VectorComplex___mul____SWIG_1(int argc, VALUE *argv, VALUE self) {
   RubyEigen::VectorXcd *arg1 = (RubyEigen::VectorXcd *) 0 ;
+  RubyEigen::MatrixXcd *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 ;
+  int res2 = 0 ;
+  RubyEigen::MatrixXcd result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_RubyEigen__MatrixT_RubyEigen__MatrixXcd__Scalar_RubyEigen__Dynamic_1_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), Ruby_Format_TypeError( "", "RubyEigen::VectorXcd *","operator *", 1, self )); 
+  }
+  arg1 = reinterpret_cast< RubyEigen::VectorXcd * >(argp1);
+  res2 = SWIG_ConvertPtr(argv[0], &argp2, SWIGTYPE_p_RubyEigen__MatrixXcd,  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), Ruby_Format_TypeError( "", "RubyEigen::MatrixXcd const &","operator *", 2, argv[0] )); 
+  }
+  if (!argp2) {
+    SWIG_exception_fail(SWIG_ValueError, Ruby_Format_TypeError("invalid null reference ", "RubyEigen::MatrixXcd const &","operator *", 2, argv[0])); 
+  }
+  arg2 = reinterpret_cast< RubyEigen::MatrixXcd * >(argp2);
+  {
+    try {
+      result = (arg1)->operator *((RubyEigen::MatrixXcd const &)*arg2);
+    }
+    catch (const RubyEigen::EigenRuntimeError &e) {
+      /* this rb_raise is called inside SWIG functions. That's ok. */
+      rb_raise(rb_eEigenRuntimeError, "%s", e.what());
+    }
+  }
+  vresult = SWIG_NewPointerObj((new RubyEigen::MatrixXcd(static_cast< const RubyEigen::MatrixXcd& >(result))), SWIGTYPE_p_RubyEigen__MatrixXcd, SWIG_POINTER_OWN |  0 );
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_VectorComplex___mul____SWIG_2(int argc, VALUE *argv, VALUE self) {
+  RubyEigen::VectorXcd *arg1 = (RubyEigen::VectorXcd *) 0 ;
   std::complex< double > arg2 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
@@ -18700,12 +19256,26 @@ SWIGINTERN VALUE _wrap_VectorComplex___mul__(int nargs, VALUE *args, VALUE self)
     int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_RubyEigen__MatrixT_RubyEigen__MatrixXcd__Scalar_RubyEigen__Dynamic_1_t, 0);
     _v = SWIG_CheckState(res);
     if (_v) {
+      void *vptr = 0;
+      int res = SWIG_ConvertPtr(argv[1], &vptr, SWIGTYPE_p_RubyEigen__MatrixXcd, 0);
+      _v = SWIG_CheckState(res);
+      if (_v) {
+        return _wrap_VectorComplex___mul____SWIG_1(nargs, args, self);
+      }
+    }
+  }
+  if (argc == 2) {
+    int _v;
+    void *vptr = 0;
+    int res = SWIG_ConvertPtr(argv[0], &vptr, SWIGTYPE_p_RubyEigen__MatrixT_RubyEigen__MatrixXcd__Scalar_RubyEigen__Dynamic_1_t, 0);
+    _v = SWIG_CheckState(res);
+    if (_v) {
       {
         int res = SWIG_AsVal_std_complex_Sl_double_Sg_(argv[1], NULL);
         _v = SWIG_CheckState(res);
       }
       if (_v) {
-        return _wrap_VectorComplex___mul____SWIG_1(nargs, args, self);
+        return _wrap_VectorComplex___mul____SWIG_2(nargs, args, self);
       }
     }
   }
@@ -18713,6 +19283,7 @@ SWIGINTERN VALUE _wrap_VectorComplex___mul__(int nargs, VALUE *args, VALUE self)
 fail:
   Ruby_Format_OverloadedError( argc, 3, "VectorComplex.__mul__", 
     "    RubyEigen::VectorXcd VectorComplex.__mul__(RubyEigen::VectorXcd const &m)\n"
+    "    RubyEigen::VectorXcd VectorComplex.__mul__(RubyEigen::MatrixXcd const &m)\n"
     "    RubyEigen::VectorXcd VectorComplex.__mul__(std::complex< double > d)\n");
   
   return Qnil;
@@ -19550,6 +20121,38 @@ fail:
 
 
 SWIGINTERN VALUE
+_wrap_VectorComplex_adjoint(int argc, VALUE *argv, VALUE self) {
+  RubyEigen::VectorXcd *arg1 = (RubyEigen::VectorXcd *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  RubyEigen::VectorXcd result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_RubyEigen__MatrixT_RubyEigen__MatrixXcd__Scalar_RubyEigen__Dynamic_1_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), Ruby_Format_TypeError( "", "RubyEigen::VectorXcd *","adjoint", 1, self )); 
+  }
+  arg1 = reinterpret_cast< RubyEigen::VectorXcd * >(argp1);
+  {
+    try {
+      result = (arg1)->adjoint();
+    }
+    catch (const RubyEigen::EigenRuntimeError &e) {
+      /* this rb_raise is called inside SWIG functions. That's ok. */
+      rb_raise(rb_eEigenRuntimeError, "%s", e.what());
+    }
+  }
+  vresult = SWIG_NewPointerObj((new RubyEigen::VectorXcd(static_cast< const RubyEigen::VectorXcd& >(result))), SWIGTYPE_p_RubyEigen__MatrixT_RubyEigen__MatrixXcd__Scalar_RubyEigen__Dynamic_1_t, SWIG_POINTER_OWN |  0 );
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
 _wrap_VectorComplex_isOrthogonal__SWIG_0(int argc, VALUE *argv, VALUE self) {
   RubyEigen::VectorXcd *arg1 = (RubyEigen::VectorXcd *) 0 ;
   RubyEigen::VectorXcd *arg2 = 0 ;
@@ -19908,6 +20511,47 @@ _wrap_VectorComplex___setitem__(int argc, VALUE *argv, VALUE self) {
     }
   }
   return Qnil;
+fail:
+  return Qnil;
+}
+
+
+
+/*
+  Document-method: Eigen::VectorComplex.to_s
+
+  call-seq:
+    to_s -> std::string
+
+Convert class to a String representation.
+*/
+SWIGINTERN VALUE
+_wrap_VectorComplex_to_s(int argc, VALUE *argv, VALUE self) {
+  RubyEigen::VectorXcd *arg1 = (RubyEigen::VectorXcd *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  std::string result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_RubyEigen__MatrixT_RubyEigen__MatrixXcd__Scalar_RubyEigen__Dynamic_1_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), Ruby_Format_TypeError( "", "RubyEigen::VectorXcd *","to_s", 1, self )); 
+  }
+  arg1 = reinterpret_cast< RubyEigen::VectorXcd * >(argp1);
+  {
+    try {
+      result = RubyEigen_VectorXcd_to_s(arg1);
+    }
+    catch (const RubyEigen::EigenRuntimeError &e) {
+      /* this rb_raise is called inside SWIG functions. That's ok. */
+      rb_raise(rb_eEigenRuntimeError, "%s", e.what());
+    }
+  }
+  vresult = SWIG_From_std_string(static_cast< std::string >(result));
+  return vresult;
 fail:
   return Qnil;
 }
@@ -27100,6 +27744,7 @@ SWIGEXPORT void Init_eigen(void) {
   rb_define_method(SwigClassMatrixDouble.klass, "maxCoeff", VALUEFUNC(_wrap_MatrixDouble_maxCoeff), -1);
   rb_define_method(SwigClassMatrixDouble.klass, "minCoeff", VALUEFUNC(_wrap_MatrixDouble_minCoeff), -1);
   rb_define_method(SwigClassMatrixDouble.klass, "array", VALUEFUNC(_wrap_MatrixDouble_array), -1);
+  rb_define_method(SwigClassMatrixDouble.klass, "real", VALUEFUNC(_wrap_MatrixDouble_real), -1);
   rb_define_method(SwigClassMatrixDouble.klass, "hasNaN", VALUEFUNC(_wrap_MatrixDouble_hasNaN), -1);
   rb_define_method(SwigClassMatrixDouble.klass, "setRandom", VALUEFUNC(_wrap_MatrixDouble_setRandom), -1);
   rb_define_method(SwigClassMatrixDouble.klass, "setConstant", VALUEFUNC(_wrap_MatrixDouble_setConstant), -1);
@@ -27125,6 +27770,7 @@ SWIGEXPORT void Init_eigen(void) {
   rb_define_method(SwigClassMatrixDouble.klass, "isMuchSmallerThan", VALUEFUNC(_wrap_MatrixDouble_isMuchSmallerThan), -1);
   rb_define_method(SwigClassMatrixDouble.klass, "isOnes", VALUEFUNC(_wrap_MatrixDouble_isOnes), -1);
   rb_define_method(SwigClassMatrixDouble.klass, "isZero", VALUEFUNC(_wrap_MatrixDouble_isZero), -1);
+  rb_define_method(SwigClassMatrixDouble.klass, "adjoint", VALUEFUNC(_wrap_MatrixDouble_adjoint), -1);
   rb_define_method(SwigClassMatrixDouble.klass, "col", VALUEFUNC(_wrap_MatrixDouble_col), -1);
   rb_define_method(SwigClassMatrixDouble.klass, "row", VALUEFUNC(_wrap_MatrixDouble_row), -1);
   rb_define_method(SwigClassMatrixDouble.klass, "cols", VALUEFUNC(_wrap_MatrixDouble_cols), -1);
@@ -27138,6 +27784,7 @@ SWIGEXPORT void Init_eigen(void) {
   rb_define_method(SwigClassMatrixDouble.klass, "prod", VALUEFUNC(_wrap_MatrixDouble_prod), -1);
   rb_define_method(SwigClassMatrixDouble.klass, "normalize", VALUEFUNC(_wrap_MatrixDouble_normalize), -1);
   rb_define_method(SwigClassMatrixDouble.klass, "transpose", VALUEFUNC(_wrap_MatrixDouble_transpose), -1);
+  rb_define_method(SwigClassMatrixDouble.klass, "conjugate", VALUEFUNC(_wrap_MatrixDouble_conjugate), -1);
   rb_define_method(SwigClassMatrixDouble.klass, "reverse", VALUEFUNC(_wrap_MatrixDouble_reverse), -1);
   rb_define_method(SwigClassMatrixDouble.klass, "replicate", VALUEFUNC(_wrap_MatrixDouble_replicate), -1);
   rb_define_method(SwigClassMatrixDouble.klass, "eigenvalues", VALUEFUNC(_wrap_MatrixDouble_eigenvalues), -1);
@@ -27196,6 +27843,7 @@ SWIGEXPORT void Init_eigen(void) {
   rb_define_method(SwigClassMatrixComplex.klass, "isMuchSmallerThan", VALUEFUNC(_wrap_MatrixComplex_isMuchSmallerThan), -1);
   rb_define_method(SwigClassMatrixComplex.klass, "isOnes", VALUEFUNC(_wrap_MatrixComplex_isOnes), -1);
   rb_define_method(SwigClassMatrixComplex.klass, "isZero", VALUEFUNC(_wrap_MatrixComplex_isZero), -1);
+  rb_define_method(SwigClassMatrixComplex.klass, "adjoint", VALUEFUNC(_wrap_MatrixComplex_adjoint), -1);
   rb_define_method(SwigClassMatrixComplex.klass, "col", VALUEFUNC(_wrap_MatrixComplex_col), -1);
   rb_define_method(SwigClassMatrixComplex.klass, "row", VALUEFUNC(_wrap_MatrixComplex_row), -1);
   rb_define_method(SwigClassMatrixComplex.klass, "cols", VALUEFUNC(_wrap_MatrixComplex_cols), -1);
@@ -27209,6 +27857,7 @@ SWIGEXPORT void Init_eigen(void) {
   rb_define_method(SwigClassMatrixComplex.klass, "prod", VALUEFUNC(_wrap_MatrixComplex_prod), -1);
   rb_define_method(SwigClassMatrixComplex.klass, "normalize", VALUEFUNC(_wrap_MatrixComplex_normalize), -1);
   rb_define_method(SwigClassMatrixComplex.klass, "transpose", VALUEFUNC(_wrap_MatrixComplex_transpose), -1);
+  rb_define_method(SwigClassMatrixComplex.klass, "conjugate", VALUEFUNC(_wrap_MatrixComplex_conjugate), -1);
   rb_define_method(SwigClassMatrixComplex.klass, "reverse", VALUEFUNC(_wrap_MatrixComplex_reverse), -1);
   rb_define_method(SwigClassMatrixComplex.klass, "replicate", VALUEFUNC(_wrap_MatrixComplex_replicate), -1);
   rb_define_method(SwigClassMatrixComplex.klass, "eigenvalues", VALUEFUNC(_wrap_MatrixComplex_eigenvalues), -1);
@@ -27240,6 +27889,7 @@ SWIGEXPORT void Init_eigen(void) {
   SWIG_TypeClientData(SWIGTYPE_p_RubyEigen__MatrixT_RubyEigen__MatrixXd__Scalar_RubyEigen__Dynamic_1_t, (void *) &SwigClassVectorDouble);
   rb_define_alloc_func(SwigClassVectorDouble.klass, _wrap_VectorDouble_allocate);
   rb_define_method(SwigClassVectorDouble.klass, "initialize", VALUEFUNC(_wrap_new_VectorDouble), -1);
+  rb_define_method(SwigClassVectorDouble.klass, "real", VALUEFUNC(_wrap_VectorDouble_real), -1);
   rb_define_method(SwigClassVectorDouble.klass, "hasNaN", VALUEFUNC(_wrap_VectorDouble_hasNaN), -1);
   rb_define_method(SwigClassVectorDouble.klass, "setRandom", VALUEFUNC(_wrap_VectorDouble_setRandom), -1);
   rb_define_method(SwigClassVectorDouble.klass, "setConstant", VALUEFUNC(_wrap_VectorDouble_setConstant), -1);
@@ -27264,12 +27914,14 @@ SWIGEXPORT void Init_eigen(void) {
   rb_define_method(SwigClassVectorDouble.klass, "isMuchSmallerThan", VALUEFUNC(_wrap_VectorDouble_isMuchSmallerThan), -1);
   rb_define_method(SwigClassVectorDouble.klass, "isOnes", VALUEFUNC(_wrap_VectorDouble_isOnes), -1);
   rb_define_method(SwigClassVectorDouble.klass, "isZero", VALUEFUNC(_wrap_VectorDouble_isZero), -1);
+  rb_define_method(SwigClassVectorDouble.klass, "adjoint", VALUEFUNC(_wrap_VectorDouble_adjoint), -1);
   rb_define_method(SwigClassVectorDouble.klass, "isOrthogonal", VALUEFUNC(_wrap_VectorDouble_isOrthogonal), -1);
   rb_define_method(SwigClassVectorDouble.klass, "squaredNorm", VALUEFUNC(_wrap_VectorDouble_squaredNorm), -1);
   rb_define_method(SwigClassVectorDouble.klass, "stableNorm", VALUEFUNC(_wrap_VectorDouble_stableNorm), -1);
   rb_define_method(SwigClassVectorDouble.klass, "segment", VALUEFUNC(_wrap_VectorDouble_segment), -1);
   rb_define_method(SwigClassVectorDouble.klass, "[]", VALUEFUNC(_wrap_VectorDouble___getitem__), -1);
   rb_define_method(SwigClassVectorDouble.klass, "[]=", VALUEFUNC(_wrap_VectorDouble___setitem__), -1);
+  rb_define_method(SwigClassVectorDouble.klass, "to_s", VALUEFUNC(_wrap_VectorDouble_to_s), -1);
   SwigClassVectorDouble.mark = 0;
   SwigClassVectorDouble.destroy = (void (*)(void *)) free_RubyEigen_VectorXd;
   SwigClassVectorDouble.trackObjects = 0;
@@ -27278,6 +27930,8 @@ SWIGEXPORT void Init_eigen(void) {
   SWIG_TypeClientData(SWIGTYPE_p_RubyEigen__MatrixT_RubyEigen__MatrixXcd__Scalar_RubyEigen__Dynamic_1_t, (void *) &SwigClassVectorComplex);
   rb_define_alloc_func(SwigClassVectorComplex.klass, _wrap_VectorComplex_allocate);
   rb_define_method(SwigClassVectorComplex.klass, "initialize", VALUEFUNC(_wrap_new_VectorComplex), -1);
+  rb_define_method(SwigClassVectorComplex.klass, "imag", VALUEFUNC(_wrap_VectorComplex_imag), -1);
+  rb_define_method(SwigClassVectorComplex.klass, "real", VALUEFUNC(_wrap_VectorComplex_real), -1);
   rb_define_method(SwigClassVectorComplex.klass, "hasNaN", VALUEFUNC(_wrap_VectorComplex_hasNaN), -1);
   rb_define_method(SwigClassVectorComplex.klass, "setRandom", VALUEFUNC(_wrap_VectorComplex_setRandom), -1);
   rb_define_method(SwigClassVectorComplex.klass, "setConstant", VALUEFUNC(_wrap_VectorComplex_setConstant), -1);
@@ -27302,12 +27956,14 @@ SWIGEXPORT void Init_eigen(void) {
   rb_define_method(SwigClassVectorComplex.klass, "isMuchSmallerThan", VALUEFUNC(_wrap_VectorComplex_isMuchSmallerThan), -1);
   rb_define_method(SwigClassVectorComplex.klass, "isOnes", VALUEFUNC(_wrap_VectorComplex_isOnes), -1);
   rb_define_method(SwigClassVectorComplex.klass, "isZero", VALUEFUNC(_wrap_VectorComplex_isZero), -1);
+  rb_define_method(SwigClassVectorComplex.klass, "adjoint", VALUEFUNC(_wrap_VectorComplex_adjoint), -1);
   rb_define_method(SwigClassVectorComplex.klass, "isOrthogonal", VALUEFUNC(_wrap_VectorComplex_isOrthogonal), -1);
   rb_define_method(SwigClassVectorComplex.klass, "squaredNorm", VALUEFUNC(_wrap_VectorComplex_squaredNorm), -1);
   rb_define_method(SwigClassVectorComplex.klass, "stableNorm", VALUEFUNC(_wrap_VectorComplex_stableNorm), -1);
   rb_define_method(SwigClassVectorComplex.klass, "segment", VALUEFUNC(_wrap_VectorComplex_segment), -1);
   rb_define_method(SwigClassVectorComplex.klass, "[]", VALUEFUNC(_wrap_VectorComplex___getitem__), -1);
   rb_define_method(SwigClassVectorComplex.klass, "[]=", VALUEFUNC(_wrap_VectorComplex___setitem__), -1);
+  rb_define_method(SwigClassVectorComplex.klass, "to_s", VALUEFUNC(_wrap_VectorComplex_to_s), -1);
   SwigClassVectorComplex.mark = 0;
   SwigClassVectorComplex.destroy = (void (*)(void *)) free_RubyEigen_VectorXcd;
   SwigClassVectorComplex.trackObjects = 0;
