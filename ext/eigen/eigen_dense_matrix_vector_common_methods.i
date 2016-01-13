@@ -1,4 +1,4 @@
-%define DENSE_MATRIX_VECTOR_Common_Methods(TYPE, s_type)
+%define DENSE_MATRIX_VECTOR_Common_Methods(TYPE, V_TYPE, s_type)
 
   //  bool allFinite();
   bool hasNaN();
