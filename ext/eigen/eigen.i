@@ -4,12 +4,11 @@
 
 %include std_string.i
 %include std_vector.i
+%include std_complex.i
 
 %{
 
-#include <complex>
 #include <strstream>
-#include <string>
 #include <Eigen/Core>
 #include <Eigen/LU>
 #include <Eigen/Eigenvalues>
@@ -69,12 +68,10 @@ namespace RubyEigen {
 
 namespace RubyEigen {
 
-
 %rename(MatrixDouble) MatrixXd; 
 %rename(MatrixComplex) MatrixXcd;
 %rename(VectorDouble) VectorXd;
 %rename(VectorComplex) VectorXcd;
-
 
 %alias MatrixXd::operator== "__eq__";
 
@@ -97,6 +94,7 @@ public:
 
   void setRandom();
   void setConstant(double);
+  void setIdentity();
   void setOnes();
   void setZero();
 
@@ -118,13 +116,24 @@ public:
   MatrixBool cwiseEqual(double);
   MatrixBool cwiseNotEqual(MatrixXd &m);
 
-  MatrixXd diagonal();
+  VectorXd diagonal();
   MatrixXd diagonal(int);
 
   MatrixXd inverse();
   double determinant();
+  double norm();
+  double operatorNorm();
+  double maxCoeff();
+  double minCoeff();
+
+  double sum();
+  double prod();
+
+  void normalize();
 
   MatrixXd transpose();
+  MatrixXd reverse();
+  MatrixXd replicate(int, int);
 
   RubyEigen::VectorXcd eigenvalues();
 
@@ -137,6 +146,37 @@ public:
 
   bool operator==(MatrixXd &m);
   bool isApprox(MatrixXd &m);
+  bool isApprox(MatrixXd &m, double);
+  bool isApproxToConstant(double);
+  bool isConstant(double);
+
+  bool isDiagonal();
+  bool isIdentity();
+  bool isLowerTriangular();
+  bool isLowerTriangular(double);
+  bool isUpperTriangular();
+  bool isUpperTriangular(double);
+
+  bool isMuchSmallerThan(double);
+  bool isMuchSmallerThan(double, double);
+  bool isMuchSmallerThan(MatrixXd& m);
+  bool isMuchSmallerThan(MatrixXd& m, double);
+
+  bool isOnes();
+  bool isOnes(double);
+  bool isZero();
+  bool isZero(double);
+
+  MatrixXd middleCols(int, int);
+  MatrixXd middleRows(int, int);
+
+  /*
+    colwise
+    rowwise
+
+    imag
+    real
+  */
 
   RubyEigen::PartialPivLU<RubyEigen::MatrixXd> lu();
 
@@ -192,12 +232,20 @@ public:
     }
   }
 
-};
+}; /* end class MatrixXd */
 
 class VectorXd {
 public:
   VectorXd(int);
   ~VectorXd();
+
+  /* vector only */
+  bool isOrthogonal(VectorXd& v);
+  bool isOrthogonal(VectorXd& v, double);
+  double squaredNorm();
+  double stableNorm();
+
+  VectorXd segment(int, int);
 
   %extend {
 
