@@ -25,6 +25,14 @@
       (*$self).segment(i, len) = Eigen:: ## TYPE ## ::Map(v.data(), v.size());
     }
 
+    void __set_segment__(int i, int len, RubyEigen:: ## TYPE &v) {
+      (*$self).segment(i, len) = v;
+    }
+
+    void __set_segment__(int i, int len, RubyEigen:: ## M_TYPE &v) {
+      (*$self).segment(i, len) = v;
+    }
+
     std::string to_s() {
       std::ostrstream s;
       s << (*$self) << std::ends;
