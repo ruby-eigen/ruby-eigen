@@ -84,4 +84,16 @@ class TestEigen < Test::Unit::TestCase
     vc.setRandom
     vc.segment(0,1)
   end
+
+  def test_matrix08
+    m = Eigen::MatrixDouble.new(3,3)
+    m.setOnes
+    n = m.__get_block__(1,1,2,2)
+    n[0,0] = 0
+  end
+
+  def test_vector01
+    assert_nothing_raised{ Eigen::VectorDouble[1, 2, 3] }
+  end
+
 end
