@@ -63,32 +63,32 @@
       return (*$self).bottomLeftCorner(i, j);
     }
 
-    void setBottomLeftCorner(int i, int j, RubyEigen:: ## TYPE &m) {
-      (*$self).bottomLeftCorner(i, j) = m;
+    void setBottomLeftCorner(RubyEigen:: ## TYPE &m) {
+      (*$self).bottomLeftCorner(m.rows(), m.cols()) = m;
     }
 
     RubyEigen:: ## TYPE getBottomRightCorner(int i, int j) {
       return (*$self).bottomRightCorner(i, j);
     }
 
-    void setBottomRightCorner(int i, int j, RubyEigen:: ## TYPE &m) {
-      (*$self).bottomRightCorner(i, j) = m;
+    void setBottomRightCorner(RubyEigen:: ## TYPE &m) {
+      (*$self).bottomRightCorner(m.rows(), m.cols()) = m;
     }
 
     RubyEigen:: ## TYPE getTopLeftCorner(int i, int j) {
       return (*$self).topLeftCorner(i, j);
     }
 
-    void setTopLeftCorner(int i, int j, RubyEigen:: ## TYPE &m) {
-      (*$self).topLeftCorner(i, j) = m;
+    void setTopLeftCorner(RubyEigen:: ## TYPE &m) {
+      (*$self).topLeftCorner(m.rows(), m.cols()) = m;
     }
 
     RubyEigen:: ## TYPE getTopRightCorner(int i, int j) {
       return (*$self).topRightCorner(i, j);
     }
 
-    void setTopRightCorner(int i, int j, RubyEigen:: ## TYPE &m) {
-      (*$self).topRightCorner(i, j) = m;
+    void setTopRightCorner(RubyEigen:: ## TYPE &m) {
+      (*$self).topRightCorner(m.rows(), m.cols()) = m;
     }
 
     TYPE __mul_n__(TYPE &a, TYPE &b, TYPE &c, TYPE &d){
