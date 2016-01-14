@@ -20,3 +20,21 @@ end
 class Eigen::MatrixComplex
   extend Eigen::MatrixConstructor
 end
+
+module Eigen
+  module VectorConstructor
+    def [](*args)
+      ret = new(args.size)
+      ret.__set_segment__(0, args.size, args)
+      ret
+    end
+  end
+end
+
+class Eigen::VectorDouble
+  extend Eigen::VectorConstructor
+end
+
+class Eigen::VectorComplex
+  extend Eigen::VectorConstructor
+end

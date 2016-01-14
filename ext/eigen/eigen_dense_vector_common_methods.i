@@ -1,11 +1,11 @@
-%define DENSE_VECTOR_Common_Methods(TYPE, O_TYPE, s_type)
+%define DENSE_VECTOR_Common_Methods(TYPE, M_TYPE, s_type)
 
   bool isOrthogonal(TYPE& v);
   bool isOrthogonal(TYPE& v, double);
   double squaredNorm();
   double stableNorm();
 
-  TYPE segment(int, int);
+  TYPE segment(int i, int len);
 
   %extend {
 
@@ -15,6 +15,14 @@
 
     void __setitem__(int i, s_type c) {
       (*$self)(i) = c;
+    }
+
+    RubyEigen:: ## TYPE __get_segment__(int i, int len) {
+      return (*$self).segment(i, len);
+    }
+
+    void __set_segment__(int i, int len, const std::vector<s_type> &v) {
+      (*$self).segment(i, len) = Eigen:: ## TYPE ## ::Map(v.data(), v.size());
     }
 
     std::string to_s() {
