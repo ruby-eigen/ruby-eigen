@@ -2,9 +2,9 @@
 
 /* load macro */
 %include "rb_error_handle.i"
-%include "eigen_dense_matrix_vector_common_methods.i"
-%include "eigen_dense_matrix_common_methods.i"
-%include "eigen_dense_vector_common_methods.i"
+%include "dense_matrix_vector_methods.i"
+%include "dense_matrix_methods.i"
+%include "dense_vector_methods.i"
 
 %include std_string.i
 %include std_vector.i
@@ -279,7 +279,7 @@ public:
 %template(LLTDouble) RubyEigen::LLT<RubyEigen::MatrixXd>;
 %template(LLTComplex) RubyEigen::LLT<RubyEigen::MatrixXcd>;
 
-%include "eigen_array.i"
+%include "array.i"
 
 
 }; /* end of namespace ruby_eigen */
