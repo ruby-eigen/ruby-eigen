@@ -17,6 +17,12 @@
       (*$self)(i) = c;
     }
 
+    std::vector< s_type > to_a() {
+      std::vector< s_type > v((*$self).rows());
+      Eigen:: ## TYPE ## ::Map(v.data(), v.size()) = (*$self);
+      return v;
+    }
+
     RubyEigen:: ## TYPE __get_segment__(int i, int len) {
       return (*$self).segment(i, len);
     }

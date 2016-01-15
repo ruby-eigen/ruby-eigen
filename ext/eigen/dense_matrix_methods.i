@@ -43,6 +43,12 @@
 
   %extend {
 
+    std::vector< s_type > __get_row_array__(int i) {
+      std::vector< s_type > v((*$self).cols());
+      Eigen:: ## V_TYPE ## ::Map(v.data(), v.size()) = (*$self).row(i);
+      return v;
+    }
+
     void __set_col__(int i, const std::vector<s_type> &v){
       (*self).col(i) = Eigen:: ## V_TYPE ## ::Map(v.data(), v.size());
     }
