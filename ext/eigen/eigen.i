@@ -69,6 +69,7 @@ namespace RubyEigen {
 %}
 
 %template(StdVectorDouble__) std::vector<double>;
+%template(StdVectorComplex__) std::vector< std::complex<double> >;
 
 namespace RubyEigen {
 
@@ -108,7 +109,7 @@ public:
 
 class MatrixXcd {
 public:
-  MatrixXcd();
+  MatrixXcd(int, int);
   ~MatrixXcd();
 
   /* complex matrix only */
