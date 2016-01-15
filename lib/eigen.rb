@@ -16,7 +16,7 @@ module Eigen::MatrixConstructor
     ret = new(row_size, col_size)
     col_ind = 0
     ms.each{|m|
-      ret.__set_block__(0,col_ind,m)
+      ret[0,col_ind] = m
       col_ind += m.cols
     }
     return ret
@@ -28,7 +28,7 @@ module Eigen::MatrixConstructor
     ret = new(row_size, col_size)
     row_ind = 0
     ms.each{|m|
-      ret.__set_block__(row_ind,0,m)
+      ret[row_ind,0] = m
       row_ind += m.rows
     }
     return ret
@@ -53,12 +53,12 @@ module Eigen::MatrixConstructor
     row_ind = 0
     ms.each{|m|
       if m.respond_to?(:rows)
-        ret.__set_block__(row_ind, row_ind, m)
+        ret[row_ind, row_ind] = m
         row_ind += m.rows
       elsif m.is_a?(Array)
         m0 = self[*m]
         raise(Eigen::EigenRuntimeError, "rows and cols are not equal") unless m0.rows == m0.cols
-        ret.__set_block__(row_ind, row_ind, m0)
+        ret[row_ind, row_ind] = m0
         row_ind += m.size
       else
         ret[row_ind, row_ind] = m
@@ -71,6 +71,46 @@ module Eigen::MatrixConstructor
 end
 
 module Eigen::MatrixCommon
+
+  def row_range(r)
+    if r.is_a?(Numeric)
+      i0 = r
+      row_size = 1
+    else
+      i0 = r.begin >= 0 ? r.begin : r.begin + rows()
+      row_size = r.end >= 0 ? r.size : r.end + rows() + 1
+    end
+    return [i0, row_size]
+  end
+
+  def col_range(r)
+    if r.is_a?(Numeric)
+      j0 = r
+      col_size = 1
+    else
+      j0 = r.begin >= 0 ? r.begin : r.begin + cols()
+      col_size = r.end >= 0 ? r.size : r.end + cols() + 1
+    end
+    return [j0, col_size]
+  end
+
+  def [](i,j)
+    return __get_item__(i,j) if i.is_a?(Numeric) and j.is_a?(Numeric)
+
+    if i == true
+      i0, row_size = 0, rows()
+    else
+      i0, row_size = row_range(i)
+    end
+    if j == true
+      j0, col_size = 0, cols()
+    else
+      j0, col_size = col_range(j)
+    end
+
+    return __get_block__(i0, j0, row_size, col_size)
+  end
+
   def to_a
     ret = Array.new(rows())
     (0..(rows()-1)).each{|i|
@@ -83,11 +123,13 @@ end
 class Eigen::MatrixDouble
   extend  Eigen::MatrixConstructor
   include Eigen::MatrixCommon
+  private "__get_item__", "__get_block__"
 end
 
 class Eigen::MatrixComplex
   extend  Eigen::MatrixConstructor
   include Eigen::MatrixCommon
+  private "__get_item__", "__get_block__"
 end
 
 module Eigen::VectorConstructor

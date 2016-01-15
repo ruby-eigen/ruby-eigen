@@ -86,13 +86,6 @@ class TestEigen < Test::Unit::TestCase
     vc.segment(0,1)
   end
 
-  def test_matrix08
-    m = MatrixDouble.new(3,3)
-    m.setOnes
-    n = m.__get_block__(1,1,2,2)
-    n[0,0] = 0
-  end
-
   def test_matrix09
     m = MatrixDouble.new(3,3)
     m.setOnes
@@ -100,6 +93,33 @@ class TestEigen < Test::Unit::TestCase
 
     v = VectorDouble[1,2,3]
     assert_equal(v.to_a, [1.0, 2.0, 3.0])
+  end
+
+  def test_get
+    m1 = MatrixDouble.new(3,3)
+    m1.setOnes
+    assert_equal(MatrixDouble[[1,1],[1,1]],
+                 m1[0..1,0..1])
+    assert_equal(MatrixDouble[[1,1],[1,1],[1,1]],
+                 m1[true,0..1])
+    assert_equal(MatrixDouble[[1,1],[1,1],[1,1]],
+                 m1[0..-1,0..1])
+    assert_equal(MatrixDouble[[1,1,1],[1,1,1]],
+                 m1[0..1,true])
+    assert_equal(MatrixDouble[[1,1,1],[1,1,1]],
+                 m1[0..1,0..-1])
+  end
+
+  def test_set
+    m1 = MatrixDouble.new(3,3)
+    m1.setOnes
+    m1[0, 0] = MatrixDouble[[0,0],[0,0]]
+    assert_equal(MatrixDouble[[0,0,1],[0,0,1],[1,1,1]],
+                 m1)
+    m1.setOnes
+    m1[1, 1] = MatrixDouble[[0,0],[0,0]]
+    assert_equal(MatrixDouble[[1,1,1],[1,0,0],[1,0,0]],
+                 m1)
   end
 
   def test_matrix_stack

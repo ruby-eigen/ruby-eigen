@@ -57,13 +57,19 @@
       (*self).row(i) = Eigen:: ## V_TYPE ## ::Map(v.data(), v.size());
     }
 
-    RubyEigen:: ## TYPE __get_block__(int a, int b, int c, int d) {
-      return (*$self).block(a, b, c, d);
+    RubyEigen::Block< RubyEigen:: ## TYPE > __ref__(int i, int j, int rows, int cols) {
+      return (*$self).block(i, j, rows, cols);
     }
 
-    void __set_block__(int i, int j, RubyEigen:: ## TYPE & m) {
-      (*$self).block(i, j, m.rows(), m.cols()) = m;
+    RubyEigen:: ## TYPE __get_block__(int i, int j, int rows, int cols) {
+      return (*$self).block(i, j, rows, cols);
     }
+
+    /*
+      void __set_block__(int i, int j, RubyEigen:: ## TYPE & m) {
+        (*$self).block(i, j, m.rows(), m.cols()) = m;
+      }
+    */
 
     RubyEigen:: ## TYPE getBottomLeftCorner(int i, int j) {
       return (*$self).bottomLeftCorner(i, j);
@@ -107,14 +113,18 @@
       return s.str();
     }
 
-    s_type __getitem__(int i, int j) {
+    s_type __get_item__(int i, int j) {
       return (*$self)(i, j);
     }
 
     void __setitem__(int i, int j, s_type c) {
       (*$self)(i, j) = c;
     }
- 
+
+    void __setitem__(int i, int j, RubyEigen:: ## TYPE & m) {
+      (*$self).block(i, j, m.rows(), m.cols()) = m;
+    }
+
     TYPE triu() {
       return (*$self).triangularView<Eigen::Upper>();
     }
