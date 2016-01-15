@@ -57,10 +57,6 @@
       (*self).row(i) = Eigen:: ## V_TYPE ## ::Map(v.data(), v.size());
     }
 
-    RubyEigen::Block< RubyEigen:: ## TYPE > __ref__(int i, int j, int rows, int cols) {
-      return (*$self).block(i, j, rows, cols);
-    }
-
     RubyEigen:: ## TYPE __get_block__(int i, int j, int rows, int cols) {
       return (*$self).block(i, j, rows, cols);
     }

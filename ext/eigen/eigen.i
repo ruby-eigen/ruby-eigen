@@ -39,6 +39,8 @@ namespace RubyEigen {
   typedef RubyEigen::Matrix<RubyEigen::MatrixXd::Scalar, RubyEigen::Dynamic, 1> VectorXd;
   typedef RubyEigen::Matrix<RubyEigen::MatrixXcd::Scalar, RubyEigen::Dynamic, 1> VectorXcd;
 
+  typedef RubyEigen::Block<RubyEigen::MatrixXd> MatrixDoubleRef;
+
   typedef Matrix<bool, Dynamic, Dynamic> MatrixBool;
   typedef Matrix<bool, Dynamic, 1> VectorBool;
   typedef Array<bool, Dynamic, Dynamic> ArrayBool;
@@ -105,7 +107,39 @@ public:
   DENSE_MATRIX_VECTOR_Common_Methods(MatrixXd, VectorXd, double)
   DENSE_MATRIX_Common_Methods(MatrixXd, VectorXd, double)
 
+  %extend {
+    RubyEigen::Block< RubyEigen::MatrixXd > __ref__(int i, int j, int rows, int cols) {
+      return (*$self).block(i, j, rows, cols);
+    }
+  }
+
 }; /* end class MatrixXd */
+
+class MatrixDoubleRef {
+public:
+  MatrixDoubleRef(RubyEigen::MatrixXd&, int, int, int, int);
+  ~MatrixDoubleRef();
+
+  /* real matrix only */
+  MatrixXd cwiseAbs();
+  MatrixXd cwiseAbs2();
+
+  MatrixXd cwiseMax(MatrixXd &m);
+  MatrixXd cwiseMax(double);
+  MatrixXd cwiseMin(MatrixXd &m);
+  MatrixXd cwiseMin(double);
+
+  double maxCoeff();
+  double minCoeff();
+
+  Eigen::ArrayXXd array();
+
+  RubyEigen::MatrixXd real();
+
+  DENSE_MATRIX_VECTOR_Common_Methods(MatrixXd, VectorXd, double)
+  DENSE_MATRIX_Common_Methods(MatrixXd, VectorXd, double)
+};
+
 
 class MatrixXcd {
 public:
@@ -121,7 +155,6 @@ public:
   DENSE_MATRIX_Common_Methods(MatrixXcd, VectorXcd, std::complex<double>)
 
 };
-
 
 class VectorXd {
 public:
