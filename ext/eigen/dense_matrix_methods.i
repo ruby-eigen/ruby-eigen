@@ -61,8 +61,8 @@
       return (*$self).block(a, b, c, d);
     }
 
-    void __set_block__(int a, int b, int c, int d, RubyEigen:: ## TYPE & m) {
-      (*$self).block(a, b, c, d) = m;
+    void __set_block__(int i, int j, RubyEigen:: ## TYPE & m) {
+      (*$self).block(i, j, m.rows(), m.cols()) = m;
     }
 
     RubyEigen:: ## TYPE getBottomLeftCorner(int i, int j) {
