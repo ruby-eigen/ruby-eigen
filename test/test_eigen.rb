@@ -127,17 +127,17 @@ class TestEigen < Test::Unit::TestCase
     m1.setOnes
     assert_equal(MatrixDouble[[1,1,1],[1,1,1],[1,1,1]],
                  m1)
-    m1_ref = m1.__ref__(0,0,2,2)
+    m1_ref = m1.ref(0..1,0..1)
     m1_ref.setZero
     assert_equal(MatrixDouble[[0,0,1],[0,0,1],[1,1,1]],
                  m1)
 
     m1 = MatrixComplex.new(3,3)
     m1.setOnes
-    m1_ref = m1.__ref__(0,0,2,2)
+    m1_ref = m1.ref(0..1,0..1)
     m1_ref.setConstant(1i)
     assert_equal(MatrixComplex[[1i,1i,1],[1i,1i,1],[1,1,1]],
-                 m1)
+                 m1)   
   end
 
   def test_matrix_stack

@@ -93,6 +93,7 @@ module Eigen::MatrixCommon
     end
     return [j0, col_size]
   end
+  private "row_range", "col_range"
 
   def [](i,j)
     return __get_item__(i,j) if i.is_a?(Numeric) and j.is_a?(Numeric)
@@ -109,6 +110,21 @@ module Eigen::MatrixCommon
     end
 
     return __get_block__(i0, j0, row_size, col_size)
+  end
+
+  def ref(range0, range1)
+    if range0 == true
+      i0, row_size = 0, rows()
+    else
+      i0, row_size = row_range(range0)
+    end
+    if range1 == true
+      j0, col_size = 0, cols()
+    else
+      j0, col_size = col_range(range1)
+    end
+
+    return __ref__(i0, j0, row_size, col_size)
   end
 
   def to_a
