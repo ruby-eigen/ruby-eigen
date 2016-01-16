@@ -2,9 +2,12 @@ require 'mkmf'
 eigen3_opt = dir_config('eigen')
 have_library("c++") or have_library("stdc++")
 
-eigen3_path = File.join( File.dirname(File.expand_path(__FILE__)), "eigen3")
+unless eigen3_opt[0]
+  eigen3_path = File.join( File.dirname(File.expand_path(__FILE__)), "eigen3")
+  $CXXFLAGS = ($CXXFLAGS || "") + " -I#{eigen3_path} "
+end
 
-$CXXFLAGS = ($CXXFLAGS || "") + " -I#{eigen3_path} -O2 -Wall "
+$CXXFLAGS = ($CXXFLAGS || "") + " -O2 -Wall "
 create_makefile('eigen/eigen')
 
 
