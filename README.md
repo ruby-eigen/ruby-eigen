@@ -63,6 +63,7 @@ p m == MatrixComplex[[1i,1i,1],[1i,1i,1],[1,1,1]] #=> true
     MatrixDouble#/
     MatrixDouble#[i,j]
     MatrixDouble#[range0,range1]
+    MatrixDouble#[]=(i, j, num)
     MatrixDouble#[]=(i, j, matrix)
 
     MatrixDouble#ref(range, range)
