@@ -41,6 +41,7 @@ namespace RubyEigen {
   typedef RubyEigen::Matrix<RubyEigen::MatrixXi::Scalar, RubyEigen::Dynamic, 1> VectorXi;
 
   typedef RubyEigen::Block<RubyEigen::MatrixXd> MatrixDoubleRef;
+  typedef RubyEigen::Block<RubyEigen::MatrixXcd> MatrixComplexRef;
 
   typedef Matrix<bool, Dynamic, Dynamic> MatrixBool;
   typedef Matrix<bool, Dynamic, 1> VectorBool;
