@@ -1,4 +1,4 @@
-%define DENSE_MATRIX_Common_Methods(TYPE, V_TYPE, s_type)
+%define DENSE_MATRIX_Methods(TYPE, V_TYPE, s_type)
 
   RubyEigen:: ## V_TYPE col(int);
   RubyEigen:: ## V_TYPE row(int);
@@ -9,22 +9,15 @@
   V_TYPE diagonal();
   TYPE diagonal(int);
 
-  TYPE inverse();
   s_type determinant();
   double norm();
-  double operatorNorm();
 
   s_type sum();
   s_type prod();
 
-  void normalize();
-
   TYPE transpose();
-  TYPE conjugate();
   TYPE reverse();
   TYPE replicate(int, int);
-
-  RubyEigen::VectorXcd eigenvalues();
 
   bool isDiagonal();
   bool isIdentity();
@@ -35,11 +28,6 @@
 
   TYPE middleCols(int, int);
   TYPE middleRows(int, int);
-
-  RubyEigen::PartialPivLU<RubyEigen:: ## TYPE> lu();
-
-  RubyEigen::LDLT<RubyEigen:: ## TYPE> ldlt();
-  RubyEigen::LLT<RubyEigen:: ## TYPE> llt();
 
   %extend {
 
@@ -60,12 +48,6 @@
     RubyEigen:: ## TYPE __get_block__(int i, int j, int rows, int cols) {
       return (*$self).block(i, j, rows, cols);
     }
-
-    /*
-      void __set_block__(int i, int j, RubyEigen:: ## TYPE & m) {
-        (*$self).block(i, j, m.rows(), m.cols()) = m;
-      }
-    */
 
     RubyEigen:: ## TYPE getBottomLeftCorner(int i, int j) {
       return (*$self).bottomLeftCorner(i, j);
@@ -129,6 +111,25 @@
       return (*$self).triangularView<Eigen::Lower>();
     }
 
+  }
+
+%enddef
+
+%define DENSE_MATRIX_RC_Methods(TYPE, V_TYPE, s_type)
+
+  void normalize();
+  double operatorNorm();
+
+  TYPE inverse();
+  RubyEigen::VectorXcd eigenvalues();
+  TYPE conjugate();
+
+  RubyEigen::PartialPivLU<RubyEigen:: ## TYPE> lu();
+
+  RubyEigen::LDLT<RubyEigen:: ## TYPE> ldlt();
+  RubyEigen::LLT<RubyEigen:: ## TYPE> llt();
+
+  %extend {
     RubyEigen::FullPivLU<TYPE> fullPivLu() {
       return (*self).fullPivLu();
     }
@@ -141,5 +142,5 @@
       return Eigen::JacobiSVD<Eigen:: ## TYPE>(*$self, Eigen::ComputeFullU | Eigen::ComputeFullV);
     }
   }
-  
 %enddef
+

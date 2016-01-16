@@ -38,6 +38,7 @@ namespace RubyEigen {
   */
   typedef RubyEigen::Matrix<RubyEigen::MatrixXd::Scalar, RubyEigen::Dynamic, 1> VectorXd;
   typedef RubyEigen::Matrix<RubyEigen::MatrixXcd::Scalar, RubyEigen::Dynamic, 1> VectorXcd;
+  typedef RubyEigen::Matrix<RubyEigen::MatrixXi::Scalar, RubyEigen::Dynamic, 1> VectorXi;
 
   typedef RubyEigen::Block<RubyEigen::MatrixXd> MatrixDoubleRef;
 
@@ -73,88 +74,14 @@ namespace RubyEigen {
 %template(StdVectorDouble__) std::vector<double>;
 %template(StdVectorComplex__) std::vector< std::complex<double> >;
 
+%include "matrix_double.i"
+%include "matrix_complex.i"
+
 namespace RubyEigen {
 
-%rename(MatrixDouble) MatrixXd; 
-%rename(MatrixComplex) MatrixXcd;
+%rename(VectorInt) VectorXi;
 %rename(VectorDouble) VectorXd;
 %rename(VectorComplex) VectorXcd;
-
-%alias MatrixXd::operator== "__eq__";
-%alias MatrixXcd::operator== "__eq__";
-
-class MatrixXd {
-public:
-  MatrixXd(int, int);
-  ~MatrixXd();
-
-  /* real matrix only */
-  MatrixXd cwiseAbs();
-  MatrixXd cwiseAbs2();
-
-  MatrixXd cwiseMax(MatrixXd &m);
-  MatrixXd cwiseMax(double);
-  MatrixXd cwiseMin(MatrixXd &m);
-  MatrixXd cwiseMin(double);
-
-  double maxCoeff();
-  double minCoeff();
-
-  Eigen::ArrayXXd array();
-
-  RubyEigen::MatrixXd real();
-
-  DENSE_MATRIX_VECTOR_Common_Methods(MatrixXd, VectorXd, double)
-  DENSE_MATRIX_Common_Methods(MatrixXd, VectorXd, double)
-
-  %extend {
-    RubyEigen::Block< RubyEigen::MatrixXd > __ref__(int i, int j, int rows, int cols) {
-      return (*$self).block(i, j, rows, cols);
-    }
-  }
-
-}; /* end class MatrixXd */
-
-class MatrixDoubleRef {
-public:
-  MatrixDoubleRef(RubyEigen::MatrixXd&, int, int, int, int);
-  ~MatrixDoubleRef();
-
-  /* real matrix only */
-  MatrixXd cwiseAbs();
-  MatrixXd cwiseAbs2();
-
-  MatrixXd cwiseMax(MatrixXd &m);
-  MatrixXd cwiseMax(double);
-  MatrixXd cwiseMin(MatrixXd &m);
-  MatrixXd cwiseMin(double);
-
-  double maxCoeff();
-  double minCoeff();
-
-  Eigen::ArrayXXd array();
-
-  RubyEigen::MatrixXd real();
-
-  DENSE_MATRIX_VECTOR_Common_Methods(MatrixXd, VectorXd, double)
-  DENSE_MATRIX_Common_Methods(MatrixXd, VectorXd, double)
-};
-
-
-class MatrixXcd {
-public:
-  MatrixXcd(int, int);
-  ~MatrixXcd();
-
-  /* complex matrix only */
-  RubyEigen::MatrixXd imag();
-
-  RubyEigen::MatrixXd real();
-
-  DENSE_MATRIX_VECTOR_Common_Methods(MatrixXcd, VectorXcd, std::complex<double>)
-  DENSE_MATRIX_Common_Methods(MatrixXcd, VectorXcd, std::complex<double>)
-
-};
 
 class VectorXd {
 public:
@@ -200,121 +127,9 @@ public:
   }
 };
 
-
-%alias FullPivLU::permutationP "p";
-%alias FullPivLU::permutationQ "q";
-
-template<class T>
-class FullPivLU {
-public:
-  FullPivLU();
-  ~FullPivLU();
-
-  T permutationP();
-  T permutationQ();
-
-  T solve(T &b);
-
-  %extend {
-
-    T u() {
-      return (*$self).matrixLU().triangularView<Eigen::Upper>();
-    }
-
-    T l() {
-      return (*$self).matrixLU().triangularView<Eigen::UnitLower>();
-    }
-  }
-};
-
-
-%template(FullPivLUDouble) RubyEigen::FullPivLU<RubyEigen::MatrixXd>;
-%template(FullPivLUComplex) RubyEigen::FullPivLU<RubyEigen::MatrixXcd>;
-
-template<class T>
-class PartialPivLU {
-public:
-  PartialPivLU();
-  ~PartialPivLU();
-};
-
-%template(PartialPivLUDouble) RubyEigen::PartialPivLU<RubyEigen::MatrixXd>;
-%template(PartialPivLUComplex) RubyEigen::PartialPivLU<RubyEigen::MatrixXcd>;
-
-
-%alias FullPivHouseholderQR::matrixQ "q";
-%alias FullPivHouseholderQR::colsPermutation "p";
-
-template<class T>
-class FullPivHouseholderQR {
-public:
-  FullPivHouseholderQR();
-  ~FullPivHouseholderQR();
-
-  T colsPermutation();
-  T matrixQ();
-
-  %extend {
-
-    T r() {
-      return (*$self).matrixQR().triangularView<Eigen::Upper>();
-    }
-
-  }
-};
-
-%template(FullPivHouseholderQRDouble) RubyEigen::FullPivHouseholderQR<RubyEigen::MatrixXd>;
-%template(FullPivHouseholderQRComplex) RubyEigen::FullPivHouseholderQR<RubyEigen::MatrixXcd>;
-
-
-template<class T>
-class JacobiSVD {
-public:
-  JacobiSVD();
-  ~JacobiSVD();
-
-  T matrixU();
-  T matrixV();
-
-  VectorXd singularValues();
-
-  T solve(VectorXd& m);
-};
-
-%template(JacobiSVDDouble) RubyEigen::JacobiSVD<RubyEigen::MatrixXd>;
-%template(JacobiSVDComplex) RubyEigen::JacobiSVD<RubyEigen::MatrixXcd>;
-
-
-template<class T>
-class LDLT {
-public:
-  LDLT();
-  ~LDLT();
-
-  T matrixL();
-  RubyEigen::Matrix<T::Scalar, RubyEigen::Dynamic, 1> vectorD();
-
-};
-
-%template(LDLTDouble) RubyEigen::LDLT<RubyEigen::MatrixXd>;
-%template(LDLTComplex) RubyEigen::LDLT<RubyEigen::MatrixXcd>;
-
-
-template<class T>
-class LLT {
-public:
-  LLT();
-  ~LLT();
-
-  T matrixL();
-
-};
-
-%template(LLTDouble) RubyEigen::LLT<RubyEigen::MatrixXd>;
-%template(LLTComplex) RubyEigen::LLT<RubyEigen::MatrixXcd>;
-
-%include "array.i"
-
+  // %include "array.i"
 
 }; /* end of namespace ruby_eigen */
+
+%include "decomposition.i"
 
