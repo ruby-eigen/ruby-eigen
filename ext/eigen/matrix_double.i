@@ -21,7 +21,7 @@ public:
   double maxCoeff();
   double minCoeff();
 
-  Eigen::ArrayXXd array();
+  RubyEigen::ArrayXXd array();
 
   RubyEigen::MatrixXd real();
 

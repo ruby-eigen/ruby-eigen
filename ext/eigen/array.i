@@ -133,6 +133,9 @@ public:
   }
 };
 
+%rename("__and__") MatrixBoolCWise::operator&&;
+%rename("__or__") MatrixBoolCWise::operator||;
+
 class MatrixBoolCWise {
 public:
   MatrixBoolCWise(int,int);
@@ -140,11 +143,50 @@ public:
   bool all();
   bool any();
 
-  MatrixBoolCWise operator+(const MatrixBoolCWise&);
+  MatrixBoolCWise operator&&(const MatrixBoolCWise&);
+  MatrixBoolCWise operator||(const MatrixBoolCWise&);
+  MatrixBoolCWise operator-();
 
   %extend{
-    MatrixXd select(MatrixXd &a, MatrixXd &b) {
+    RubyEigen::ArrayXXd select(MatrixXd &a, MatrixXd &b) {
       return (*$self).select(a, b);
+    }
+
+    bool __getitem__(int i, int j) {
+      return (*$self)(i,j);
+    }
+
+    void __setitem__(int i, int j, bool c) {
+      (*$self)(i,j) = c;
+    }
+
+  }
+};
+
+%rename("__and__") VectorBoolCWise::operator&&;
+%rename("__or__") VectorBoolCWise::operator||;
+
+class VectorBoolCWise {
+public:
+  VectorBoolCWise(int,int);
+  ~VectorBoolCWise();
+  bool all();
+  bool any();
+
+  VectorBoolCWise operator&&(const VectorBoolCWise&);
+  VectorBoolCWise operator||(const VectorBoolCWise&);
+
+  %extend{
+    RubyEigen::ArrayXd select(VectorXd &a, VectorXd &b) {
+      return (*$self).select(a, b);
+    }
+
+    bool __getitem__(int i) {
+      return (*$self)(i);
+    }
+
+    void __setitem__(int i, bool c) {
+      (*$self)(i) = c;
     }
   }
 };
