@@ -140,6 +140,23 @@ class TestEigen < Test::Unit::TestCase
                  m1)   
   end
 
+  def test_select
+    m0 = MatrixDouble.new(3,3)
+    m0.setZero
+    m0[0,0] = 1
+    m2 = MatrixDouble.new(3,3)
+    m2.setConstant(2)
+    m = MatrixDouble.new(3,3)
+    m.setOnes
+    assert_equal( MatrixDouble[[2,0,0],[0,0,0],[0,0,0]],
+                  (m.cwiseEqual(m0)).select(m2, m0))
+    m1a = m.array
+    m0a = m0.array
+    tmp = (m0a >= m1a).select(m2, m0).matrix
+    assert_equal( MatrixDouble[[2,0,0],[0,0,0],[0,0,0]],
+                  tmp)
+  end
+
   def test_matrix_stack
     m1 = MatrixDouble.new(3,3)
     m1.setOnes
