@@ -47,8 +47,8 @@ namespace RubyEigen {
 
   typedef Matrix<bool, Dynamic, Dynamic> MatrixBool;
   typedef Matrix<bool, Dynamic, 1> VectorBool;
-  typedef Array<bool, Dynamic, Dynamic> ArrayBool;
-  typedef Array<bool, Dynamic, 1> VecBoolCWise;
+  typedef Array<bool, Dynamic, Dynamic> MatrixBoolCWise;
+  typedef Array<bool, Dynamic, 1> VectorBoolCWise;
 
 };
 
@@ -130,7 +130,7 @@ public:
   }
 };
 
-  // %include "array.i"
+%include "array.i"
 
 }; /* end of namespace ruby_eigen */
 

@@ -1,7 +1,7 @@
 %define DENSE_MATRIX_Methods(TYPE, V_TYPE, s_type)
 
   RubyEigen:: ## V_TYPE col(int);
-  RubyEigen:: ## V_TYPE row(int);
+  TYPE row(int);
 
   int cols();
   int rows();
