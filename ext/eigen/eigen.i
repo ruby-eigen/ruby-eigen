@@ -47,8 +47,8 @@ namespace RubyEigen {
 
   typedef Matrix<bool, Dynamic, Dynamic> MatrixBool;
   typedef Matrix<bool, Dynamic, 1> VectorBool;
-  typedef Array<bool, Dynamic, Dynamic> MatrixBoolCWise;
-  typedef Array<bool, Dynamic, 1> VectorBoolCWise;
+  typedef Array<bool, Dynamic, Dynamic> CMatrixBool;
+  typedef Array<bool, Dynamic, 1> CVectorBool;
 
 };
 
@@ -121,9 +121,10 @@ public:
 
   bool all();
   bool any();
-  bool count();
+  int count();
 
   %extend{
+
     MatrixXd select(const MatrixXd &a, const MatrixXd &b) {
       return (*$self).select(a, b);
     }

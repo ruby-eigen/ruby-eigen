@@ -1,7 +1,7 @@
-%rename(MatrixDoubleCWise) ArrayXXd;
-%rename(VectorDoubleCWise) ArrayXd;
-%rename(MatrixComplexCWise) ArrayXXcd;
-%rename(MatrixComplexCWise) ArrayXcd;
+%rename(CMatrixDouble) ArrayXXd;
+%rename(CVectorDouble) ArrayXd;
+%rename(CMatrixComplex) ArrayXXcd;
+%rename(CVectorComplex) ArrayXcd;
 
 %define DENSE_ARRAY_Real_Methods(TYPE, s_type, boolklass)
 
@@ -78,8 +78,8 @@ public:
 
   RubyEigen::MatrixXd matrix();
 
-  DENSE_ARRAY_Real_Methods(ArrayXXd, double, RubyEigen::MatrixBoolCWise)
-  DENSE_ARRAY_Methods(ArrayXXd, ArrayXXd, double, RubyEigen::MatrixBoolCWise)
+  DENSE_ARRAY_Real_Methods(ArrayXXd, double, RubyEigen::CMatrixBool)
+  DENSE_ARRAY_Methods(ArrayXXd, ArrayXXd, double, RubyEigen::CMatrixBool)
   %extend {
     double __getitem__(int i, int j) {
       return (*$self)(i, j);
@@ -98,8 +98,8 @@ public:
 
   RubyEigen::VectorXd matrix();
 
-  DENSE_ARRAY_Real_Methods(ArrayXd, double, VectorBoolCWise)
-  DENSE_ARRAY_Methods(ArrayXd, ArrayXd, double, VectorBoolCWise)
+  DENSE_ARRAY_Real_Methods(ArrayXd, double, CVectorBool)
+  DENSE_ARRAY_Methods(ArrayXd, ArrayXd, double, CVectorBool)
 
   %extend {
     double __getitem__(int i) {
@@ -119,7 +119,7 @@ public:
 
   RubyEigen::MatrixXcd matrix();
 
-  DENSE_ARRAY_Methods(ArrayXXcd, ArrayXXd, std::complex<double>, MatrixBoolCWise)
+  DENSE_ARRAY_Methods(ArrayXXcd, ArrayXXd, std::complex<double>, CMatrixBool)
 
   %extend {
     std::complex<double> __getitem__(int i, int j) {
@@ -133,19 +133,19 @@ public:
   }
 };
 
-%rename("__and__") MatrixBoolCWise::operator&&;
-%rename("__or__") MatrixBoolCWise::operator||;
+%rename("__and__") CMatrixBool::operator&&;
+%rename("__or__") CMatrixBool::operator||;
 
-class MatrixBoolCWise {
+class CMatrixBool {
 public:
-  MatrixBoolCWise(int,int);
-  ~MatrixBoolCWise();
+  CMatrixBool(int,int);
+  ~CMatrixBool();
   bool all();
   bool any();
+  int count();
 
-  MatrixBoolCWise operator&&(const MatrixBoolCWise&);
-  MatrixBoolCWise operator||(const MatrixBoolCWise&);
-  MatrixBoolCWise operator-();
+  CMatrixBool operator&&(const CMatrixBool&);
+  CMatrixBool operator||(const CMatrixBool&);
 
   %extend{
     RubyEigen::ArrayXXd select(MatrixXd &a, MatrixXd &b) {
@@ -163,18 +163,19 @@ public:
   }
 };
 
-%rename("__and__") VectorBoolCWise::operator&&;
-%rename("__or__") VectorBoolCWise::operator||;
+%rename("__and__") CVectorBool::operator&&;
+%rename("__or__") CVectorBool::operator||;
 
-class VectorBoolCWise {
+class CVectorBool {
 public:
-  VectorBoolCWise(int,int);
-  ~VectorBoolCWise();
+  CVectorBool(int,int);
+  ~CVectorBool();
   bool all();
   bool any();
+  int count();
 
-  VectorBoolCWise operator&&(const VectorBoolCWise&);
-  VectorBoolCWise operator||(const VectorBoolCWise&);
+  CVectorBool operator&&(const CVectorBool&);
+  CVectorBool operator||(const CVectorBool&);
 
   %extend{
     RubyEigen::ArrayXd select(VectorXd &a, VectorXd &b) {

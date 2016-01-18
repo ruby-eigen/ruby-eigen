@@ -3,6 +3,7 @@ namespace RubyEigen {
 %rename(MatrixDouble) MatrixXd; 
 
 %alias MatrixXd::operator== "__eq__";
+%alias MatrixXd::array "cmatrix,cm";
 
 class MatrixXd {
 public:
