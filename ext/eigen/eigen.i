@@ -2,9 +2,11 @@
 
 /* load macro */
 %include "rb_error_handle.i"
+
 %include "dense/common_methods.i"
 %include "dense/matrix_methods.i"
 %include "dense/vector_methods.i"
+%include "sparse/matrix_methods.i"
 
 %include std_string.i
 %include std_vector.i
@@ -19,6 +21,12 @@
 #include <Eigen/QR>
 #include <Eigen/SVD>
 #include <Eigen/Cholesky>
+#include <Eigen/SparseCore>
+#include <Eigen/SparseCholesky>
+#include <Eigen/SparseLU>
+#include <Eigen/SparseQR>
+#include <Eigen/IterativeLinearSolvers>
+#include <Eigen/Sparse>
 
 %}
 
@@ -48,6 +56,8 @@ namespace RubyEigen {
   typedef Array<bool, Dynamic, Dynamic> CMatrixBool;
   typedef Array<bool, Dynamic, 1> CVectorBool;
 
+  typedef SparseMatrix<double> SpMatrixDouble;
+  typedef SparseMatrix<double>::InnerIterator SpMatrixDoubleIter;
 };
 
 %} /* inline end */
@@ -77,6 +87,7 @@ namespace RubyEigen {
 
 %include "dense/matrix_double.i"
 %include "dense/matrix_complex.i"
+%include "sparse/matrix_double.i"
 
 namespace RubyEigen {
 
@@ -126,6 +137,7 @@ public:
     MatrixXd select(const MatrixXd &a, const MatrixXd &b) {
       return (*$self).select(a, b);
     }
+
   }
 };
 
@@ -134,4 +146,3 @@ public:
 }; /* end of namespace ruby_eigen */
 
 %include "dense/decomposition.i"
-
