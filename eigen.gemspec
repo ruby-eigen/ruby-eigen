@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
                    "ext/eigen/eigen_wrap.cxx"] + Dir.glob("ext/eigen/eigen3/**/*")
   s.extensions  = ["ext/eigen/extconf.rb"]
   s.homepage    = 'https://github.com/ruby-eigen/ruby-eigen'
-  s.license     = 'MIT'
+  s.license     = 'LGPL'
   s.add_runtime_dependency 'rake-compiler', '~> 0.9.5'
   s.rdoc_options << "--exclude=."
   s.required_ruby_version = '>= 2.2.0'

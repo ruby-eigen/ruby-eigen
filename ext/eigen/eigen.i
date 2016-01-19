@@ -12,8 +12,6 @@
 
 %{
 
-#define EIGEN_MPL2_ONLY 1
-
 #include <strstream>
 #include <Eigen/Core>
 #include <Eigen/LU>
