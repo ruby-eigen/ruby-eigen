@@ -10,5 +10,8 @@ Rake::TestTask.new do |t|
   t.libs << 'test'
 end
 
+CLEAN.delete_if{|s| /Eigen.Core/ =~ s}
+
 desc "Run tests"
 task :default => :test
+
