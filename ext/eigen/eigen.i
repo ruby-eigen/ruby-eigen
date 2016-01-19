@@ -2,9 +2,9 @@
 
 /* load macro */
 %include "rb_error_handle.i"
-%include "dense_matrix_vector_methods.i"
-%include "dense_matrix_methods.i"
-%include "dense_vector_methods.i"
+%include "dense/common_methods.i"
+%include "dense/matrix_methods.i"
+%include "dense/vector_methods.i"
 
 %include std_string.i
 %include std_vector.i
@@ -77,8 +77,8 @@ namespace RubyEigen {
 %template(StdVectorDouble__) std::vector<double>;
 %template(StdVectorComplex__) std::vector< std::complex<double> >;
 
-%include "matrix_double.i"
-%include "matrix_complex.i"
+%include "dense/matrix_double.i"
+%include "dense/matrix_complex.i"
 
 namespace RubyEigen {
 
@@ -135,5 +135,5 @@ public:
 
 }; /* end of namespace ruby_eigen */
 
-%include "decomposition.i"
+%include "dense/decomposition.i"
 
