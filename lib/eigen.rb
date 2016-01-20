@@ -168,3 +168,32 @@ class Eigen::VectorComplex
   extend  Eigen::VectorConstructor
   include Eigen::VectorCommon
 end
+
+module Eigen::SpMatrixCommon
+
+  def setFromTriplet(arry)
+    arry0 = arry.sort{|a, b|
+      ret = a[1] <=> b[1]
+      ret == 0 ? a[0] <=> b[0] : ret
+    }
+    each_col_size = Array.new(cols(), 0)
+    arry0.slice_when{|a, b| a[1] != b[1] }.each{|e|
+      each_col_size[ e[0][1] ] = e.size
+    }
+    reserve( each_col_size )
+    arry0.each{|e|
+      __insert__(e[0], e[1], e[2])
+    }
+  end
+
+  def reserve( arry )
+    raise Eigen::EigenRuntimeError unless arry.size == cols()
+    __reserve__( arry )
+  end
+
+end
+
+
+class Eigen::SpMatrixDouble
+  include Eigen::SpMatrixCommon
+end

@@ -9,7 +9,14 @@
   double squaredNorm();
   double blueNorm();
 
+%rename(__reserve__) reserve;
+  void reserve(int);
+  void reserve( std::vector<int> );
+
+  void makeCompressed();
   bool isCompressed();
+
+  void prune(double);
 
   void setIdentity();
   void setZero();
@@ -32,11 +39,28 @@
   TYPE transpose();
   TYPE adjoint();
 
+%alias coeff "[]";
+
+  s_type coeff(int, int);
+
   %extend {
 
-    s_type __get_item__(int i, int j) {
-      return (*$self).coeff(i, j);
+    void __setitem__(int i, int j, s_type val) {
+      (*$self).coeffRef(i, j) = val;
     }
 
+    void __insert__(int i, int j, s_type val) {
+      (*$self).insert(i,j) = val;
+    }
+
+    std::vector< int > innerIndices(){
+      std::vector< int > v((*$self).innerIndexPtr(), (*$self).innerIndexPtr() + (*$self).nonZeros());
+      return v;
+    }
+
+    std::vector< int > outerIndices(){
+      std::vector< int > v((*$self).outerIndexPtr(), (*$self).outerIndexPtr() + (*$self).outerSize()+1);
+      return v;
+    }
   }
 %enddef

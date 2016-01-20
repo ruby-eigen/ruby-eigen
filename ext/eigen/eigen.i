@@ -58,6 +58,7 @@ namespace RubyEigen {
 
   typedef SparseMatrix<double> SpMatrixDouble;
   typedef SparseMatrix<double>::InnerIterator SpMatrixDoubleIter;
+
 };
 
 %} /* inline end */
@@ -82,6 +83,7 @@ namespace RubyEigen {
 };
 %}
 
+%template(StdVectorInt__) std::vector<int>;
 %template(StdVectorDouble__) std::vector<double>;
 %template(StdVectorComplex__) std::vector< std::complex<double> >;
 

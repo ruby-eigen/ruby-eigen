@@ -190,4 +190,19 @@ class TestEigen < Test::Unit::TestCase
     assert_nothing_raised{ VectorDouble[1, 2, 3] }
   end
 
+  def test_spmatrix
+    m = SpMatrixDouble.new(5,5)
+    a = [[0,1,3], [1,0,22], [1,4,17], [2,0,7], [2,1,5], [2,3,1], [4,2,14], [4,4,8]]
+    m.setFromTriplet(a)
+
+    assert_equal(a.size, m.nonZeros)
+
+    assert_equal([1, 2, 0, 2, 4, 2, 1, 4],
+                 m.innerIndices)
+
+    assert_equal([0,2,4,5,6,8], m.outerIndices)
+
+    assert_raise(EigenRuntimeError){ m.reserve( [1,2] ) }
+  end
+
 end
