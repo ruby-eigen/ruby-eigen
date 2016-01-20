@@ -203,6 +203,19 @@ class TestEigen < Test::Unit::TestCase
     assert_equal([0,2,4,5,6,8], m.outerIndices)
 
     assert_raise(EigenRuntimeError){ m.reserve( [1,2] ) }
+
+    assert_equal([22,7,3,5,14,1,17,8],
+                 m.values)
+
+    it = Eigen::SpMatrixDoubleIter.new(m, 0)
+    assert_equal(22, it.value)
+    assert_equal(7, it.next)
+    assert_equal(7, it.value)
+    assert_equal(2, it.index)
+    assert (not it.end?)
+
+    m = SpMatrixDouble.new(5,5)
+    assert_nothing_raised{ m.reserve(7) }
   end
 
 end

@@ -15,6 +15,7 @@
 
   void makeCompressed();
   bool isCompressed();
+  void uncompress();
 
   void prune(double);
 
@@ -60,6 +61,11 @@
 
     std::vector< int > outerIndices(){
       std::vector< int > v((*$self).outerIndexPtr(), (*$self).outerIndexPtr() + (*$self).outerSize()+1);
+      return v;
+    }
+
+    std::vector< s_type > values(){
+      std::vector< s_type > v((*$self).valuePtr(), (*$self).valuePtr() + (*$self).nonZeros());
       return v;
     }
   }

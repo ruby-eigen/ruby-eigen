@@ -18,9 +18,41 @@ SPARSE_MATRIX_Methods(SpMatrixDouble,  double)
 
 class SpMatrixDoubleIter {
 public:
-  SpMatrixDoubleIter(RubyEigen::SpMatrixDouble, int);
+  SpMatrixDoubleIter(RubyEigen::SpMatrixDouble&, int);
   ~SpMatrixDoubleIter();
   
+  double value();
+  int row();
+  int col();
+  int index();
+  int outer();
+
+%rename("end?") end;
+
+  %extend {
+
+    double next() {
+      if (*$self){
+        ++(*$self);
+        return (*$self).value();
+      }else{
+        return 0;
+      }
+    }
+
+    bool end(){
+      if (*$self) {
+        return false;
+      }else{
+        return true;
+      }
+    }
+
+    void set(double i) {
+      (*$self).valueRef() = i;
+    }
+
+  }
 };
 
 };
