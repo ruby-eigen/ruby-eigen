@@ -184,6 +184,8 @@ class TestEigen < Test::Unit::TestCase
     assert_equal(MatrixComplex.block_diagonal([[1i,1],[1,1]],1+1i),
                  MatrixComplex[ [1i,1,0], [1,1,0], [0,0,1+1i] ])
 
+    assert_raise(EigenRuntimeError){ MatrixDouble.hstack(m1, m3) }
+    assert_raise(EigenRuntimeError){ MatrixDouble.vstack(m1, m3) }
   end
 
   def test_vector01

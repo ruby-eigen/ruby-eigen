@@ -16,6 +16,7 @@ module Eigen::MatrixConstructor
     ret = new(row_size, col_size)
     col_ind = 0
     ms.each{|m|
+      raise Eigen::EigenRuntimeError, "row sizes are different" unless row_size == m.rows
       ret[0,col_ind] = m
       col_ind += m.cols
     }
@@ -28,6 +29,7 @@ module Eigen::MatrixConstructor
     ret = new(row_size, col_size)
     row_ind = 0
     ms.each{|m|
+      raise Eigen::EigenRuntimeError, "col sizes are different" unless col_size == m.cols
       ret[row_ind,0] = m
       row_ind += m.rows
     }
