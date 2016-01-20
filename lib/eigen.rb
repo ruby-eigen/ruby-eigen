@@ -199,4 +199,5 @@ end
 
 class Eigen::SpMatrixDouble
   include Eigen::SpMatrixCommon
+  private "__reserve__", "__insert__"
 end
