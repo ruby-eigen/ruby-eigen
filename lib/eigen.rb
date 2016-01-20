@@ -186,9 +186,12 @@ module Eigen::SpMatrixCommon
     }
   end
 
-  def reserve( arry )
-    raise Eigen::EigenRuntimeError unless arry.size == cols()
-    __reserve__( arry )
+  def reserve( arg )
+    if arg.respond_to?(:to_int)
+      return __reserve__( arg )
+    end
+    raise Eigen::EigenRuntimeError unless arg.size == cols()
+    __reserve__( arg )
   end
 
 end
