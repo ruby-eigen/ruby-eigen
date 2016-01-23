@@ -32,7 +32,7 @@ the Free Software Foundation, either version 3 of the License, or
 Because Eigen includes some routines licensed under the LGPL and we plan to enable these features,
 we have chosen the LGPL.
 
-This package includes the source of Eigen itself. See COPING.* files in ext/eigen/eigen3/ for
+This package includes the source of Eigen itself. See COPYING.* files in ext/eigen/eigen3/ for
 the license of Eigen. See also http://eigen.tuxfamily.org/index.php?title=Main_Page#License
 
 ## Classes
