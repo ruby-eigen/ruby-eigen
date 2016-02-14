@@ -42,6 +42,9 @@
   TYPE pow(s_type);
   //  TYPE inverse();
 
+  s_type sum();
+  s_type prod();
+
   /* element wise compare */
   boolklass operator==(const TYPE&);
 
