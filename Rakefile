@@ -2,16 +2,29 @@ require "rake/extensiontask"
 require 'rake/testtask'
 require 'rake/clean'
 
-Rake::ExtensionTask.new "eigen" do |ext|
-  ext.lib_dir = "lib/eigen"
+
+elibs = ["eigen"]
+
+elibs.each{|s|
+  Rake::ExtensionTask.new s do |ext|
+    ext.lib_dir = "lib/#{s}"
+  end
+}
+
+namespace :swg do
+  elibs.each{|f|
+    task f do
+      sh "swig -c++ -ruby -Wall ext/#{f}/#{f}.i"
+    end
+  }
 end
 
 Rake::TestTask.new do |t|
   t.libs << 'test'
 end
-
-CLEAN.delete_if{|s| /Eigen.Core/ =~ s}
-
 desc "Run tests"
-task :default => :test
+
+task :swig => elibs.map{|f| "swg:#{f}" }
+task :default => [:test]
+task :build => [:swig, :compile]
 
