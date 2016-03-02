@@ -89,7 +89,7 @@ namespace RubyEigen {
 
 %include "dense/matrix_double.i"
 %include "dense/matrix_complex.i"
-%include "sparse/matrix_double.i"
+%include "sparse/matrix_real.i"
 
 namespace RubyEigen {
 
