@@ -17,7 +17,7 @@
   bool isCompressed();
   void uncompress();
 
-  void prune(double);
+  void prune(s_type);
 
   void setIdentity();
   void setZero();

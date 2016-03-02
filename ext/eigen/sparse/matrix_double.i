@@ -1,20 +1,23 @@
 namespace RubyEigen {
 
-class SpMatrixDouble {
+template<typename T>
+class SparseMatrix {
 public:
-  SpMatrixDouble(int, int);
-  ~SpMatrixDouble();
+  SparseMatrix(size_t, size_t);
+  ~SparseMatrix();
 
   /* real matrix only */
-  SpMatrixDouble cwiseAbs();
-  SpMatrixDouble cwiseAbs2();
+  SparseMatrix<T> cwiseAbs();
+  SparseMatrix<T> cwiseAbs2();
 
-  SpMatrixDouble cwiseMax(SpMatrixDouble &m);
-  SpMatrixDouble cwiseMin(SpMatrixDouble &m);
+  SparseMatrix<T> cwiseMax(const SparseMatrix<T> &m);
+  SparseMatrix<T> cwiseMin(const SparseMatrix<T> &m);
 
-SPARSE_MATRIX_Methods(SpMatrixDouble,  double)
+  SPARSE_MATRIX_Methods(SparseMatrix<T>,  T)
 
 };
+%template(SpMatrixFloat) SparseMatrix<float>;
+%template(SpMatrixDouble) SparseMatrix<double>;
 
 class SpMatrixDoubleIter {
 public:
