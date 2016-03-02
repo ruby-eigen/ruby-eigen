@@ -92,6 +92,7 @@ namespace RubyEigen {
 %include "dense/matrix_double.i"
 %include "dense/matrix_complex.i"
 %include "sparse/matrix_real.i"
+%include "sparse/solver.i"
 
 namespace RubyEigen {
 

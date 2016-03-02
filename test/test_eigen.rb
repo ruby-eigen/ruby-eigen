@@ -188,6 +188,13 @@ class TestEigen < Test::Unit::TestCase
     assert_raise(EigenRuntimeError){ MatrixDouble.vstack(m1, m3) }
   end
 
+  def test_solve
+    m = MatrixDouble[ [1,0], [1, 2] ]
+    solver = m.fullPivLu()
+    solver.solve(MatrixDouble[ [1], [1] ])
+    solver.solve(VectorDouble[1, 1])
+  end
+
   def test_vector01
     assert_nothing_raised{ VectorDouble[1, 2, 3] }
   end

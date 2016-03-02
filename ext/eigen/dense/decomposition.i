@@ -12,7 +12,8 @@ public:
   T permutationP();
   T permutationQ();
 
-  T solve(T &b);
+  T solve(const T &b);
+  RubyEigen::Matrix<T::Scalar, RubyEigen::Dynamic, 1> solve(const RubyEigen::Matrix<T::Scalar, RubyEigen::Dynamic, 1>&);
 
   %extend {
 
@@ -53,6 +54,9 @@ public:
   T colsPermutation();
   T matrixQ();
 
+  T solve(const T &b);
+  RubyEigen::Matrix<T::Scalar, RubyEigen::Dynamic, 1> solve(const RubyEigen::Matrix<T::Scalar, RubyEigen::Dynamic, 1>&);
+
   %extend {
 
     T r() {
@@ -77,7 +81,9 @@ public:
 
   VectorXd singularValues();
 
-  T solve(VectorXd& m);
+  T solve(const T&);
+  RubyEigen::Matrix<T::Scalar, RubyEigen::Dynamic, 1> solve(const RubyEigen::Matrix<T::Scalar, RubyEigen::Dynamic, 1>&);
+
 };
 
 %template(JacobiSVDDouble) RubyEigen::JacobiSVD<RubyEigen::MatrixXd>;
