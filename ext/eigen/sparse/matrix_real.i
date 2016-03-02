@@ -21,9 +21,9 @@ public:
 
 class SpMatrixDoubleIter {
 public:
-  SpMatrixDoubleIter(RubyEigen::SpMatrixDouble&, int);
+  SpMatrixDoubleIter(RubyEigen::SpMatrixDouble&, size_t);
   ~SpMatrixDoubleIter();
-  
+
   double value();
   int row();
   int col();
@@ -51,8 +51,47 @@ public:
       }
     }
 
-    void set(double i) {
-      (*$self).valueRef() = i;
+    void set(double x) {
+      (*$self).valueRef() = x;
+    }
+
+  }
+};
+
+class SpMatrixFloatIter {
+public:
+  SpMatrixFloatIter(RubyEigen::SpMatrixFloat&, size_t);
+  ~SpMatrixFloatIter();
+
+  float value();
+  int row();
+  int col();
+  int index();
+  int outer();
+
+%rename("end?") end;
+
+  %extend {
+
+    float next() {
+      if (*$self){
+        ++(*$self);
+        return (*$self).value();
+      }else{
+        return 0;
+      }
+    }
+
+    bool end(){
+      if (*$self) {
+        return false;
+      }else{
+        return true;
+      }
+    }
+
+    void set(float x) {
+      (*$self).valueRef() = x;
     }
 
   }

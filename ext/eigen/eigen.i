@@ -57,7 +57,9 @@ namespace RubyEigen {
   typedef Array<bool, Dynamic, 1> CVectorBool;
 
   typedef SparseMatrix<double> SpMatrixDouble;
+  typedef SparseMatrix<float>  SpMatrixFloat;
   typedef SparseMatrix<double>::InnerIterator SpMatrixDoubleIter;
+  typedef SparseMatrix<float>::InnerIterator  SpMatrixFloatIter;
 
 };
 
