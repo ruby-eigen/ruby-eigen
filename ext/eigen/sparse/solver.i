@@ -10,13 +10,13 @@ public:
   void compute(const T&);
   T matrixL();
   T matrixU();
-  RubyEigen::Matrix<T::Scalar, RubyEigen::Dynamic, RubyEigen::Dynamic> permutationP();
-  //  T permutationPinv();
+  RubyEigen::PermutationMatrix permutationP();
+  RubyEigen::PermutationMatrix permutationPinv();
 
   T solve(const T&);
   RubyEigen::Matrix<T::Scalar, RubyEigen::Dynamic, 1> solve(const RubyEigen::Matrix<T::Scalar, RubyEigen::Dynamic, 1>&);
 
-  //  RubyEigen::Matrix<T::Scalar, RubyEigen::Dynamic, 1> vectorD();
+  RubyEigen::Matrix<T::Scalar, RubyEigen::Dynamic, 1> vectorD();
 
 };
 
@@ -30,6 +30,13 @@ public:
   ~ConjugateGradient();
 
   void compute(const T&);
+  void setTolerance (const double&);
+  double tolerance();
+  void setMaxIterations(int);
+  int maxIterations();
+
+  double error();
+  int iterations();
 
   T solve(const T &b);
   RubyEigen::Matrix<T::Scalar, RubyEigen::Dynamic, 1> solve(const RubyEigen::Matrix<T::Scalar, RubyEigen::Dynamic, 1>&);
@@ -46,6 +53,13 @@ public:
   ~BiCGSTAB();
 
   void compute(const T&);
+  void setTolerance (const double&);
+  double tolerance();
+  void setMaxIterations(int);
+  int maxIterations();
+
+  double error();
+  int iterations();
 
   T solve(const T &b);
   RubyEigen::Matrix<T::Scalar, RubyEigen::Dynamic, 1> solve(const RubyEigen::Matrix<T::Scalar, RubyEigen::Dynamic, 1>&);

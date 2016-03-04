@@ -61,8 +61,8 @@ namespace RubyEigen {
   typedef SparseMatrix<double>::InnerIterator SpMatrixDoubleIter;
   typedef SparseMatrix<float>::InnerIterator  SpMatrixFloatIter;
 
-  typedef PermutationMatrix<RubyEigen::Dynamic, RubyEigen::Dynamic, size_t> PermutationMatrix;
-  typedef Matrix<unsigned long, Dynamic, 1> PermutationIndices;
+  typedef PermutationMatrix<RubyEigen::Dynamic, RubyEigen::Dynamic, int> PermutationMatrix;
+  typedef Matrix<int, Dynamic, 1> PermutationIndices;
 
 };
 
