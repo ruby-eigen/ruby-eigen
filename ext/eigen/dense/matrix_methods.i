@@ -81,10 +81,6 @@
       (*$self).topRightCorner(m.rows(), m.cols()) = m;
     }
 
-    TYPE __mul_n__(TYPE &a, TYPE &b, TYPE &c, TYPE &d){
-      return (*$self) * a * b * c * d;
-    }
-
     std::string to_s() {
       std::ostrstream s;
       s << (*$self) << std::ends;

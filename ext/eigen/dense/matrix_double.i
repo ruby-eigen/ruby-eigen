@@ -30,6 +30,8 @@ public:
   DENSE_MATRIX_Methods(MatrixXd, VectorXd, double)
   DENSE_MATRIX_RC_Methods(MatrixXd, VectorXd, double)
 
+  MatrixXd operator*(const RubyEigen::Transpose<MatrixXd>&);
+
   %extend {
     RubyEigen::Block< RubyEigen::MatrixXd > __ref__(int i, int j, int rows, int cols) {
       return (*$self).block(i, j, rows, cols);

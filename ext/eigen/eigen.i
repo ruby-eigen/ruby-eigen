@@ -146,6 +146,17 @@ public:
   }
 };
 
+%nodefaultctor Transpose;
+template<class T>
+class Transpose {
+public:
+
+  T operator*(const T& m);
+
+};
+
+%template(TransposeMatrixDouble) RubyEigen::Transpose<RubyEigen::MatrixXd>;
+
 %include "array.i"
 
 }; /* end of namespace ruby_eigen */
