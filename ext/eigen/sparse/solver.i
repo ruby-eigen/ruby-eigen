@@ -67,4 +67,53 @@ public:
 %template(BiCGSTABDouble)   BiCGSTAB<RubyEigen::MatrixXd>;
 %template(BiCGSTABSpDouble) BiCGSTAB<RubyEigen::SparseMatrix<double> >;
 
+
+class SparseQRDouble {
+public:
+  SparseQRDouble(const RubyEigen::SparseMatrix<double>&);
+  ~SparseQRDouble();
+
+
+  int cols();
+  int rows();
+  int rank();
+
+  std::string lastErrorMessage();
+
+  %extend{
+    RubyEigen::SparseMatrix<double> matrixQ(){
+      RubyEigen::SparseMatrix<double> Q;
+      Q = $self->matrixQ();
+      return Q;
+    }
+
+    RubyEigen::SparseMatrix<double> matrixR(){
+      RubyEigen::SparseMatrix<double> R;
+      R = $self->matrixR();
+      return R;
+    }
+  }
+
+  RubyEigen::SparseMatrix<double> solve(const RubyEigen::SparseMatrix<double>&);
+  RubyEigen::VectorXd solve(const RubyEigen::VectorXd&);
+};
+
+class SparseLUDouble {
+public:
+  SparseLUDouble(const RubyEigen::SparseMatrix<double>&);
+  ~SparseLUDouble();
+
+  RubyEigen::SparseMatrix<double> solve(const RubyEigen::SparseMatrix<double>&);
+  RubyEigen::VectorXd solve(const RubyEigen::VectorXd&);
+};
+
+class SparseLUFloat {
+public:
+  SparseLUFloat(const RubyEigen::SparseMatrix<float>&);
+  ~SparseLUFloat();
+
+  RubyEigen::SparseMatrix<float> solve(const RubyEigen::SparseMatrix<float>&);
+  //  RubyEigen::VectorXd solve(const RubyEigen::VectorXd&);
+};
+
 };
