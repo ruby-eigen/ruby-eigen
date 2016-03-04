@@ -41,8 +41,6 @@ the license of Eigen. See also http://eigen.tuxfamily.org/index.php?title=Main_P
     Eigen::MatrixDoubleRef
     Eigen::MatrixComplex
     Eigen::MatrixComplexRef
-    Eigen::SpMatrixFloat
-    Eigen::SpMatrixDouble
     Eigen::VectorDouble
     Eigen::VectorComplex
     Eigen::MatrixBool
