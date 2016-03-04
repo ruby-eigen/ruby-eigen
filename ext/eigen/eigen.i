@@ -62,6 +62,7 @@ namespace RubyEigen {
   typedef SparseMatrix<float>::InnerIterator  SpMatrixFloatIter;
 
   typedef PermutationMatrix<Dynamic, Dynamic, size_t> PermutationMatrix;
+  typedef Matrix<unsigned long, Dynamic, 1> PermutationIndices;
 
 };
 
@@ -167,6 +168,10 @@ public:
   size_t rows();
   size_t cols();
 
+  int determinant();
+  PermutationMatrix inverse();
+  PermutationMatrix operator*(const PermutationMatrix&);
+
   %extend{
     std::vector<int> indices(){
       std::vector< int > v((*$self).rows());
@@ -176,11 +181,12 @@ public:
       }
       return v;
     }
-  }
 
-  int determinant();
-  PermutationMatrix inverse();
-  PermutationMatrix operator*(const PermutationMatrix&);
+    RubyEigen::MatrixXd toMatrixDouble(){
+      return (*$self);
+    }
+
+  }
 
 };
 
