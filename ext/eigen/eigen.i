@@ -61,6 +61,8 @@ namespace RubyEigen {
   typedef SparseMatrix<double>::InnerIterator SpMatrixDoubleIter;
   typedef SparseMatrix<float>::InnerIterator  SpMatrixFloatIter;
 
+  typedef PermutationMatrix<Dynamic, Dynamic, size_t> PermutationMatrix;
+
 };
 
 %} /* inline end */
@@ -156,6 +158,32 @@ public:
 };
 
 %template(TransposeMatrixDouble) RubyEigen::Transpose<RubyEigen::MatrixXd>;
+
+
+class PermutationMatrix {
+public:
+  PermutationMatrix(size_t);
+
+  size_t rows();
+  size_t cols();
+
+  %extend{
+    std::vector<int> indices(){
+      std::vector< int > v((*$self).rows());
+      RubyEigen::PermutationIndices v0 = (*$self).indices();
+      for(int i=0; i<v.size(); i++){
+        v[i] = v0(i);
+      }
+      return v;
+    }
+  }
+
+  int determinant();
+  PermutationMatrix inverse();
+  PermutationMatrix operator*(const PermutationMatrix&);
+
+};
+
 
 %include "array.i"
 
