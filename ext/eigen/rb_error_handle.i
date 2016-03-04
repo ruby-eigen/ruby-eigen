@@ -33,5 +33,5 @@ static VALUE rb_eEigenRuntimeError;
 
 
 %init %{
-  rb_eEigenRuntimeError = rb_define_class_under(mEigen, "EigenRuntimeError", rb_eStandardError);
+  rb_eEigenRuntimeError = rb_define_class_under(mEigen, "EigenRuntimeError", rb_eRuntimeError);
 %}
