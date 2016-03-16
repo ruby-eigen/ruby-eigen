@@ -44,6 +44,11 @@ namespace RubyEigen {
 %}
 %include "rubyeigen_base.h"
 
+%{
+#include "rubyeigen_algo_base.h"
+%}
+%include "rubyeigen_algo_base.h"
+
 /*
    The following code appears only in .cxx file. The specialization of template classes
    in SWIG context is done by using %template directive.
