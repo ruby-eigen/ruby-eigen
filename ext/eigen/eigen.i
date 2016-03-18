@@ -1,6 +1,10 @@
 %module eigen
 
 /* load macro */
+%{
+#include <stdexcept>
+#include "rubyeigen_except.h"
+%}
 %include "rb_error_handle.i"
 
 %include "dense/common_methods.i"
