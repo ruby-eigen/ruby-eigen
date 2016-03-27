@@ -135,7 +135,7 @@
     }
 
     RubyEigen::JacobiSVD<TYPE> svd() {
-      return Eigen::JacobiSVD<Eigen:: ## TYPE >(*$self, Eigen::ComputeFullU | Eigen::ComputeFullV);
+      return RubyEigen::JacobiSVD<RubyEigen:: ## TYPE >(*$self, Eigen::ComputeFullU | Eigen::ComputeFullV);
     }
   }
 %enddef

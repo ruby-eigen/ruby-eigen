@@ -42,7 +42,7 @@ public:
   RubyEigen::Matrix<T::Scalar, RubyEigen::Dynamic, 1> solve(const RubyEigen::Matrix<T::Scalar, RubyEigen::Dynamic, 1>&);
 };
 
-%template(ConjugateGradientDouble)   ConjugateGradient<RubyEigen::MatrixXd>;
+%template(ConjugateGradientDouble)   ConjugateGradient<RubyEigen::MatrixDouble>;
 %template(ConjugateGradientSpDouble) ConjugateGradient<RubyEigen::SparseMatrix<double> >;
 
 template<class T>
@@ -64,7 +64,7 @@ public:
   T solve(const T &b);
   RubyEigen::Matrix<T::Scalar, RubyEigen::Dynamic, 1> solve(const RubyEigen::Matrix<T::Scalar, RubyEigen::Dynamic, 1>&);
 };
-%template(BiCGSTABDouble)   BiCGSTAB<RubyEigen::MatrixXd>;
+%template(BiCGSTABDouble)   BiCGSTAB<RubyEigen::MatrixDouble>;
 %template(BiCGSTABSpDouble) BiCGSTAB<RubyEigen::SparseMatrix<double> >;
 
 
