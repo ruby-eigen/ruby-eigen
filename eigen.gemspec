@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = 'ruby-eigen'
-  s.version     = '0.0.11.pre1'
-  s.date        = '2016-03-05'
+  s.version     = '0.0.11.pre2'
+  s.date        = '2016-03-27'
   s.summary     = "Ruby bindings for Eigen"
   s.description = "Ruby bindings for Eigen, a C++ template library for linear algebra. Implemented using SWIG."
   s.authors     = ["Takashi Tamura"]
@@ -9,7 +9,9 @@ Gem::Specification.new do |s|
   s.files       = ["LICENSE", "COPYING.LGPLv3",
                    "README.md",
                    "lib/eigen.rb",
-                   "ext/eigen/eigen_wrap.cxx"] + Dir.glob("ext/eigen/eigen3/**/*")
+                   "ext/eigen/eigen_wrap.cxx"] +
+    Dir.glob("ext/eigen/*.h") +
+    Dir.glob("ext/eigen/eigen3/**/*")
   s.extensions  = ["ext/eigen/extconf.rb"]
   s.homepage    = 'https://github.com/ruby-eigen/ruby-eigen'
   s.license     = 'LGPL-3.0'
