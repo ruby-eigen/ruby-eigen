@@ -28,7 +28,7 @@ public:
 };
 
 
-%template(FullPivLUDouble) RubyEigen::FullPivLU<RubyEigen::MatrixXd>;
+%template(FullPivLUDouble) RubyEigen::FullPivLU<RubyEigen::MatrixDouble>;
 %template(FullPivLUComplex) RubyEigen::FullPivLU<RubyEigen::MatrixXcd>;
 
 template<class T>
@@ -38,7 +38,7 @@ public:
   ~PartialPivLU();
 };
 
-%template(PartialPivLUDouble) RubyEigen::PartialPivLU<RubyEigen::MatrixXd>;
+%template(PartialPivLUDouble) RubyEigen::PartialPivLU<RubyEigen::MatrixDouble>;
 %template(PartialPivLUComplex) RubyEigen::PartialPivLU<RubyEigen::MatrixXcd>;
 
 
@@ -66,7 +66,7 @@ public:
   }
 };
 
-%template(FullPivHouseholderQRDouble) RubyEigen::FullPivHouseholderQR<RubyEigen::MatrixXd>;
+%template(FullPivHouseholderQRDouble) RubyEigen::FullPivHouseholderQR<RubyEigen::MatrixDouble>;
 %template(FullPivHouseholderQRComplex) RubyEigen::FullPivHouseholderQR<RubyEigen::MatrixXcd>;
 
 
@@ -86,7 +86,7 @@ public:
 
 };
 
-%template(JacobiSVDDouble) RubyEigen::JacobiSVD<RubyEigen::MatrixXd>;
+%template(JacobiSVDDouble) RubyEigen::JacobiSVD<RubyEigen::MatrixDouble>;
 %template(JacobiSVDComplex) RubyEigen::JacobiSVD<RubyEigen::MatrixXcd>;
 
 
@@ -101,7 +101,7 @@ public:
 
 };
 
-%template(LDLTDouble) RubyEigen::LDLT<RubyEigen::MatrixXd>;
+%template(LDLTDouble) RubyEigen::LDLT<RubyEigen::MatrixDouble>;
 %template(LDLTComplex) RubyEigen::LDLT<RubyEigen::MatrixXcd>;
 
 
@@ -115,7 +115,7 @@ public:
 
 };
 
-%template(LLTDouble) RubyEigen::LLT<RubyEigen::MatrixXd>;
+%template(LLTDouble) RubyEigen::LLT<RubyEigen::MatrixDouble>;
 %template(LLTComplex) RubyEigen::LLT<RubyEigen::MatrixXcd>;
 
 }; /* end of namespace ruby_eigen */

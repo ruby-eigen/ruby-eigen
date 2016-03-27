@@ -79,7 +79,7 @@ public:
   ArrayXXd(int,int);
   ~ArrayXXd();
 
-  RubyEigen::MatrixXd matrix();
+  RubyEigen::MatrixDouble matrix();
 
   DENSE_ARRAY_Real_Methods(ArrayXXd, double, RubyEigen::CMatrixBool)
   DENSE_ARRAY_Methods(ArrayXXd, ArrayXXd, double, RubyEigen::CMatrixBool)
@@ -151,7 +151,7 @@ public:
   CMatrixBool operator||(const CMatrixBool&);
 
   %extend{
-    RubyEigen::ArrayXXd select(MatrixXd &a, MatrixXd &b) {
+    RubyEigen::ArrayXXd select(MatrixDouble &a, MatrixDouble &b) {
       return (*$self).select(a, b);
     }
 

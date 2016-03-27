@@ -83,10 +83,11 @@ public:
 
   RubyEigen::VectorXd real();
 
-  DENSE_MATRIX_VECTOR_Common_Methods(VectorXd, MatrixXd, double)
-  DENSE_VECTOR_Common_Methods(VectorXd, MatrixXd, double)
+  DENSE_MATRIX_VECTOR_Common_Methods(VectorXd, MatrixDouble, double)
+  DENSE_VECTOR_Common_Methods(VectorXd, MatrixDouble, double)
 
 };
+
 
 class VectorXcd {
 public:
@@ -115,7 +116,7 @@ public:
 
   %extend{
 
-    MatrixXd select(const MatrixXd &a, const MatrixXd &b) {
+    MatrixDouble select(const MatrixDouble &a, const MatrixDouble &b) {
       return (*$self).select(a, b);
     }
 
@@ -131,7 +132,7 @@ public:
 
 };
 
-%template(TransposeMatrixDouble) RubyEigen::Transpose<RubyEigen::MatrixXd>;
+%template(TransposeMatrixDouble) RubyEigen::Transpose<RubyEigen::MatrixDouble>;
 
 
 class PermutationMatrix {
@@ -158,7 +159,7 @@ public:
       return v;
     }
 
-    RubyEigen::MatrixXd toMatrixDouble(){
+    RubyEigen::MatrixDouble toMatrixDouble(){
       return (*$self);
     }
 

@@ -114,16 +114,16 @@
 %define DENSE_MATRIX_RC_Methods(TYPE, V_TYPE, s_type)
 
   void normalize();
-  double operatorNorm();
+  s_type operatorNorm();
 
   TYPE inverse();
-  RubyEigen::VectorXcd eigenvalues();
+  RubyEigen::Matrix<RubyEigen::Matrix<std::complex<s_type>, RubyEigen::Dynamic, RubyEigen::Dynamic>::Scalar, RubyEigen::Dynamic, 1> eigenvalues();
   TYPE conjugate();
 
-  RubyEigen::PartialPivLU<RubyEigen:: ## TYPE> lu();
+  RubyEigen::PartialPivLU<RubyEigen:: ## TYPE > lu();
 
-  RubyEigen::LDLT<RubyEigen:: ## TYPE> ldlt();
-  RubyEigen::LLT<RubyEigen:: ## TYPE> llt();
+  RubyEigen::LDLT<RubyEigen:: ## TYPE > ldlt();
+  RubyEigen::LLT<RubyEigen:: ## TYPE > llt();
 
   %extend {
     RubyEigen::FullPivLU<TYPE> fullPivLu() {
@@ -131,11 +131,11 @@
     }
 
     RubyEigen::FullPivHouseholderQR<TYPE> fullPivHouseholderQR() {
-      return RubyEigen::FullPivHouseholderQR<RubyEigen::TYPE>(*$self);
+      return RubyEigen::FullPivHouseholderQR<RubyEigen::TYPE >(*$self);
     }
 
     RubyEigen::JacobiSVD<TYPE> svd() {
-      return Eigen::JacobiSVD<Eigen:: ## TYPE>(*$self, Eigen::ComputeFullU | Eigen::ComputeFullV);
+      return Eigen::JacobiSVD<Eigen:: ## TYPE >(*$self, Eigen::ComputeFullU | Eigen::ComputeFullV);
     }
   }
 %enddef

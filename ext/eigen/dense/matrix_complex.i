@@ -10,13 +10,13 @@ public:
   ~MatrixXcd();
 
   /* complex matrix only */
-  RubyEigen::MatrixXd imag();
+  RubyEigen::MatrixDouble imag();
 
-  RubyEigen::MatrixXd real();
+  RubyEigen::MatrixDouble real();
 
   DENSE_MATRIX_VECTOR_Common_Methods(MatrixXcd, VectorXcd, std::complex<double>)
   DENSE_MATRIX_Methods(MatrixXcd, VectorXcd, std::complex<double>)
-  DENSE_MATRIX_RC_Methods(MatrixXcd, VectorXcd, std::complex<double>)
+  DENSE_MATRIX_RC_Methods(MatrixXcd, VectorXcd, double)
 
   %extend {
     RubyEigen::Block< RubyEigen::MatrixXcd > __ref__(int i, int j, int rows, int cols) {
@@ -32,13 +32,13 @@ public:
   ~MatrixComplexRef();
 
   /* complex matrix only */
-  RubyEigen::MatrixXd imag();
+  RubyEigen::MatrixDouble imag();
 
-  RubyEigen::MatrixXd real();
+  RubyEigen::MatrixDouble real();
 
   DENSE_MATRIX_VECTOR_Common_Methods(MatrixXcd, VectorXcd, std::complex<double>)
   DENSE_MATRIX_Methods(MatrixXcd, VectorXcd, std::complex<double>)
-  DENSE_MATRIX_RC_Methods(MatrixXcd, VectorXcd, std::complex<double>)
+  DENSE_MATRIX_RC_Methods(MatrixXcd, VectorXcd, double)
 };
 
 };  /* end of namespace ruby_eigen */
