@@ -40,7 +40,7 @@ namespace RubyEigen {
     }
   }
     
-}; /* end class MatrixXd */
+}; /* end class MatrixDouble */
   %template(MatrixDouble) Matrix<double, RubyEigen::Dynamic, RubyEigen::Dynamic>;
   %template(MatrixFloat)  Matrix<float, RubyEigen::Dynamic, RubyEigen::Dynamic>;
 
