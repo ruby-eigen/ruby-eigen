@@ -61,9 +61,10 @@ namespace RubyEigen {
 #include "rubyeigen_algo.h"
 %}
 
-%template(StdVectorInt__) std::vector<int>;
-%template(StdVectorDouble__) std::vector<double>;
-%template(StdVectorComplex__) std::vector< std::complex<double> >;
+%template(StdVectorInt) std::vector<int>;
+%template(StdVectorDouble) std::vector<double>;
+%template(StdVectorFloat) std::vector<float>;
+%template(StdVectorComplex) std::vector< std::complex<double> >;
 
 %include "dense/matrix_double.i"
 %include "dense/matrix_complex.i"

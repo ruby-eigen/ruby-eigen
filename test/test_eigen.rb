@@ -227,4 +227,8 @@ class TestEigen < Test::Unit::TestCase
     assert_nothing_raised{ m.reserve(7) }
   end
 
+  def test_float
+    MatrixFloat[[1,2],[3,4]]
+  end
+
 end

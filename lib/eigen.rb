@@ -144,6 +144,12 @@ class Eigen::MatrixDouble
   private "__get_item__", "__get_block__"
 end
 
+class Eigen::MatrixFloat
+  extend  Eigen::MatrixConstructor
+  include Eigen::MatrixCommon
+  private "__get_item__", "__get_block__"
+end
+
 class Eigen::MatrixComplex
   extend  Eigen::MatrixConstructor
   include Eigen::MatrixCommon
