@@ -291,7 +291,7 @@ class SparseMatrix
       {
         std::size_t totalReserveSize = 0;
         // turn the matrix into non-compressed mode
-        m_innerNonZeros = static_cast<Index*>(ruby_xmalloc(m_outerSize * sizeof(Index)));
+        m_innerNonZeros = static_cast<Index*>(std::malloc(m_outerSize * sizeof(Index)));
         if (!m_innerNonZeros) internal::throw_std_bad_alloc();
         
         // temporarily use m_innerSizes to hold the new starting points.
@@ -324,7 +324,7 @@ class SparseMatrix
       }
       else
       {
-        Index* newOuterIndex = static_cast<Index*>(ruby_xmalloc((m_outerSize+1)*sizeof(Index)));
+        Index* newOuterIndex = static_cast<Index*>(std::malloc((m_outerSize+1)*sizeof(Index)));
         if (!newOuterIndex) internal::throw_std_bad_alloc();
         
         Index count = 0;
@@ -353,7 +353,7 @@ class SparseMatrix
         }
         
         std::swap(m_outerIndex, newOuterIndex);
-        ruby_xfree(newOuterIndex);
+        std::free(newOuterIndex);
       }
       
     }
@@ -468,7 +468,7 @@ class SparseMatrix
         m_outerIndex[j+1] = m_outerIndex[j] + m_innerNonZeros[j];
         oldStart = nextOldStart;
       }
-      ruby_xfree(m_innerNonZeros);
+      std::free(m_innerNonZeros);
       m_innerNonZeros = 0;
       m_data.resize(m_outerIndex[m_outerSize]);
       m_data.squeeze();
@@ -479,7 +479,7 @@ class SparseMatrix
     {
       if(m_innerNonZeros != 0)
         return; 
-      m_innerNonZeros = static_cast<Index*>(ruby_xmalloc(m_outerSize * sizeof(Index)));
+      m_innerNonZeros = static_cast<Index*>(std::malloc(m_outerSize * sizeof(Index)));
       for (Index i = 0; i < m_outerSize; i++)
       {
         m_innerNonZeros[i] = m_outerIndex[i+1] - m_outerIndex[i]; 
@@ -555,7 +555,7 @@ class SparseMatrix
       else if (innerChange < 0) 
       {
         // Inner size decreased: allocate a new m_innerNonZeros
-        m_innerNonZeros = static_cast<Index*>(ruby_xmalloc((m_outerSize+outerChange+1) * sizeof(Index)));
+        m_innerNonZeros = static_cast<Index*>(std::malloc((m_outerSize+outerChange+1) * sizeof(Index)));
         if (!m_innerNonZeros) internal::throw_std_bad_alloc();
         for(Index i = 0; i < m_outerSize; i++)
           m_innerNonZeros[i] = m_outerIndex[i+1] - m_outerIndex[i];
@@ -600,15 +600,15 @@ class SparseMatrix
       m_data.clear();
       if (m_outerSize != outerSize || m_outerSize==0)
       {
-        ruby_xfree(m_outerIndex);
-        m_outerIndex = static_cast<Index*>(ruby_xmalloc((outerSize + 1) * sizeof(Index)));
+        std::free(m_outerIndex);
+        m_outerIndex = static_cast<Index*>(std::malloc((outerSize + 1) * sizeof(Index)));
         if (!m_outerIndex) internal::throw_std_bad_alloc();
         
         m_outerSize = outerSize;
       }
       if(m_innerNonZeros)
       {
-        ruby_xfree(m_innerNonZeros);
+        std::free(m_innerNonZeros);
         m_innerNonZeros = 0;
       }
       memset(m_outerIndex, 0, (m_outerSize+1)*sizeof(Index));
@@ -700,7 +700,7 @@ class SparseMatrix
       Eigen::Map<Matrix<Index, Dynamic, 1> >(&this->m_data.index(0), rows()).setLinSpaced(0, rows()-1);
       Eigen::Map<Matrix<Scalar, Dynamic, 1> >(&this->m_data.value(0), rows()).setOnes();
       Eigen::Map<Matrix<Index, Dynamic, 1> >(this->m_outerIndex, rows()+1).setLinSpaced(0, rows());
-      ruby_xfree(m_innerNonZeros);
+      std::free(m_innerNonZeros);
       m_innerNonZeros = 0;
     }
     inline SparseMatrix& operator=(const SparseMatrix& other)
@@ -785,8 +785,8 @@ class SparseMatrix
     /** Destructor */
     inline ~SparseMatrix()
     {
-      ruby_xfree(m_outerIndex);
-      ruby_xfree(m_innerNonZeros);
+      std::free(m_outerIndex);
+      std::free(m_innerNonZeros);
     }
 
 #ifndef EIGEN_PARSED_BY_DOXYGEN
@@ -806,7 +806,7 @@ protected:
       resize(other.rows(), other.cols());
       if(m_innerNonZeros)
       {
-        ruby_xfree(m_innerNonZeros);
+        std::free(m_innerNonZeros);
         m_innerNonZeros = 0;
       }
     }
@@ -1051,7 +1051,7 @@ void SparseMatrix<Scalar,_Options,_Index>::sumupDuplicates()
   m_outerIndex[m_outerSize] = count;
 
   // turn the matrix into compressed form
-  ruby_xfree(m_innerNonZeros);
+  std::free(m_innerNonZeros);
   m_innerNonZeros = 0;
   m_data.resize(m_outerIndex[m_outerSize]);
 }

@@ -103,7 +103,7 @@ inline void throw_std_bad_alloc()
   */
 inline void* handmade_aligned_malloc(std::size_t size)
 {
-  void *original = ruby_xmalloc(size+16);
+  void *original = std::malloc(size+16);
   if (original == 0) return 0;
   void *aligned = reinterpret_cast<void*>((reinterpret_cast<std::size_t>(original) & ~(std::size_t(15))) + 16);
   *(reinterpret_cast<void**>(aligned) - 1) = original;
@@ -113,7 +113,7 @@ inline void* handmade_aligned_malloc(std::size_t size)
 /** \internal Frees memory allocated with handmade_aligned_malloc */
 inline void handmade_aligned_free(void *ptr)
 {
-  if (ptr) ruby_xfree(*(reinterpret_cast<void**>(ptr) - 1));
+  if (ptr) std::free(*(reinterpret_cast<void**>(ptr) - 1));
 }
 
 /** \internal
@@ -215,9 +215,9 @@ inline void* aligned_malloc(size_t size)
 
   void *result;
   #if !EIGEN_ALIGN
-    result = ruby_xmalloc(size);
+    result = std::malloc(size);
   #elif EIGEN_MALLOC_ALREADY_ALIGNED
-    result = ruby_xmalloc(size);
+    result = std::malloc(size);
   #elif EIGEN_HAS_POSIX_MEMALIGN
     if(posix_memalign(&result, 16, size)) result = 0;
   #elif EIGEN_HAS_MM_MALLOC
@@ -238,11 +238,11 @@ inline void* aligned_malloc(size_t size)
 inline void aligned_free(void *ptr)
 {
   #if !EIGEN_ALIGN
-    ruby_xfree(ptr);
+    std::free(ptr);
   #elif EIGEN_MALLOC_ALREADY_ALIGNED
-    ruby_xfree(ptr);
+    std::free(ptr);
   #elif EIGEN_HAS_POSIX_MEMALIGN
-    ruby_xfree(ptr);
+    std::free(ptr);
   #elif EIGEN_HAS_MM_MALLOC
     _mm_free(ptr);
   #elif defined(_MSC_VER) && (!defined(_WIN32_WCE))
@@ -305,7 +305,7 @@ template<> inline void* conditional_aligned_malloc<false>(size_t size)
 {
   check_that_malloc_is_allowed();
 
-  void *result = ruby_xmalloc(size);
+  void *result = std::malloc(size);
   if(!result && size)
     throw_std_bad_alloc();
   return result;
@@ -319,7 +319,7 @@ template<bool Align> inline void conditional_aligned_free(void *ptr)
 
 template<> inline void conditional_aligned_free<false>(void *ptr)
 {
-  ruby_xfree(ptr);
+  std::free(ptr);
 }
 
 template<bool Align> inline void* conditional_aligned_realloc(void* ptr, size_t new_size, size_t old_size)
