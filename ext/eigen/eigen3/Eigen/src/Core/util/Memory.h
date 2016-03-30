@@ -103,6 +103,7 @@ inline void throw_std_bad_alloc()
   */
 inline void* handmade_aligned_malloc(std::size_t size)
 {
+  rubyeigen_gc_if_needed(size);
   void *original = std::malloc(size+16);
   if (original == 0) return 0;
   void *aligned = reinterpret_cast<void*>((reinterpret_cast<std::size_t>(original) & ~(std::size_t(15))) + 16);
@@ -212,7 +213,7 @@ inline void check_that_malloc_is_allowed()
 inline void* aligned_malloc(size_t size)
 {
   check_that_malloc_is_allowed();
-
+  rubyeigen_gc_if_needed(size);
   void *result;
   #if !EIGEN_ALIGN
     result = std::malloc(size);
@@ -304,7 +305,7 @@ template<bool Align> inline void* conditional_aligned_malloc(size_t size)
 template<> inline void* conditional_aligned_malloc<false>(size_t size)
 {
   check_that_malloc_is_allowed();
-
+  rubyeigen_gc_if_needed(size);
   void *result = std::malloc(size);
   if(!result && size)
     throw_std_bad_alloc();
