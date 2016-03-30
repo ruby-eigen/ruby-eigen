@@ -287,7 +287,7 @@ class SparseMatrix
     template<class SizesType>
     inline void reserveInnerVectors(const SizesType& reserveSizes)
     {
-      rubyeigen_gc_if_needed(m_outerSize * sizeof(Index));
+      rubyeigen_gc_add_count(m_outerSize * sizeof(Index));
       if(isCompressed())
       {
         std::size_t totalReserveSize = 0;
@@ -480,7 +480,7 @@ class SparseMatrix
     {
       if(m_innerNonZeros != 0)
         return; 
-      rubyeigen_gc_if_needed(m_outerSize * sizeof(Index));
+      rubyeigen_gc_add_count(m_outerSize * sizeof(Index));
       m_innerNonZeros = static_cast<Index*>(std::malloc(m_outerSize * sizeof(Index)));
       for (Index i = 0; i < m_outerSize; i++)
       {
@@ -557,7 +557,7 @@ class SparseMatrix
       else if (innerChange < 0) 
       {
         // Inner size decreased: allocate a new m_innerNonZeros
-        rubyeigen_gc_if_needed(m_outerSize * sizeof(Index));
+        rubyeigen_gc_add_count(m_outerSize * sizeof(Index));
         m_innerNonZeros = static_cast<Index*>(std::malloc((m_outerSize+outerChange+1) * sizeof(Index)));
         if (!m_innerNonZeros) internal::throw_std_bad_alloc();
         for(Index i = 0; i < m_outerSize; i++)
@@ -604,7 +604,7 @@ class SparseMatrix
       if (m_outerSize != outerSize || m_outerSize==0)
       {
         std::free(m_outerIndex);
-        rubyeigen_gc_if_needed(outerSize * sizeof(Index));
+        rubyeigen_gc_add_count(outerSize * sizeof(Index));
         m_outerIndex = static_cast<Index*>(std::malloc((outerSize + 1) * sizeof(Index)));
         if (!m_outerIndex) internal::throw_std_bad_alloc();
         

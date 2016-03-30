@@ -209,3 +209,14 @@ class Eigen::SpMatrixDouble
   include Eigen::SpMatrixCommon
   private "__reserve__", "__insert__"
 end
+
+
+Thread.start do
+  loop do
+    if Eigen.gc_count > 67108864
+      GC.start
+      Eigen.reset_gc_count()
+    end
+    sleep(2)
+  end
+end

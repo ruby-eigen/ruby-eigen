@@ -11,6 +11,7 @@ Gem::Specification.new do |s|
                    "lib/eigen.rb",
                    "ext/eigen/eigen_wrap.cxx"] +
     Dir.glob("ext/eigen/*.h") +
+    Dir.glob("ext/eigen/*.hpp") +
     Dir.glob("ext/eigen/eigen3/**/*")
   s.extensions  = ["ext/eigen/extconf.rb"]
   s.homepage    = 'https://github.com/ruby-eigen/ruby-eigen'
