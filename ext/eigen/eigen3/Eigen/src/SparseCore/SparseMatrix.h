@@ -604,7 +604,7 @@ class SparseMatrix
       if (m_outerSize != outerSize || m_outerSize==0)
       {
         std::free(m_outerIndex);
-        rubyeigen_gc_if_needed(m_outerSize * sizeof(Index));
+        rubyeigen_gc_if_needed(outerSize * sizeof(Index));
         m_outerIndex = static_cast<Index*>(std::malloc((outerSize + 1) * sizeof(Index)));
         if (!m_outerIndex) internal::throw_std_bad_alloc();
         
