@@ -1,5 +1,5 @@
 require 'eigen/eigen'
-
+require "accel/gcthread"
 
 module Eigen::MatrixConstructor
   def [](*rows)
@@ -210,13 +210,5 @@ class Eigen::SpMatrixDouble
   private "__reserve__", "__insert__"
 end
 
-
-Thread.start do
-  loop do
-    if Eigen.gc_count > 67108864
-      GC.start
-      Eigen.reset_gc_count()
-    end
-    sleep(2)
-  end
-end
+Accel::GCThread.setup(lambda{ Eigen.gc_count > 67108864 },
+                      lambda{ Eigen.reset_gc_count()    })

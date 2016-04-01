@@ -17,6 +17,7 @@ Gem::Specification.new do |s|
   s.homepage    = 'https://github.com/ruby-eigen/ruby-eigen'
   s.license     = 'LGPL-3.0'
   s.add_runtime_dependency 'rake-compiler', '~> 0.9.5'
+  s.add_runtime_dependency 'accel-gcthread'
   s.rdoc_options << "--exclude=."
   s.required_ruby_version = '>= 2.2.0'
 end
