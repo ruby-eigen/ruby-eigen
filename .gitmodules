@@ -1,0 +1,3 @@
+[submodule "ext/eigen/eigen"]
+	path = ext/eigen/eigen
+	url = git@github.com:RLovelett/eigen.git
