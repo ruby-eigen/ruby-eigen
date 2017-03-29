@@ -5,13 +5,7 @@
 #include <stdexcept>
 #include "rubyeigen_except.h"
 
-#include "rubyeigen_gc.hpp"
 %}
-
-%rename(gc_count) rubyeigen_gc_get_count;
-%rename(reset_gc_count) rubyeigen_gc_reset_count;
-size_t rubyeigen_gc_get_count();
-void rubyeigen_gc_reset_count();
 
 %include "rb_error_handle.i"
 
