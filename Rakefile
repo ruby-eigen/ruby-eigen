@@ -14,7 +14,7 @@ elibs.each{|s|
 namespace :swg do
   elibs.each{|f|
     task f do
-      sh "swig -c++ -ruby -Wall ext/#{f}/#{f}.i"
+      sh "swig -c++ -ruby ext/#{f}/#{f}.i"
     end
   }
 end

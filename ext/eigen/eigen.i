@@ -1,5 +1,6 @@
 %module eigen
 
+#pragma SWIG nowarn=401
 
 %{
 #include <stdexcept>
@@ -37,6 +38,13 @@
 namespace Eigen {};
 namespace RubyEigen {
   using namespace Eigen;
+
+  static void adjust_memory_usage(ssize_t n) {
+#ifdef HAVE_RB_GC_ADJUST_MEMORY_USAGE
+    rb_gc_adjust_memory_usage(n);
+#endif
+  }
+
 };
 %}
 
