@@ -6,6 +6,10 @@ public:
   Matrix(int);
   ~Matrix();
 
+%typemap(ret) Matrix<T, D1, 1> %{
+  RubyEigen::adjust_memory_usage(&$1);
+%}
+
   RubyEigen::Matrix real();
 
   %rename("dot") operator*;

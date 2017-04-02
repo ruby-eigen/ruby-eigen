@@ -6,6 +6,11 @@ public:
 
   typedef T Scalar;
 
+
+%typemap(ret) Matrix<T, D1, D2> %{
+  RubyEigen::adjust_memory_usage(&$1);
+%}
+
   Matrix(size_t, size_t);
   ~Matrix();
 
@@ -151,7 +156,7 @@ public:
   RubyEigen::Matrix<std::complex< RubyEigen::rb_eigen_traits<T>::float_type >, RubyEigen::Dynamic, 1> eigenvalues();
   Matrix conjugate();
 
-  %return("partial_piv_lu") lu;
+  %rename("partial_piv_lu") lu;
   RubyEigen::PartialPivLU<RubyEigen::rb_eigen_traits<T>::matrix_type > lu();
 
   %rename("cholesky_ldlt") ldlt;

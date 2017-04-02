@@ -43,7 +43,11 @@ extern "C" {
 namespace Eigen {};
 namespace RubyEigen {
   using namespace Eigen;
+};
+%}
 
+%{
+namespace RubyEigen {
   template<typename T>
   struct narray_traits{
     static VALUE type() { return Qnil; }
@@ -105,7 +109,17 @@ namespace RubyEigen {
 #endif
   }
 
-};
+  template<class T>
+  static void adjust_memory_usage(const Matrix<T, RubyEigen::Dynamic, RubyEigen::Dynamic>* m) {
+    adjust_memory_usage(m->rows()*m->cols()*sizeof(T));
+  }
+
+  template<class T>
+  static void adjust_memory_usage(const Matrix<T, RubyEigen::Dynamic, 1>* v) {
+    adjust_memory_usage(v->size()*sizeof(T));
+  }
+
+}; // namespace RubyEigen
 %}
 
 %inline %{
