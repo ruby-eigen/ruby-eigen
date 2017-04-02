@@ -28,8 +28,10 @@ public:
 };
 
 
-%template(FullPivLUDouble) RubyEigen::FullPivLU<RubyEigen::DFloatMatrix>;
-%template(FullPivLUComplex) RubyEigen::FullPivLU<RubyEigen::DComplexMatrix>;
+%template(DFloatFullPivLU)   RubyEigen::FullPivLU<RubyEigen::DFloatMatrix>;
+%template(SFloatFullPivLU)   RubyEigen::FullPivLU<RubyEigen::SFloatMatrix>;
+%template(DComplexFullPivLU) RubyEigen::FullPivLU<RubyEigen::DComplexMatrix>;
+%template(SComplexFullPivLU) RubyEigen::FullPivLU<RubyEigen::SComplexMatrix>;
 
 template<class T>
 class PartialPivLU {
@@ -38,8 +40,10 @@ public:
   ~PartialPivLU();
 };
 
-%template(PartialPivLUDouble) RubyEigen::PartialPivLU<RubyEigen::DFloatMatrix>;
-%template(PartialPivLUComplex) RubyEigen::PartialPivLU<RubyEigen::DComplexMatrix>;
+%template(DFloatPartialPivLU) RubyEigen::PartialPivLU<RubyEigen::DFloatMatrix>;
+%template(SFloatPartialPivLU) RubyEigen::PartialPivLU<RubyEigen::SFloatMatrix>;
+%template(DComplexPartialPivLU) RubyEigen::PartialPivLU<RubyEigen::DComplexMatrix>;
+%template(SComplexPartialPivLU) RubyEigen::PartialPivLU<RubyEigen::SComplexMatrix>;
 
 
 %alias FullPivHouseholderQR::matrixQ "q";
@@ -66,8 +70,10 @@ public:
   }
 };
 
-%template(FullPivHouseholderQRDouble) RubyEigen::FullPivHouseholderQR<RubyEigen::DFloatMatrix>;
-%template(FullPivHouseholderQRComplex) RubyEigen::FullPivHouseholderQR<RubyEigen::DComplexMatrix>;
+%template(DFloatFullPivHouseholderQR) RubyEigen::FullPivHouseholderQR<RubyEigen::DFloatMatrix>;
+%template(SFloatFullPivHouseholderQR) RubyEigen::FullPivHouseholderQR<RubyEigen::SFloatMatrix>;
+%template(DComplexFullPivHouseholderQR) RubyEigen::FullPivHouseholderQR<RubyEigen::DComplexMatrix>;
+%template(SComplexFullPivHouseholderQR) RubyEigen::FullPivHouseholderQR<RubyEigen::SComplexMatrix>;
 
 
 template<class T>
@@ -79,15 +85,17 @@ public:
   T matrixU();
   T matrixV();
 
-  DFloatVector singularValues();
+  RubyEigen::Matrix<T::Scalar, RubyEigen::Dynamic, 1> singularValues();
 
   T solve(const T&);
   RubyEigen::Matrix<T::Scalar, RubyEigen::Dynamic, 1> solve(const RubyEigen::Matrix<T::Scalar, RubyEigen::Dynamic, 1>&);
 
 };
 
-%template(JacobiSVDDouble) RubyEigen::JacobiSVD<RubyEigen::DFloatMatrix>;
-%template(JacobiSVDComplex) RubyEigen::JacobiSVD<RubyEigen::DComplexMatrix>;
+%template(DFlaotJacobiSVD) RubyEigen::JacobiSVD<RubyEigen::DFloatMatrix>;
+%template(SFlaotJacobiSVD) RubyEigen::JacobiSVD<RubyEigen::SFloatMatrix>;
+%template(DComplexJacobiSVD) RubyEigen::JacobiSVD<RubyEigen::DComplexMatrix>;
+%template(SComplexJacobiSVD) RubyEigen::JacobiSVD<RubyEigen::SComplexMatrix>;
 
 
 template<class T>
@@ -101,8 +109,10 @@ public:
 
 };
 
-%template(LDLTDouble) RubyEigen::LDLT<RubyEigen::DFloatMatrix>;
-%template(LDLTComplex) RubyEigen::LDLT<RubyEigen::DComplexMatrix>;
+%template(DFloatLDLT) RubyEigen::LDLT<RubyEigen::DFloatMatrix>;
+%template(SFloatLDLT) RubyEigen::LDLT<RubyEigen::SFloatMatrix>;
+%template(DComplexLDLT) RubyEigen::LDLT<RubyEigen::DComplexMatrix>;
+%template(SComplexLDLT) RubyEigen::LDLT<RubyEigen::SComplexMatrix>;
 
 
 template<class T>
@@ -115,7 +125,9 @@ public:
 
 };
 
-%template(LLTDouble) RubyEigen::LLT<RubyEigen::DFloatMatrix>;
-%template(LLTComplex) RubyEigen::LLT<RubyEigen::DComplexMatrix>;
+%template(DFloatLLT) RubyEigen::LLT<RubyEigen::DFloatMatrix>;
+%template(SFloatLLT) RubyEigen::LLT<RubyEigen::SFloatMatrix>;
+%template(DComplexLLT) RubyEigen::LLT<RubyEigen::DComplexMatrix>;
+%template(SComplexLLT) RubyEigen::LLT<RubyEigen::SComplexMatrix>;
 
 }; /* end of namespace ruby_eigen */

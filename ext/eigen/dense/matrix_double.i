@@ -151,22 +151,33 @@ public:
   RubyEigen::Matrix<std::complex< RubyEigen::rb_eigen_traits<T>::float_type >, RubyEigen::Dynamic, 1> eigenvalues();
   Matrix conjugate();
 
+  %return("partial_piv_lu") lu;
   RubyEigen::PartialPivLU<RubyEigen::rb_eigen_traits<T>::matrix_type > lu();
 
+  %rename("cholesky_ldlt") ldlt;
+  %rename("cholesky_llt") llt;
   RubyEigen::LDLT<RubyEigen::rb_eigen_traits<T>::matrix_type > ldlt();
   RubyEigen::LLT<RubyEigen::rb_eigen_traits<T>::matrix_type > llt();
 
   %extend {
-    RubyEigen::FullPivLU<RubyEigen::rb_eigen_traits<T>::matrix_type> fullPivLu() {
+
+    %newobject eigen_solver;
+    RubyEigen::ComplexEigenSolver<RubyEigen::rb_eigen_traits<T>::matrix_type>* complex_eigen_solver() {
+      return new RubyEigen::ComplexEigenSolver<RubyEigen::rb_eigen_traits<T>::matrix_type>(*$self);
+    }
+
+    RubyEigen::FullPivLU<RubyEigen::rb_eigen_traits<T>::matrix_type> full_piv_lu() {
       return (*self).fullPivLu();
     }
 
-    RubyEigen::FullPivHouseholderQR<RubyEigen::rb_eigen_traits<T>::matrix_type> fullPivHouseholderQR() {
-      return RubyEigen::FullPivHouseholderQR<RubyEigen::rb_eigen_traits<T>::matrix_type>(*$self);
+    %newobject full_piv_householder_qr;
+    RubyEigen::FullPivHouseholderQR<RubyEigen::rb_eigen_traits<T>::matrix_type>* full_piv_householder_qr() {
+      return new RubyEigen::FullPivHouseholderQR<RubyEigen::rb_eigen_traits<T>::matrix_type>(*$self);
     }
 
-    RubyEigen::JacobiSVD<RubyEigen::rb_eigen_traits<T>::matrix_type> svd() {
-      return RubyEigen::JacobiSVD<RubyEigen::rb_eigen_traits<T>::matrix_type>(*$self, Eigen::ComputeFullU | Eigen::ComputeFullV);
+    %newobject jacobi_svd;
+    RubyEigen::JacobiSVD<RubyEigen::rb_eigen_traits<T>::matrix_type>* jacobi_svd() {
+      return new RubyEigen::JacobiSVD<RubyEigen::rb_eigen_traits<T>::matrix_type>(*$self, Eigen::ComputeFullU | Eigen::ComputeFullV);
     }
   }
 

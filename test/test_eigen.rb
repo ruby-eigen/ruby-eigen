@@ -71,7 +71,7 @@ class TestEigen < Test::Unit::TestCase
     qr = m.full_piv_householder_qr
     assert  ( m. dot qr.p ).is_approx( qr.q. dot qr.r )
     
-    m.svd().matrix_u 
+    m.jacobi_svd().matrix_u
 
   end
 
