@@ -95,7 +95,7 @@ public:
   }
 
   RubyEigen::SparseMatrix<double> solve(const RubyEigen::SparseMatrix<double>&);
-  RubyEigen::VectorXd solve(const RubyEigen::VectorXd&);
+  RubyEigen::VectorDFloat solve(const RubyEigen::VectorXd&);
 };
 
 class SparseLUDouble {
@@ -104,7 +104,7 @@ public:
   ~SparseLUDouble();
 
   RubyEigen::SparseMatrix<double> solve(const RubyEigen::SparseMatrix<double>&);
-  RubyEigen::VectorXd solve(const RubyEigen::VectorXd&);
+  RubyEigen::VectorDFloat solve(const RubyEigen::VectorXd&);
 };
 
 class SparseLUFloat {
@@ -113,7 +113,7 @@ public:
   ~SparseLUFloat();
 
   RubyEigen::SparseMatrix<float> solve(const RubyEigen::SparseMatrix<float>&);
-  //  RubyEigen::VectorXd solve(const RubyEigen::VectorXd&);
+  //  RubyEigen::VectorDFloat solve(const RubyEigen::VectorXd&);
 };
 
 };

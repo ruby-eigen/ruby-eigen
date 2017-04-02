@@ -50,8 +50,8 @@ namespace RubyEigen {
   typedef RubyEigen::Matrix<std::complex<double>, RubyEigen::Dynamic, RubyEigen::Dynamic> MatrixDComplex;
   typedef RubyEigen::Matrix<std::complex<float>,  RubyEigen::Dynamic, RubyEigen::Dynamic> MatrixSComplex;
 
-  typedef RubyEigen::Matrix<double, RubyEigen::Dynamic, 1> VectorXd;
-  typedef RubyEigen::Matrix<float,  RubyEigen::Dynamic, 1> VectorXf;
+  typedef RubyEigen::Matrix<double, RubyEigen::Dynamic, 1> VectorDFloat;
+  typedef RubyEigen::Matrix<float,  RubyEigen::Dynamic, 1> VectorSFloat;
   typedef RubyEigen::Matrix<std::complex<double>, RubyEigen::Dynamic, 1> VectorXcd;
   typedef RubyEigen::Matrix<std::complex<float>,  RubyEigen::Dynamic, 1> VectorXcf;
   typedef RubyEigen::Matrix<RubyEigen::MatrixXi::Scalar, RubyEigen::Dynamic, 1> VectorXi;
@@ -80,7 +80,7 @@ namespace RubyEigen {
 
   template<>
   struct rb_eigen_traits<double> {
-    typedef VectorXd vector_type;
+    typedef VectorDFloat vector_type;
     typedef MatrixDouble matrix_type;
     typedef double float_type;
   };
@@ -135,21 +135,20 @@ namespace RubyEigen {
 namespace RubyEigen {
 
 %rename(VectorInt) VectorXi;
-%rename(VectorDouble) VectorXd;
+%rename(VectorDouble) VectorDFloat;
 %rename(VectorComplex) VectorXcd;
 
-class VectorXd {
+class VectorDFloat {
 public:
-  VectorXd(int);
-  ~VectorXd();
+  VectorDFloat(int);
+  ~VectorDFloat();
 
-  RubyEigen::VectorXd real();
+  RubyEigen::VectorDFloat real();
 
-  DENSE_MATRIX_VECTOR_Common_Methods(VectorXd, double)
-  DENSE_VECTOR_Common_Methods(VectorXd, MatrixDouble, double)
+  DENSE_MATRIX_VECTOR_Common_Methods(VectorDFloat, double)
+  DENSE_VECTOR_Common_Methods(VectorDFloat,  double)
 
 };
-
 
 class VectorXcd {
 public:
@@ -157,12 +156,12 @@ public:
   ~VectorXcd();
 
   /* complex matrix only */
-  RubyEigen::VectorXd imag();
+  RubyEigen::VectorDFloat imag();
 
-  RubyEigen::VectorXd real();
+  RubyEigen::VectorDFloat real();
 
   DENSE_MATRIX_VECTOR_Common_Methods(VectorXcd, std::complex<double>)
-  DENSE_VECTOR_Common_Methods(VectorXcd, MatrixXcd, std::complex<double>)
+  DENSE_VECTOR_Common_Methods(VectorXcd,  std::complex<double>)
 
 };
 

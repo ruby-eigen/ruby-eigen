@@ -79,7 +79,7 @@ public:
   T matrixU();
   T matrixV();
 
-  VectorXd singularValues();
+  VectorDFloat singularValues();
 
   T solve(const T&);
   RubyEigen::Matrix<T::Scalar, RubyEigen::Dynamic, 1> solve(const RubyEigen::Matrix<T::Scalar, RubyEigen::Dynamic, 1>&);
