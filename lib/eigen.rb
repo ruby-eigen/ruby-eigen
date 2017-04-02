@@ -150,11 +150,18 @@ class Eigen::MatrixFloat
   private "__get_item__", "__get_block__"
 end
 
-class Eigen::MatrixComplex
+class Eigen::MatrixDComplex
   extend  Eigen::MatrixConstructor
   include Eigen::MatrixCommon
   private "__get_item__", "__get_block__"
 end
+
+class Eigen::MatrixSComplex
+  extend  Eigen::MatrixConstructor
+  include Eigen::MatrixCommon
+  private "__get_item__", "__get_block__"
+end
+
 
 module Eigen::VectorConstructor
   def [](*args)

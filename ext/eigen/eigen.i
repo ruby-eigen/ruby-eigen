@@ -48,11 +48,11 @@ namespace RubyEigen {
 namespace RubyEigen {
   typedef RubyEigen::Matrix<double, RubyEigen::Dynamic, RubyEigen::Dynamic> MatrixDouble;
   typedef RubyEigen::Matrix<float,  RubyEigen::Dynamic, RubyEigen::Dynamic> MatrixFloat;
-  typedef RubyEigen::Matrix<std::complex<double>, RubyEigen::Dynamic, RubyEigen::Dynamic> MatrixComplex;
-  typedef RubyEigen::Matrix<std::complex<float>,  RubyEigen::Dynamic, RubyEigen::Dynamic> MatrixComplexFloat;
+  typedef RubyEigen::Matrix<std::complex<double>, RubyEigen::Dynamic, RubyEigen::Dynamic> MatrixDComplex;
+  typedef RubyEigen::Matrix<std::complex<float>,  RubyEigen::Dynamic, RubyEigen::Dynamic> MatrixSComplex;
 
   typedef RubyEigen::Matrix<double, RubyEigen::Dynamic, 1> VectorXd;
-  typedef RubyEigen::Matrix<float,  RubyEigen::Dynamic, 1>  VectorXf;
+  typedef RubyEigen::Matrix<float,  RubyEigen::Dynamic, 1> VectorXf;
   typedef RubyEigen::Matrix<std::complex<double>, RubyEigen::Dynamic, 1> VectorXcd;
   typedef RubyEigen::Matrix<std::complex<float>,  RubyEigen::Dynamic, 1> VectorXcf;
   typedef RubyEigen::Matrix<RubyEigen::MatrixXi::Scalar, RubyEigen::Dynamic, 1> VectorXi;
@@ -93,13 +93,22 @@ namespace RubyEigen {
   template<>
   struct rb_eigen_traits<std::complex<double> > {
     typedef VectorXcd vector_type;
-    typedef MatrixXcd matrix_type;
+    typedef MatrixDComplex matrix_type;
   };
+
+  template<>
+  struct rb_eigen_traits<std::complex<float> > {
+    typedef VectorXcf vector_type;
+    typedef MatrixSComplex matrix_type;
+  };
+
 };
 %}
 
 %template() RubyEigen::rb_eigen_traits<double>;
 %template() RubyEigen::rb_eigen_traits<float>;
+%template() RubyEigen::rb_eigen_traits<std::complex<double>>;
+%template() RubyEigen::rb_eigen_traits<std::complex<float>>;
 
 %{
 #include "rubyeigen_algo_base.h"
