@@ -1,16 +1,15 @@
 %module eigen
 
-/* load macro */
+
 %{
 #include <stdexcept>
 #include "rubyeigen_except.h"
-
 %}
 
 %include "rb_error_handle.i"
 
 %include "dense/common_methods.i"
-%include "dense/matrix_methods.i"
+ // %include "dense/matrix_methods.i"
 %include "dense/vector_methods.i"
 %include "sparse/matrix_methods.i"
 
@@ -76,30 +75,35 @@ namespace RubyEigen {
     typedef void vector_type;
     typedef void matrix_type;
     typedef T scalar_type;
+    typedef void float_type;
   };
 
   template<>
   struct rb_eigen_traits<double> {
     typedef VectorXd vector_type;
     typedef MatrixDouble matrix_type;
+    typedef double float_type;
   };
 
   template<>
   struct rb_eigen_traits<float> {
     typedef VectorXf vector_type;
     typedef MatrixFloat matrix_type;
+    typedef float float_type;
   };
 
   template<>
   struct rb_eigen_traits<std::complex<double> > {
     typedef VectorXcd vector_type;
     typedef MatrixDComplex matrix_type;
+    typedef double float_type;
   };
 
   template<>
   struct rb_eigen_traits<std::complex<float> > {
     typedef VectorXcf vector_type;
     typedef MatrixSComplex matrix_type;
+    typedef float float_type;
   };
 
 };
@@ -115,10 +119,6 @@ namespace RubyEigen {
 %}
 %include "rubyeigen_algo_base.h"
 
-/*
-   The following code appears only in .cxx file. The specialization of template classes
-   in SWIG context is done by using %template directive.
-*/
 %{
 #include "rubyeigen_algo.h"
 %}
@@ -129,7 +129,6 @@ namespace RubyEigen {
 %template() std::vector< std::complex<double> >;
 
 %include "dense/matrix_double.i"
-%include "dense/matrix_complex.i"
 %include "sparse/matrix_real.i"
  //%include "sparse/solver.i"
 
@@ -233,6 +232,6 @@ public:
 
 }; /* end of namespace ruby_eigen */
 
-// %include "dense/decomposition.i"
+%include "dense/decomposition.i"
 
 
