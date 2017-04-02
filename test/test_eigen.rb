@@ -231,4 +231,9 @@ class TestEigen < Test::Unit::TestCase
 #    MatrixFloat[[1,2],[3,4]]
 #  end
 
+  def test_narray
+    m = Numo::DFloat[[1,2,3],[4,5,6]]
+    Eigen::DFloatMatrix.from_narray(m).to_a
+  end
+
 end

@@ -1,5 +1,5 @@
+require 'numo/narray'
 require 'eigen/eigen'
-require "accel/gcthread"
 
 module Eigen::MatrixConstructor
   def [](*rows)
@@ -51,7 +51,7 @@ module Eigen::MatrixConstructor
     }
     col_size = row_size
     ret = new(row_size, row_size)
-    ret.setZero
+    ret.set_zero
     row_ind = 0
     ms.each{|m|
       if m.respond_to?(:rows)
@@ -138,25 +138,25 @@ module Eigen::MatrixCommon
   end
 end
 
-class Eigen::MatrixDouble
+class Eigen::DFloatMatrix
   extend  Eigen::MatrixConstructor
   include Eigen::MatrixCommon
   private "__get_item__", "__get_block__"
 end
 
-class Eigen::MatrixFloat
+class Eigen::SFloatMatrix
   extend  Eigen::MatrixConstructor
   include Eigen::MatrixCommon
   private "__get_item__", "__get_block__"
 end
 
-class Eigen::MatrixDComplex
+class Eigen::DComplexMatrix
   extend  Eigen::MatrixConstructor
   include Eigen::MatrixCommon
   private "__get_item__", "__get_block__"
 end
 
-class Eigen::MatrixSComplex
+class Eigen::SComplexMatrix
   extend  Eigen::MatrixConstructor
   include Eigen::MatrixCommon
   private "__get_item__", "__get_block__"
@@ -174,12 +174,12 @@ end
 module Eigen::VectorCommon
 end
 
-class Eigen::VectorDFloat
+class Eigen::DFloatVector
   extend  Eigen::VectorConstructor
   include Eigen::VectorCommon
 end
 
-class Eigen::VectorComplex
+class Eigen::DComplexVector
   extend  Eigen::VectorConstructor
   include Eigen::VectorCommon
 end
@@ -212,10 +212,7 @@ module Eigen::SpMatrixCommon
 end
 
 
-class Eigen::SpMatrixDouble
+class Eigen::DFloatSpMatrix
   include Eigen::SpMatrixCommon
   private "__reserve__", "__insert__"
 end
-
-Accel::GCThread.setup(lambda{ Eigen.gc_count > 67108864 },
-                      lambda{ Eigen.reset_gc_count()    })

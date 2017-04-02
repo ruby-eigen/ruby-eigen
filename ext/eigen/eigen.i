@@ -19,7 +19,9 @@
 %include std_complex.i
 
 %{
-
+extern "C" {
+#include <numo/narray.h>
+}
 #include <complex>
 #include <strstream>
 #include <Eigen/Core>
@@ -41,6 +43,51 @@
 namespace Eigen {};
 namespace RubyEigen {
   using namespace Eigen;
+
+  template<typename T>
+  struct narray_traits{
+    static VALUE type() { return Qnil; }
+  };
+
+  template<>
+  struct narray_traits<double>{
+    static VALUE type() { return numo_cDFloat; }
+  };
+
+  template<>
+  struct narray_traits<float>{
+    static VALUE type() { return numo_cSFloat; }
+  };
+
+  template<>
+  struct narray_traits<int32_t>{
+    static VALUE type() { return numo_cInt32; }
+  };
+
+  template<>
+  struct narray_traits<int16_t>{
+    static VALUE type() { return numo_cInt16; }
+  };
+
+  template<>
+  struct narray_traits<char>{
+    static VALUE type() { return numo_cInt8; }
+  };
+
+  template<>
+  struct narray_traits<uint32_t>{
+    static VALUE type() { return numo_cUInt32; }
+  };
+
+  template<>
+  struct narray_traits<uint16_t>{
+    static VALUE type() { return numo_cUInt16; }
+  };
+
+  template<>
+  struct narray_traits<unsigned char>{
+    static VALUE type() { return numo_cUInt8; }
+  };
 
   static void adjust_memory_usage(ssize_t n) {
 #ifdef HAVE_RB_GC_ADJUST_MEMORY_USAGE
