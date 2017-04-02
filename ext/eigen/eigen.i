@@ -9,7 +9,6 @@
 %include "rb_error_handle.i"
 
 %include "dense/common_methods.i"
-%include "dense/vector_methods.i"
 %include "sparse/matrix_methods.i"
 
 %include std_string.i
@@ -128,50 +127,12 @@ namespace RubyEigen {
 %template() std::vector< std::complex<double> >;
 
 %include "dense/matrix_double.i"
+%include "dense/vector_float.i"
 %include "sparse/matrix_real.i"
  //%include "sparse/solver.i"
 
+
 namespace RubyEigen {
-
-template<typename T, typename D1>
-class Matrix<T, D1, 1> {
-public:
-  Matrix(int);
-  ~Matrix();
-
-  RubyEigen::Matrix real();
-
-  %rename("dot") operator*;
-  Matrix operator*(const Matrix&);
-  rb_eigen_traits<T>::matrix_type operator*(const rb_eigen_traits<T>::matrix_type &);
-  Matrix operator*(const T&);
-
-  DENSE_MATRIX_VECTOR_Common_Methods(Matrix, T)
-  DENSE_VECTOR_Common_Methods(Matrix, T)
-
-};
-
-  %template(VectorDFloat) Matrix<double, RubyEigen::Dynamic, 1>;
-  %template(VectorSFloat) Matrix<float,  RubyEigen::Dynamic, 1>;
-  %template(VectorDComplex) Matrix<std::complex<double>, RubyEigen::Dynamic, 1>;
-  %template(VectorSComplex) Matrix<std::complex<float>,  RubyEigen::Dynamic, 1>;
-
-  /*
-class VectorXcd {
-public:
-  VectorXcd(int);
-  ~VectorXcd();
-
-  // complex matrix only 
-  RubyEigen::VectorDFloat imag();
-
-  RubyEigen::VectorDFloat real();
-
-  DENSE_MATRIX_VECTOR_Common_Methods(VectorXcd, std::complex<double>)
-  DENSE_VECTOR_Common_Methods(VectorXcd,  std::complex<double>)
-
-};
-  */
 
 class MatrixBool {
 public:

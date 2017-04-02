@@ -1,3 +1,20 @@
+namespace RubyEigen {
+
+template<typename T, typename D1>
+class Matrix<T, D1, 1> {
+public:
+  Matrix(int);
+  ~Matrix();
+
+  RubyEigen::Matrix real();
+
+  %rename("dot") operator*;
+  Matrix operator*(const Matrix&);
+  rb_eigen_traits<T>::matrix_type operator*(const rb_eigen_traits<T>::matrix_type &);
+  Matrix operator*(const T&);
+
+  DENSE_MATRIX_VECTOR_Common_Methods(Matrix, T)
+
   bool isOrthogonal(Matrix& v);
   bool isOrthogonal(Matrix& v, double);
   double squaredNorm();
@@ -44,3 +61,18 @@
     }
 
   }
+
+
+};
+
+  %template(VectorDFloat) Matrix<double, RubyEigen::Dynamic, 1>;
+  %template(VectorSFloat) Matrix<float,  RubyEigen::Dynamic, 1>;
+  %template(VectorDComplex) Matrix<std::complex<double>, RubyEigen::Dynamic, 1>;
+  %template(VectorSComplex) Matrix<std::complex<float>,  RubyEigen::Dynamic, 1>;
+
+
+  // complex matrix only 
+  //  RubyEigen::VectorDFloat imag();
+  //  RubyEigen::VectorDFloat real();
+
+}; /* end of namespace ruby_eigen */
