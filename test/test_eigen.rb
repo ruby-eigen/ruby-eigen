@@ -233,7 +233,11 @@ class TestEigen < Test::Unit::TestCase
 
   def test_narray
     m = Numo::DFloat[[1,2,3],[4,5,6]]
+    v = Numo::DFloat[1,2,3,4]
     Eigen::DFloatMatrix.from_narray(m).to_a
+    Eigen::DFloatMatrix.from_narray(m).to_narray
+    Eigen::DFloatVector.from_narray(v).to_a
+    Eigen::DFloatVector.from_narray(v).to_narray
   end
 
 end
