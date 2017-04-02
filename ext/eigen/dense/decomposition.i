@@ -28,8 +28,8 @@ public:
 };
 
 
-%template(FullPivLUDouble) RubyEigen::FullPivLU<RubyEigen::MatrixDouble>;
-%template(FullPivLUComplex) RubyEigen::FullPivLU<RubyEigen::MatrixDComplex>;
+%template(FullPivLUDouble) RubyEigen::FullPivLU<RubyEigen::DFloatMatrix>;
+%template(FullPivLUComplex) RubyEigen::FullPivLU<RubyEigen::DComplexMatrix>;
 
 template<class T>
 class PartialPivLU {
@@ -38,8 +38,8 @@ public:
   ~PartialPivLU();
 };
 
-%template(PartialPivLUDouble) RubyEigen::PartialPivLU<RubyEigen::MatrixDouble>;
-%template(PartialPivLUComplex) RubyEigen::PartialPivLU<RubyEigen::MatrixDComplex>;
+%template(PartialPivLUDouble) RubyEigen::PartialPivLU<RubyEigen::DFloatMatrix>;
+%template(PartialPivLUComplex) RubyEigen::PartialPivLU<RubyEigen::DComplexMatrix>;
 
 
 %alias FullPivHouseholderQR::matrixQ "q";
@@ -66,8 +66,8 @@ public:
   }
 };
 
-%template(FullPivHouseholderQRDouble) RubyEigen::FullPivHouseholderQR<RubyEigen::MatrixDouble>;
-%template(FullPivHouseholderQRComplex) RubyEigen::FullPivHouseholderQR<RubyEigen::MatrixDComplex>;
+%template(FullPivHouseholderQRDouble) RubyEigen::FullPivHouseholderQR<RubyEigen::DFloatMatrix>;
+%template(FullPivHouseholderQRComplex) RubyEigen::FullPivHouseholderQR<RubyEigen::DComplexMatrix>;
 
 
 template<class T>
@@ -79,15 +79,15 @@ public:
   T matrixU();
   T matrixV();
 
-  VectorDFloat singularValues();
+  DFloatVector singularValues();
 
   T solve(const T&);
   RubyEigen::Matrix<T::Scalar, RubyEigen::Dynamic, 1> solve(const RubyEigen::Matrix<T::Scalar, RubyEigen::Dynamic, 1>&);
 
 };
 
-%template(JacobiSVDDouble) RubyEigen::JacobiSVD<RubyEigen::MatrixDouble>;
-%template(JacobiSVDComplex) RubyEigen::JacobiSVD<RubyEigen::MatrixDComplex>;
+%template(JacobiSVDDouble) RubyEigen::JacobiSVD<RubyEigen::DFloatMatrix>;
+%template(JacobiSVDComplex) RubyEigen::JacobiSVD<RubyEigen::DComplexMatrix>;
 
 
 template<class T>
@@ -101,8 +101,8 @@ public:
 
 };
 
-%template(LDLTDouble) RubyEigen::LDLT<RubyEigen::MatrixDouble>;
-%template(LDLTComplex) RubyEigen::LDLT<RubyEigen::MatrixDComplex>;
+%template(LDLTDouble) RubyEigen::LDLT<RubyEigen::DFloatMatrix>;
+%template(LDLTComplex) RubyEigen::LDLT<RubyEigen::DComplexMatrix>;
 
 
 template<class T>
@@ -115,7 +115,7 @@ public:
 
 };
 
-%template(LLTDouble) RubyEigen::LLT<RubyEigen::MatrixDouble>;
-%template(LLTComplex) RubyEigen::LLT<RubyEigen::MatrixDComplex>;
+%template(LLTDouble) RubyEigen::LLT<RubyEigen::DFloatMatrix>;
+%template(LLTComplex) RubyEigen::LLT<RubyEigen::DComplexMatrix>;
 
 }; /* end of namespace ruby_eigen */

@@ -92,10 +92,10 @@ public:
 
 };  // class SparseMatrix
 
-%template(SpMatrixDouble) SparseMatrix<double>;
-%template(SpMatrixFloat)  SparseMatrix<float>;
-%template(SpMatrixDComplex)  SparseMatrix<std::complex<double>>;
-%template(SpMatrixSComplex)  SparseMatrix<std::complex<float>>;
+%template(DFloatSpMatrix) SparseMatrix<double>;
+%template(SFloatSpMatrix) SparseMatrix<float>;
+%template(DComplexSpMatrix) SparseMatrix<std::complex<double>>;
+%template(SComplexSpMatrix) SparseMatrix<std::complex<float>>;
 
 }; // namespace RubyEigen 
 
@@ -155,9 +155,9 @@ public:
 
 }; // class SpMatrixIter
 
-%template(SpMatrixDoubleIter) RubyEigen::SpMatrixIter<double>;
-%template(SpMatrixSFloatIter) RubyEigen::SpMatrixIter<float>;
-%template(SpMatrixDComplexIter) RubyEigen::SpMatrixIter<std::complex<double>>;
-%template(SpMatrixSComplexIter) RubyEigen::SpMatrixIter<std::complex<float>>;
+%template(DFloatSpMatrixIter) RubyEigen::SpMatrixIter<double>;
+%template(SFloatSpMatrixIter) RubyEigen::SpMatrixIter<float>;
+%template(DComplexSpMatrixIter) RubyEigen::SpMatrixIter<std::complex<double>>;
+%template(SComplexSpMatrixIter) RubyEigen::SpMatrixIter<std::complex<float>>;
 
 }; // namespace RubyEigen 

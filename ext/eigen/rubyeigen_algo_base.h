@@ -1,7 +1,7 @@
 namespace RubyEigen {
-  typedef SparseQR<RubyEigen::SpMatrixDouble, COLAMDOrdering<int> > SparseQRDouble;
-  typedef SparseQR<RubyEigen::SpMatrixFloat, COLAMDOrdering<int> > SparseQRFloat;
+  typedef SparseQR<RubyEigen::DFloatSpMatrix, COLAMDOrdering<int> > DFloatSparseQR;
+  typedef SparseQR<RubyEigen::SFloatSpMatrix, COLAMDOrdering<int> > SFloatSparseQR;
 
-  typedef SparseLU<RubyEigen::SpMatrixDouble, COLAMDOrdering<int> > SparseLUDouble;
-  typedef SparseLU<RubyEigen::SpMatrixFloat, COLAMDOrdering<int> > SparseLUFloat;
+  typedef SparseLU<RubyEigen::DFloatSpMatrix, COLAMDOrdering<int> > DFloatSparseLU;
+  typedef SparseLU<RubyEigen::SFloatSpMatrix, COLAMDOrdering<int> > SFloatSparseLU;
 };

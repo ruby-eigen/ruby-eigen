@@ -42,7 +42,7 @@ public:
   RubyEigen::Matrix<T::Scalar, RubyEigen::Dynamic, 1> solve(const RubyEigen::Matrix<T::Scalar, RubyEigen::Dynamic, 1>&);
 };
 
-%template(ConjugateGradientDouble)   ConjugateGradient<RubyEigen::MatrixDouble>;
+%template(ConjugateGradientDouble)   ConjugateGradient<RubyEigen::DFloatMatrix>;
 %template(ConjugateGradientSpDouble) ConjugateGradient<RubyEigen::SparseMatrix<double> >;
 
 template<class T>
@@ -64,7 +64,7 @@ public:
   T solve(const T &b);
   RubyEigen::Matrix<T::Scalar, RubyEigen::Dynamic, 1> solve(const RubyEigen::Matrix<T::Scalar, RubyEigen::Dynamic, 1>&);
 };
-%template(BiCGSTABDouble)   BiCGSTAB<RubyEigen::MatrixDouble>;
+%template(BiCGSTABDouble)   BiCGSTAB<RubyEigen::DFloatMatrix>;
 %template(BiCGSTABSpDouble) BiCGSTAB<RubyEigen::SparseMatrix<double> >;
 
 
@@ -95,7 +95,7 @@ public:
   }
 
   RubyEigen::SparseMatrix<double> solve(const RubyEigen::SparseMatrix<double>&);
-  RubyEigen::VectorDFloat solve(const RubyEigen::VectorXd&);
+  RubyEigen::DFloatVector solve(const RubyEigen::DFloatVector&);
 };
 
 class SparseLUDouble {
@@ -104,7 +104,7 @@ public:
   ~SparseLUDouble();
 
   RubyEigen::SparseMatrix<double> solve(const RubyEigen::SparseMatrix<double>&);
-  RubyEigen::VectorDFloat solve(const RubyEigen::VectorXd&);
+  RubyEigen::DFloatVector solve(const RubyEigen::DFloatVector&);
 };
 
 class SparseLUFloat {
@@ -113,7 +113,7 @@ public:
   ~SparseLUFloat();
 
   RubyEigen::SparseMatrix<float> solve(const RubyEigen::SparseMatrix<float>&);
-  //  RubyEigen::VectorDFloat solve(const RubyEigen::VectorXd&);
+  //  RubyEigen::DFloatVector solve(const RubyEigen::VectorXd&);
 };
 
 };

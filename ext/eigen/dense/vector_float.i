@@ -65,14 +65,14 @@ public:
 
 };
 
-  %template(VectorDFloat) Matrix<double, RubyEigen::Dynamic, 1>;
+  %template(DFloatVector) Matrix<double, RubyEigen::Dynamic, 1>;
   %template(VectorSFloat) Matrix<float,  RubyEigen::Dynamic, 1>;
   %template(VectorDComplex) Matrix<std::complex<double>, RubyEigen::Dynamic, 1>;
   %template(VectorSComplex) Matrix<std::complex<float>,  RubyEigen::Dynamic, 1>;
 
 
   // complex matrix only 
-  //  RubyEigen::VectorDFloat imag();
-  //  RubyEigen::VectorDFloat real();
+  //  RubyEigen::DFloatVector imag();
+  //  RubyEigen::DFloatVector real();
 
 }; /* end of namespace ruby_eigen */

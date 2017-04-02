@@ -134,24 +134,24 @@ public:
 
 }; // class Matrix
 
-  %template(MatrixDouble) Matrix<double, RubyEigen::Dynamic, RubyEigen::Dynamic>;
-  %template(MatrixFloat)  Matrix<float, RubyEigen::Dynamic, RubyEigen::Dynamic>;
-  %template(MatrixDComplex) Matrix<std::complex<double>, RubyEigen::Dynamic, RubyEigen::Dynamic>;
-  %template(MatrixSComplex) Matrix<std::complex<float>,  RubyEigen::Dynamic, RubyEigen::Dynamic>;
+  %template(DFloatMatrix) Matrix<double, RubyEigen::Dynamic, RubyEigen::Dynamic>;
+  %template(SFloatMatrix) Matrix<float,  RubyEigen::Dynamic, RubyEigen::Dynamic>;
+  %template(DComplexMatrix) Matrix<std::complex<double>, RubyEigen::Dynamic, RubyEigen::Dynamic>;
+  %template(SComplexMatrix) Matrix<std::complex<float>,  RubyEigen::Dynamic, RubyEigen::Dynamic>;
 
-class MatrixDoubleRef {
+class DFloatMatrixRef {
 public:
-  MatrixDoubleRef(RubyEigen::MatrixDouble&, int, int, int, int);
-  ~MatrixDoubleRef();
+  DFloatMatrixRef(RubyEigen::DFloatMatrix&, int, int, int, int);
+  ~DFloatMatrixRef();
 
   /* real matrix only */
-  MatrixDouble cwiseAbs();
-  MatrixDouble cwiseAbs2();
+  DFloatMatrix cwiseAbs();
+  DFloatMatrix cwiseAbs2();
 
   double maxCoeff();
   double minCoeff();
 
-  RubyEigen::MatrixDouble real();
+  RubyEigen::DFloatMatrix real();
 
   //  DENSE_MATRIX_VECTOR_Common_Methods(MatrixDouble, VectorXd, double)
   //  DENSE_MATRIX_Methods(MatrixDouble, VectorXd, double)

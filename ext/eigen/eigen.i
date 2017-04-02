@@ -53,27 +53,27 @@ namespace RubyEigen {
 
 %inline %{
 namespace RubyEigen {
-  typedef RubyEigen::Matrix<double, RubyEigen::Dynamic, RubyEigen::Dynamic> MatrixDouble;
-  typedef RubyEigen::Matrix<float,  RubyEigen::Dynamic, RubyEigen::Dynamic> MatrixFloat;
-  typedef RubyEigen::Matrix<std::complex<double>, RubyEigen::Dynamic, RubyEigen::Dynamic> MatrixDComplex;
-  typedef RubyEigen::Matrix<std::complex<float>,  RubyEigen::Dynamic, RubyEigen::Dynamic> MatrixSComplex;
+  typedef RubyEigen::Matrix<double, RubyEigen::Dynamic, RubyEigen::Dynamic> DFloatMatrix;
+  typedef RubyEigen::Matrix<float,  RubyEigen::Dynamic, RubyEigen::Dynamic> SFloatMatrix;
+  typedef RubyEigen::Matrix<std::complex<double>, RubyEigen::Dynamic, RubyEigen::Dynamic> DComplexMatrix;
+  typedef RubyEigen::Matrix<std::complex<float>,  RubyEigen::Dynamic, RubyEigen::Dynamic> SComplexMatrix;
 
-  typedef RubyEigen::Matrix<double, RubyEigen::Dynamic, 1> VectorDFloat;
-  typedef RubyEigen::Matrix<float,  RubyEigen::Dynamic, 1> VectorSFloat;
-  typedef RubyEigen::Matrix<std::complex<double>, RubyEigen::Dynamic, 1> VectorXcd;
-  typedef RubyEigen::Matrix<std::complex<float>,  RubyEigen::Dynamic, 1> VectorSComplex;
+  typedef RubyEigen::Matrix<double, RubyEigen::Dynamic, 1> DFloatVector;
+  typedef RubyEigen::Matrix<float,  RubyEigen::Dynamic, 1> SFloatVector;
+  typedef RubyEigen::Matrix<std::complex<double>, RubyEigen::Dynamic, 1> DComplexVector;
+  typedef RubyEigen::Matrix<std::complex<float>,  RubyEigen::Dynamic, 1> SComplexVector;
   typedef RubyEigen::Matrix<RubyEigen::MatrixXi::Scalar, RubyEigen::Dynamic, 1> VectorXi;
 
-  typedef RubyEigen::Block<RubyEigen::MatrixDouble> MatrixDoubleRef;
-  typedef RubyEigen::Block<RubyEigen::MatrixXcd> MatrixComplexRef;
+  typedef RubyEigen::Block<RubyEigen::DFloatMatrix> DFloatMatrixRef;
+  typedef RubyEigen::Block<RubyEigen::DComplexMatrix> DComplexMatrixRef;
 
   typedef Matrix<bool, Dynamic, Dynamic> MatrixBool;
   typedef Matrix<bool, Dynamic, 1> VectorBool;
 
-  typedef SparseMatrix<double> SpMatrixDouble;
-  typedef SparseMatrix<float>  SpMatrixFloat;
-  typedef SparseMatrix<double>::InnerIterator SpMatrixDoubleIter;
-  typedef SparseMatrix<float>::InnerIterator  SpMatrixFloatIter;
+  typedef SparseMatrix<double> DFloatSpMatrix;
+  typedef SparseMatrix<float>  SFloatSpMatrix;
+  typedef SparseMatrix<double>::InnerIterator DFloatSpMatrixIter;
+  typedef SparseMatrix<float>::InnerIterator  SFloatSpMatrixIter;
 
   typedef PermutationMatrix<RubyEigen::Dynamic, RubyEigen::Dynamic, int> PermutationMatrix;
   typedef Matrix<int, Dynamic, 1> PermutationIndices;
@@ -88,29 +88,29 @@ namespace RubyEigen {
 
   template<>
   struct rb_eigen_traits<double> {
-    typedef VectorDFloat vector_type;
-    typedef MatrixDouble matrix_type;
+    typedef DFloatVector vector_type;
+    typedef DFloatMatrix matrix_type;
     typedef double float_type;
   };
 
   template<>
   struct rb_eigen_traits<float> {
-    typedef VectorXf vector_type;
-    typedef MatrixFloat matrix_type;
+    typedef SFloatVector vector_type;
+    typedef SFloatMatrix matrix_type;
     typedef float float_type;
   };
 
   template<>
   struct rb_eigen_traits<std::complex<double> > {
-    typedef VectorXcd vector_type;
-    typedef MatrixDComplex matrix_type;
+    typedef DComplexVector vector_type;
+    typedef DComplexMatrix matrix_type;
     typedef double float_type;
   };
 
   template<>
   struct rb_eigen_traits<std::complex<float> > {
-    typedef VectorXcf vector_type;
-    typedef MatrixSComplex matrix_type;
+    typedef SComplexVector vector_type;
+    typedef SComplexMatrix matrix_type;
     typedef float float_type;
   };
 
@@ -155,7 +155,7 @@ public:
 
   %extend{
 
-    MatrixDouble select(const MatrixDouble &a, const MatrixDouble &b) {
+    DFloatMatrix select(const DFloatMatrix &a, const DFloatMatrix &b) {
       return (*$self).select(a, b);
     }
 
@@ -171,7 +171,7 @@ public:
 
 };
 
-%template(TransposeMatrixDouble) RubyEigen::Transpose<RubyEigen::MatrixDouble>;
+%template(TransposeMatrixDouble) RubyEigen::Transpose<RubyEigen::DFloatMatrix>;
 
 
 class PermutationMatrix {
@@ -198,7 +198,7 @@ public:
       return v;
     }
 
-    RubyEigen::MatrixDouble toMatrixDouble(){
+    RubyEigen::DFloatMatrix toMatrixDouble(){
       return (*$self);
     }
 
