@@ -238,6 +238,9 @@ class TestEigen < Test::Unit::TestCase
     Eigen::DFloatMatrix.from_narray(m).to_narray
     Eigen::DFloatVector.from_narray(v).to_a
     Eigen::DFloatVector.from_narray(v).to_narray
+
+    m = Numo::Int32[[1,2,3],[4,5,6]]
+    Eigen::Int32Matrix.from_narray(m).to_narray
   end
 
 end

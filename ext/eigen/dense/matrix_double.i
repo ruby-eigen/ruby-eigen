@@ -196,5 +196,4 @@ public:
   //  DENSE_MATRIX_RC_Methods(MatrixDouble, VectorXd, double)
 };
 
-
 }; /* end of namespace ruby_eigen */

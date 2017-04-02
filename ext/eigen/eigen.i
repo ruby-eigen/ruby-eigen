@@ -60,6 +60,11 @@ namespace RubyEigen {
   };
 
   template<>
+  struct narray_traits<int64_t>{
+    static VALUE type() { return numo_cInt64; }
+  };
+
+  template<>
   struct narray_traits<int32_t>{
     static VALUE type() { return numo_cInt32; }
   };
@@ -72,6 +77,11 @@ namespace RubyEigen {
   template<>
   struct narray_traits<char>{
     static VALUE type() { return numo_cInt8; }
+  };
+
+  template<>
+  struct narray_traits<uint64_t>{
+    static VALUE type() { return numo_cUInt64; }
   };
 
   template<>
@@ -183,7 +193,9 @@ namespace RubyEigen {
 %template() std::vector<float>;
 %template() std::vector< std::complex<double> >;
 
+%include "dense/extend_matrix.i"
 %include "dense/matrix_double.i"
+%include "dense/matrix_integer.i"
 %include "dense/vector_float.i"
 %include "sparse/matrix_real.i"
  //%include "sparse/solver.i"
