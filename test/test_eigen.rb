@@ -49,12 +49,12 @@ class TestEigen < Test::Unit::TestCase
     m.setRandom
     lu = m.fullPivLu
     p, l, u, q = lu.p, lu.l, lu.u, lu.q
-    assert m.isApprox(p.inverse * l * u * q.inverse)
+    assert m.isApprox(p.inverse.dot l.dot u.dot q.inverse )
 
     m.setConstant(1)
     lu = m.fullPivLu
     p, l, u, q = lu.p, lu.l, lu.u, lu.q
-    assert m.isApprox(p.inverse * l * u * q.inverse)
+    assert m.isApprox(p.inverse.dot l.dot u.dot q.inverse)
   end
 
   def test_matrix06
@@ -65,11 +65,11 @@ class TestEigen < Test::Unit::TestCase
     m = MatrixDouble[[1,2], [3,4]]
 
     qr = m.fullPivHouseholderQR
-    assert  ( m * qr.p ).isApprox( qr.q * qr.r )
+    assert  ( m.dot qr.p ).isApprox( qr.q.dot qr.r )
 
     m.setRandom
     qr = m.fullPivHouseholderQR
-    assert  ( m * qr.p ).isApprox( qr.q * qr.r )
+    assert  ( m. dot qr.p ).isApprox( qr.q. dot qr.r )
     
     m.svd().matrixU 
 
@@ -77,7 +77,7 @@ class TestEigen < Test::Unit::TestCase
 
   def test_matrix07
     m = MatrixDouble.new(1,2)
-    v = VectorDouble.new(2)
+    v = VectorDFloat.new(2)
     m.dot v
     v.dot m
 
@@ -91,7 +91,7 @@ class TestEigen < Test::Unit::TestCase
     m.setOnes
     assert_equal(m.to_a, Array.new(3){ [1.0, 1.0, 1.0] })
 
-    v = VectorDouble[1,2,3]
+    v = VectorDFloat[1,2,3]
     assert_equal(v.to_a, [1.0, 2.0, 3.0])
   end
 
@@ -192,11 +192,11 @@ class TestEigen < Test::Unit::TestCase
     m = MatrixDouble[ [1,0], [1, 2] ]
     solver = m.fullPivLu()
     solver.solve(MatrixDouble[ [1], [1] ])
-    solver.solve(VectorDouble[1, 1])
+    solver.solve(VectorDFloat[1, 1])
   end
 
   def test_vector01
-    assert_nothing_raised{ VectorDouble[1, 2, 3] }
+    assert_nothing_raised{ VectorDFloat[1, 2, 3] }
   end
 
   def test_spmatrix

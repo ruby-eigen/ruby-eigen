@@ -174,7 +174,7 @@ end
 module Eigen::VectorCommon
 end
 
-class Eigen::VectorDouble
+class Eigen::VectorDFloat
   extend  Eigen::VectorConstructor
   include Eigen::VectorCommon
 end
