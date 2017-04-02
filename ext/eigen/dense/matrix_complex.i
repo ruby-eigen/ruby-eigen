@@ -1,5 +1,5 @@
 namespace RubyEigen {
-
+  /*
 %rename(MatrixComplex) MatrixXcd;
 
 %alias MatrixXcd::operator== "__eq__";
@@ -9,7 +9,7 @@ public:
   MatrixXcd(int, int);
   ~MatrixXcd();
 
-  /* complex matrix only */
+  // complex matrix only 
   RubyEigen::MatrixDouble imag();
 
   RubyEigen::MatrixDouble real();
@@ -25,7 +25,7 @@ public:
   }
 
 };
-
+  */
   /*
 class MatrixComplexRef {
 public:

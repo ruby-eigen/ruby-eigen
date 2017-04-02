@@ -26,13 +26,13 @@ class TestEigen < Test::Unit::TestCase
     m1.setRandom
     m2 = MatrixDouble.new(200,200)
     m2.setRandom
-    m1 * m2
+    m1.dot m2
   end
 
   def test_matrix03
     m1 = MatrixDouble.new(2,3)
     m2 = MatrixDouble.new(4,5)
-    assert_raise(EigenRuntimeError){ m1*m2 }
+    assert_raise(EigenRuntimeError){ m1.dot m2 }
   end
 
   def test_matrix04
@@ -78,8 +78,8 @@ class TestEigen < Test::Unit::TestCase
   def test_matrix07
     m = MatrixDouble.new(1,2)
     v = VectorDouble.new(2)
-    m * v
-    v * m
+    m.dot v
+    v.dot m
 
     vc = VectorComplex.new(2)
     vc.setRandom

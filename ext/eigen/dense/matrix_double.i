@@ -6,18 +6,18 @@ public:
   Matrix(int, int);
   ~Matrix();
 
-  /* real matrix only */
   Matrix cwiseAbs();
   Matrix cwiseAbs2();
 
-  T maxCoeff();
-  T minCoeff();
+  /* real matrix only */
+  //  T maxCoeff();
+  //  T minCoeff();
 
   RubyEigen::Matrix real();
 #define VectorTinMatrix Matrix<RubyEigen::Matrix<T, RubyEigen::Dynamic, RubyEigen::Dynamic>::Scalar, RubyEigen::Dynamic, 1>
 #define MatrixTinMatrix Matrix<T, RubyEigen::Dynamic, RubyEigen::Dynamic>
   DENSE_MATRIX_VECTOR_Common_Methods(Matrix, T) 
-    //    DENSE_MATRIX_Methods(Matrix, VectorTinMatrix, T) 
+  DENSE_MATRIX_Methods(Matrix, T) 
     //    DENSE_MATRIX_RC_Methods(MatrixTinMatrix, VectorTinMatrix, T) 
 
 
@@ -37,7 +37,7 @@ public:
 
   %template(MatrixDouble) Matrix<double, RubyEigen::Dynamic, RubyEigen::Dynamic>;
   %template(MatrixFloat)  Matrix<float, RubyEigen::Dynamic, RubyEigen::Dynamic>;
-
+  %template(MatrixComplex) Matrix<std::complex<double>, RubyEigen::Dynamic, RubyEigen::Dynamic>;
 
 class MatrixDoubleRef {
 public:

@@ -7,7 +7,7 @@ unless eigen3_opt[0]
   $CXXFLAGS = ($CXXFLAGS || "") + " -I#{eigen3_path} "
 end
 
-$CXXFLAGS = ($CXXFLAGS || "") + " -O2 -Wall "
+$CXXFLAGS = ($CXXFLAGS || "") + " -std=c++11 -Wall "
 create_makefile('eigen/eigen')
 
 

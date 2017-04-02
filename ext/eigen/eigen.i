@@ -47,17 +47,14 @@ namespace RubyEigen {
 %inline %{
 namespace RubyEigen {
   typedef RubyEigen::Matrix<double, RubyEigen::Dynamic, RubyEigen::Dynamic> MatrixDouble;
-  typedef RubyEigen::Matrix<float, RubyEigen::Dynamic, RubyEigen::Dynamic> MatrixFloat;
+  typedef RubyEigen::Matrix<float,  RubyEigen::Dynamic, RubyEigen::Dynamic> MatrixFloat;
   typedef RubyEigen::Matrix<std::complex<double>, RubyEigen::Dynamic, RubyEigen::Dynamic> MatrixComplex;
-  typedef RubyEigen::Matrix<std::complex<float>, RubyEigen::Dynamic, RubyEigen::Dynamic> MatrixComplexFloat;
+  typedef RubyEigen::Matrix<std::complex<float>,  RubyEigen::Dynamic, RubyEigen::Dynamic> MatrixComplexFloat;
 
-  /*
-     By redefining VectorXd and VectorXcd in SWIG scope, SWIG can interpret what the templates are.
-     The following templates appear in some decomposition classes.
-  */
-  //  typedef RubyEigen::Matrix<RubyEigen::MatrixDouble::Scalar, RubyEigen::Dynamic, 1> VectorXd;
-  typedef RubyEigen::Matrix<RubyEigen::MatrixFloat::Scalar, RubyEigen::Dynamic, 1>  VectorXf;
-  typedef RubyEigen::Matrix<RubyEigen::MatrixComplex::Scalar, RubyEigen::Dynamic, 1> VectorXcd;
+  typedef RubyEigen::Matrix<double, RubyEigen::Dynamic, 1> VectorXd;
+  typedef RubyEigen::Matrix<float,  RubyEigen::Dynamic, 1>  VectorXf;
+  typedef RubyEigen::Matrix<std::complex<double>, RubyEigen::Dynamic, 1> VectorXcd;
+  typedef RubyEigen::Matrix<std::complex<float>,  RubyEigen::Dynamic, 1> VectorXcf;
   typedef RubyEigen::Matrix<RubyEigen::MatrixXi::Scalar, RubyEigen::Dynamic, 1> VectorXi;
 
   typedef RubyEigen::Block<RubyEigen::MatrixDouble> MatrixDoubleRef;
@@ -65,8 +62,6 @@ namespace RubyEigen {
 
   typedef Matrix<bool, Dynamic, Dynamic> MatrixBool;
   typedef Matrix<bool, Dynamic, 1> VectorBool;
-  typedef Array<bool, Dynamic, Dynamic> CMatrixBool;
-  typedef Array<bool, Dynamic, 1> CVectorBool;
 
   typedef SparseMatrix<double> SpMatrixDouble;
   typedef SparseMatrix<float>  SpMatrixFloat;
@@ -126,7 +121,7 @@ namespace RubyEigen {
 
 %include "dense/matrix_double.i"
 %include "dense/matrix_complex.i"
- //%include "sparse/matrix_real.i"
+%include "sparse/matrix_real.i"
  //%include "sparse/solver.i"
 
 namespace RubyEigen {
