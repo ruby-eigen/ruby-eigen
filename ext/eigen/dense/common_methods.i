@@ -14,6 +14,9 @@
   TYPE cwiseSqrt();
   TYPE cwiseInverse();
 
+%rename("__mul__") cwiseProduct;
+%rename("__div__") cwiseQuotient;
+
   TYPE cwiseProduct(TYPE &m);
   TYPE cwiseQuotient(TYPE &m); 
 

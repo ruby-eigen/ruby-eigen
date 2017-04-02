@@ -2,6 +2,9 @@
 
 #pragma SWIG nowarn=401
 
+%rename("%(utitle)s", %$ismember, %$isfunction) "";
+%rename("%(utitle)s", %$ismember, %$isvariable) "";
+
 %{
 #include <stdexcept>
 #include "rubyeigen_except.h"

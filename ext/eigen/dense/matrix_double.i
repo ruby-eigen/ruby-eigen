@@ -3,6 +3,9 @@ namespace RubyEigen {
 template<typename T, typename D1, typename D2>
 class Matrix {
 public:
+
+  typedef T Scalar;
+
   Matrix(int, int);
   ~Matrix();
 
@@ -129,7 +132,7 @@ public:
     }
   }
 
-}; 
+}; // class Matrix
 
   %template(MatrixDouble) Matrix<double, RubyEigen::Dynamic, RubyEigen::Dynamic>;
   %template(MatrixFloat)  Matrix<float, RubyEigen::Dynamic, RubyEigen::Dynamic>;

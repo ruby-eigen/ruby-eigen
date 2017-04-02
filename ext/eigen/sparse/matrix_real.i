@@ -41,12 +41,18 @@ public:
   SparseMatrix cwiseSqrt();
   SparseMatrix cwiseInverse();
 
+%rename("__mul__") cwiseProduct;
+%rename("__div__") cwiseQuotient;
+
   SparseMatrix cwiseProduct(SparseMatrix &m);
   SparseMatrix cwiseQuotient(SparseMatrix &m); 
 
   SparseMatrix operator+(const SparseMatrix &m);
   SparseMatrix operator-(const SparseMatrix &m);
   SparseMatrix operator-();
+
+%rename("dot") operator*;
+
   SparseMatrix operator*(const SparseMatrix &m);
   SparseMatrix operator*(T d);
   SparseMatrix operator/(T d);
@@ -107,6 +113,7 @@ public:
 %}
 
 namespace RubyEigen {
+
 template<class T>
 class SpMatrixIter : public SparseMatrix<T>::InnerIterator {
 public:
