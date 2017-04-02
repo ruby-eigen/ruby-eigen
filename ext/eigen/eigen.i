@@ -20,6 +20,7 @@
 
 %{
 
+#include <complex>
 #include <strstream>
 #include <Eigen/Core>
 #include <Eigen/LU>
@@ -36,19 +37,74 @@
 
 %}
 
-/* The following code appears in .cxx file and is also parsed by SWIG. See SWIG.html#SWIG_nn20 */
 %inline %{
-/* to avoid SWIG warning */
 namespace Eigen {};
 namespace RubyEigen {
   using namespace Eigen;
 };
 %}
 
-%{
-#include "rubyeigen_base.h"
+%inline %{
+namespace RubyEigen {
+  typedef RubyEigen::Matrix<double, RubyEigen::Dynamic, RubyEigen::Dynamic> MatrixDouble;
+  typedef RubyEigen::Matrix<float, RubyEigen::Dynamic, RubyEigen::Dynamic> MatrixFloat;
+  typedef RubyEigen::Matrix<std::complex<double>, RubyEigen::Dynamic, RubyEigen::Dynamic> MatrixComplex;
+  typedef RubyEigen::Matrix<std::complex<float>, RubyEigen::Dynamic, RubyEigen::Dynamic> MatrixComplexFloat;
+
+  /*
+     By redefining VectorXd and VectorXcd in SWIG scope, SWIG can interpret what the templates are.
+     The following templates appear in some decomposition classes.
+  */
+  //  typedef RubyEigen::Matrix<RubyEigen::MatrixDouble::Scalar, RubyEigen::Dynamic, 1> VectorXd;
+  typedef RubyEigen::Matrix<RubyEigen::MatrixFloat::Scalar, RubyEigen::Dynamic, 1>  VectorXf;
+  typedef RubyEigen::Matrix<RubyEigen::MatrixComplex::Scalar, RubyEigen::Dynamic, 1> VectorXcd;
+  typedef RubyEigen::Matrix<RubyEigen::MatrixXi::Scalar, RubyEigen::Dynamic, 1> VectorXi;
+
+  typedef RubyEigen::Block<RubyEigen::MatrixDouble> MatrixDoubleRef;
+  typedef RubyEigen::Block<RubyEigen::MatrixXcd> MatrixComplexRef;
+
+  typedef Matrix<bool, Dynamic, Dynamic> MatrixBool;
+  typedef Matrix<bool, Dynamic, 1> VectorBool;
+  typedef Array<bool, Dynamic, Dynamic> CMatrixBool;
+  typedef Array<bool, Dynamic, 1> CVectorBool;
+
+  typedef SparseMatrix<double> SpMatrixDouble;
+  typedef SparseMatrix<float>  SpMatrixFloat;
+  typedef SparseMatrix<double>::InnerIterator SpMatrixDoubleIter;
+  typedef SparseMatrix<float>::InnerIterator  SpMatrixFloatIter;
+
+  typedef PermutationMatrix<RubyEigen::Dynamic, RubyEigen::Dynamic, int> PermutationMatrix;
+  typedef Matrix<int, Dynamic, 1> PermutationIndices;
+
+  template<class T> 
+  struct rb_eigen_traits {
+    typedef void vector_type;
+    typedef void matrix_type;
+    typedef T scalar_type;
+  };
+
+  template<>
+  struct rb_eigen_traits<double> {
+    typedef VectorXd vector_type;
+    typedef MatrixDouble matrix_type;
+  };
+
+  template<>
+  struct rb_eigen_traits<float> {
+    typedef VectorXf vector_type;
+    typedef MatrixFloat matrix_type;
+  };
+
+  template<>
+  struct rb_eigen_traits<std::complex<double> > {
+    typedef VectorXcd vector_type;
+    typedef MatrixXcd matrix_type;
+  };
+};
 %}
-%include "rubyeigen_base.h"
+
+%template() RubyEigen::rb_eigen_traits<double>;
+%template() RubyEigen::rb_eigen_traits<float>;
 
 %{
 #include "rubyeigen_algo_base.h"
@@ -63,15 +119,15 @@ namespace RubyEigen {
 #include "rubyeigen_algo.h"
 %}
 
-%template(StdVectorInt) std::vector<int>;
-%template(StdVectorDouble) std::vector<double>;
-%template(StdVectorFloat) std::vector<float>;
-%template(StdVectorComplex) std::vector< std::complex<double> >;
+%template() std::vector<int>;
+%template() std::vector<double>;
+%template() std::vector<float>;
+%template() std::vector< std::complex<double> >;
 
 %include "dense/matrix_double.i"
 %include "dense/matrix_complex.i"
-%include "sparse/matrix_real.i"
-%include "sparse/solver.i"
+ //%include "sparse/matrix_real.i"
+ //%include "sparse/solver.i"
 
 namespace RubyEigen {
 
@@ -86,7 +142,7 @@ public:
 
   RubyEigen::VectorXd real();
 
-  DENSE_MATRIX_VECTOR_Common_Methods(VectorXd, MatrixDouble, double)
+  DENSE_MATRIX_VECTOR_Common_Methods(VectorXd, double)
   DENSE_VECTOR_Common_Methods(VectorXd, MatrixDouble, double)
 
 };
@@ -102,7 +158,7 @@ public:
 
   RubyEigen::VectorXd real();
 
-  DENSE_MATRIX_VECTOR_Common_Methods(VectorXcd, MatrixXcd, std::complex<double>)
+  DENSE_MATRIX_VECTOR_Common_Methods(VectorXcd, std::complex<double>)
   DENSE_VECTOR_Common_Methods(VectorXcd, MatrixXcd, std::complex<double>)
 
 };
@@ -171,8 +227,8 @@ public:
 };
 
 
-%include "array.i"
-
 }; /* end of namespace ruby_eigen */
 
-%include "dense/decomposition.i"
+// %include "dense/decomposition.i"
+
+

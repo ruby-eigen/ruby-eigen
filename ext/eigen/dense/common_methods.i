@@ -1,4 +1,4 @@
-%define DENSE_MATRIX_VECTOR_Common_Methods(TYPE, O_TYPE, s_type)
+%define DENSE_MATRIX_VECTOR_Common_Methods(TYPE, s_type)
 
   //  bool allFinite();
   bool hasNaN();
@@ -17,16 +17,9 @@
   TYPE cwiseProduct(TYPE &m);
   TYPE cwiseQuotient(TYPE &m); 
 
-  MatrixBool cwiseEqual(TYPE &m);
-  MatrixBool cwiseEqual(s_type);
-  MatrixBool cwiseNotEqual(TYPE &m);
-
   TYPE operator+(const TYPE &m);
   TYPE operator-(const TYPE &m);
   TYPE operator-();
-  TYPE operator*(const TYPE &m);
-  O_TYPE operator*(const O_TYPE &m);
-  TYPE operator*(s_type d);
   TYPE operator/(s_type d);
 
   bool operator==(TYPE &m);

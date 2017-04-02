@@ -1,12 +1,12 @@
-%define DENSE_MATRIX_Methods(TYPE, V_TYPE, s_type)
+%define DENSE_MATRIX_Methods(TYPE, s_type)
 
-  RubyEigen:: ## V_TYPE col(int);
+  RubyEigen::rb_eigen_traits<s_type>::vector_type col(int);
   TYPE row(int);
 
   int cols();
   int rows();
 
-  V_TYPE diagonal();
+  RubyEigen::rb_eigen_traits<s_type>::vector_type diagonal();
   TYPE diagonal(int);
 
   s_type determinant();
@@ -33,52 +33,20 @@
 
     std::vector< s_type > __get_row_array__(int i) {
       std::vector< s_type > v((*$self).cols());
-      Eigen:: ## V_TYPE ## ::Map(v.data(), v.size()) = (*$self).row(i);
+      RubyEigen::rb_eigen_traits<s_type>::vector_type::Map(v.data(), v.size()) = (*$self).row(i);
       return v;
     }
 
     void __set_col__(int i, const std::vector<s_type> &v){
-      (*self).col(i) = Eigen:: ## V_TYPE ## ::Map(v.data(), v.size());
+      (*self).col(i) = RubyEigen::rb_eigen_traits<s_type>::vector_type::Map(v.data(), v.size());
     }
 
     void __set_row__(int i, const std::vector<s_type> &v){
-      (*self).row(i) = Eigen:: ## V_TYPE ## ::Map(v.data(), v.size());
+      (*self).row(i) = RubyEigen::rb_eigen_traits<s_type>::vector_type::Map(v.data(), v.size());
     }
 
-    RubyEigen:: ## TYPE __get_block__(int i, int j, int rows, int cols) {
+    RubyEigen::rb_eigen_traits<s_type>::matrix_type __get_block__(int i, int j, int rows, int cols) {
       return (*$self).block(i, j, rows, cols);
-    }
-
-    RubyEigen:: ## TYPE getBottomLeftCorner(int i, int j) {
-      return (*$self).bottomLeftCorner(i, j);
-    }
-
-    void setBottomLeftCorner(RubyEigen:: ## TYPE &m) {
-      (*$self).bottomLeftCorner(m.rows(), m.cols()) = m;
-    }
-
-    RubyEigen:: ## TYPE getBottomRightCorner(int i, int j) {
-      return (*$self).bottomRightCorner(i, j);
-    }
-
-    void setBottomRightCorner(RubyEigen:: ## TYPE &m) {
-      (*$self).bottomRightCorner(m.rows(), m.cols()) = m;
-    }
-
-    RubyEigen:: ## TYPE getTopLeftCorner(int i, int j) {
-      return (*$self).topLeftCorner(i, j);
-    }
-
-    void setTopLeftCorner(RubyEigen:: ## TYPE &m) {
-      (*$self).topLeftCorner(m.rows(), m.cols()) = m;
-    }
-
-    RubyEigen:: ## TYPE getTopRightCorner(int i, int j) {
-      return (*$self).topRightCorner(i, j);
-    }
-
-    void setTopRightCorner(RubyEigen:: ## TYPE &m) {
-      (*$self).topRightCorner(m.rows(), m.cols()) = m;
     }
 
     std::string to_s() {
