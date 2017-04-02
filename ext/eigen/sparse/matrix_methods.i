@@ -1,4 +1,4 @@
-%define SPARSE_MATRIX_Methods(TYPE,  s_type)
+%define SPARSE_MATRIX_Methods()
 
   int rows();
   int cols();
@@ -17,40 +17,40 @@
   bool isCompressed();
   void uncompress();
 
-  void prune(s_type);
+  void prune(T);
 
   void setIdentity();
   void setZero();
 
   /* component wise op */
   
-  TYPE cwiseSqrt();
-  TYPE cwiseInverse();
+  SparseMatrix cwiseSqrt();
+  SparseMatrix cwiseInverse();
 
-  TYPE cwiseProduct(TYPE &m);
-  TYPE cwiseQuotient(TYPE &m); 
+  SparseMatrix cwiseProduct(SparseMatrix &m);
+  SparseMatrix cwiseQuotient(SparseMatrix &m); 
 
-  TYPE operator+(const TYPE &m);
-  TYPE operator-(const TYPE &m);
-  TYPE operator-();
-  TYPE operator*(const TYPE &m);
-  TYPE operator*(s_type d);
-  TYPE operator/(s_type d);
+  SparseMatrix operator+(const SparseMatrix &m);
+  SparseMatrix operator-(const SparseMatrix &m);
+  SparseMatrix operator-();
+  SparseMatrix operator*(const SparseMatrix &m);
+  SparseMatrix operator*(T d);
+  SparseMatrix operator/(T d);
 
-  TYPE transpose();
-  TYPE adjoint();
+  SparseMatrix transpose();
+  SparseMatrix adjoint();
 
 %alias coeff "[]";
 
-  s_type coeff(int, int);
+  T coeff(int, int);
 
   %extend {
 
-    void __setitem__(int i, int j, s_type val) {
+    void __setitem__(int i, int j, T val) {
       (*$self).coeffRef(i, j) = val;
     }
 
-    void __insert__(int i, int j, s_type val) {
+    void __insert__(int i, int j, T val) {
       (*$self).insert(i,j) = val;
     }
 
@@ -64,8 +64,8 @@
       return v;
     }
 
-    std::vector< s_type > values(){
-      std::vector< s_type > v((*$self).valuePtr(), (*$self).valuePtr() + (*$self).nonZeros());
+    std::vector< T > values(){
+      std::vector< T > v((*$self).valuePtr(), (*$self).valuePtr() + (*$self).nonZeros());
       return v;
     }
   }

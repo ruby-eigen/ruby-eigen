@@ -7,34 +7,123 @@ public:
   ~SparseMatrix();
 
   /* real matrix only */
-  SparseMatrix<T> cwiseAbs();
-  SparseMatrix<T> cwiseAbs2();
+  //  SparseMatrix cwiseAbs();
+  //  SparseMatrix cwiseAbs2();
 
-  SparseMatrix<T> cwiseMax(const SparseMatrix<T> &m);
-  SparseMatrix<T> cwiseMin(const SparseMatrix<T> &m);
+  //  SparseMatrix cwiseMax(const SparseMatrix &m);
+  //  SparseMatrix cwiseMin(const SparseMatrix &m);
 
-  SPARSE_MATRIX_Methods(SparseMatrix<T>,  T)
+  int rows();
+  int cols();
+  int outerSize();
+  int innerSize();
+  int nonZeros();
 
-};
-%template(SpMatrixFloat) SparseMatrix<float>;
+  double squaredNorm();
+  double blueNorm();
+
+%rename(__reserve__) reserve;
+
+  void reserve(int);
+  void reserve( std::vector<int> );
+
+  void makeCompressed();
+  bool isCompressed();
+  void uncompress();
+
+  void prune(T);
+
+  void setIdentity();
+  void setZero();
+
+  /* component wise op */
+  
+  SparseMatrix cwiseSqrt();
+  SparseMatrix cwiseInverse();
+
+  SparseMatrix cwiseProduct(SparseMatrix &m);
+  SparseMatrix cwiseQuotient(SparseMatrix &m); 
+
+  SparseMatrix operator+(const SparseMatrix &m);
+  SparseMatrix operator-(const SparseMatrix &m);
+  SparseMatrix operator-();
+  SparseMatrix operator*(const SparseMatrix &m);
+  SparseMatrix operator*(T d);
+  SparseMatrix operator/(T d);
+
+  SparseMatrix transpose();
+  SparseMatrix adjoint();
+
+%alias coeff "[]";
+
+  T coeff(int, int);
+
+  %extend {
+
+    void __setitem__(int i, int j, T val) {
+      (*$self).coeffRef(i, j) = val;
+    }
+
+    void __insert__(int i, int j, T val) {
+      (*$self).insert(i,j) = val;
+    }
+
+    std::vector< int > innerIndices(){
+      std::vector< int > v((*$self).innerIndexPtr(), (*$self).innerIndexPtr() + (*$self).nonZeros());
+      return v;
+    }
+
+    std::vector< int > outerIndices(){
+      std::vector< int > v((*$self).outerIndexPtr(), (*$self).outerIndexPtr() + (*$self).outerSize()+1);
+      return v;
+    }
+
+    std::vector< T > values(){
+      std::vector< T > v((*$self).valuePtr(), (*$self).valuePtr() + (*$self).nonZeros());
+      return v;
+    }
+  }
+
+};  // class SparseMatrix
+
 %template(SpMatrixDouble) SparseMatrix<double>;
+%template(SpMatrixFloat)  SparseMatrix<float>;
+%template(SpMatrixDComplex)  SparseMatrix<std::complex<double>>;
+%template(SpMatrixSComplex)  SparseMatrix<std::complex<float>>;
 
-class SpMatrixDoubleIter {
+}; // namespace RubyEigen 
+
+%{
+namespace RubyEigen {
+template<class T>
+class SpMatrixIter : public SparseMatrix<T>::InnerIterator {
 public:
-  SpMatrixDoubleIter(RubyEigen::SpMatrixDouble&, size_t);
-  ~SpMatrixDoubleIter();
 
-  double value();
-  int row();
-  int col();
-  int index();
-  int outer();
+  SpMatrixIter(SparseMatrix<T>& m, size_t i) : SparseMatrix<T>::InnerIterator(m, i) {}
+  ~SpMatrixIter() {}
+
+};
+};
+%}
+
+namespace RubyEigen {
+template<class T>
+class SpMatrixIter : public SparseMatrix<T>::InnerIterator {
+public:
+  SpMatrixIter(SparseMatrix<T>&, size_t);
+  ~SpMatrixIter();
+
+  T value();
+  size_t row();
+  size_t col();
+  size_t index();
+  size_t outer();
 
 %rename("end?") end;
 
   %extend {
 
-    double next() {
+    T next() {
       if (*$self){
         ++(*$self);
         return (*$self).value();
@@ -51,50 +140,17 @@ public:
       }
     }
 
-    void set(double x) {
+    void set(T x) {
       (*$self).valueRef() = x;
     }
 
   }
-};
 
-class SpMatrixFloatIter {
-public:
-  SpMatrixFloatIter(RubyEigen::SpMatrixFloat&, size_t);
-  ~SpMatrixFloatIter();
+}; // class SpMatrixIter
 
-  float value();
-  int row();
-  int col();
-  int index();
-  int outer();
+%template(SpMatrixDoubleIter) RubyEigen::SpMatrixIter<double>;
+%template(SpMatrixSFloatIter) RubyEigen::SpMatrixIter<float>;
+%template(SpMatrixDComplexIter) RubyEigen::SpMatrixIter<std::complex<double>>;
+%template(SpMatrixSComplexIter) RubyEigen::SpMatrixIter<std::complex<float>>;
 
-%rename("end?") end;
-
-  %extend {
-
-    float next() {
-      if (*$self){
-        ++(*$self);
-        return (*$self).value();
-      }else{
-        return 0;
-      }
-    }
-
-    bool end(){
-      if (*$self) {
-        return false;
-      }else{
-        return true;
-      }
-    }
-
-    void set(float x) {
-      (*$self).valueRef() = x;
-    }
-
-  }
-};
-
-};
+}; // namespace RubyEigen 

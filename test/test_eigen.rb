@@ -81,7 +81,7 @@ class TestEigen < Test::Unit::TestCase
     m.dot v
     v.dot m
 
-    vc = VectorComplex.new(2)
+    vc = VectorDComplex.new(2)
     vc.setRandom
     vc.segment(0,1)
   end
@@ -132,11 +132,11 @@ class TestEigen < Test::Unit::TestCase
     assert_equal(MatrixDouble[[0,0,1],[0,0,1],[1,1,1]],
                  m1)
 
-    m1 = MatrixComplex.new(3,3)
+    m1 = MatrixDComplex.new(3,3)
     m1.setOnes
     m1_ref = m1.ref(0..1,0..1)
     m1_ref.setConstant(1i)
-    assert_equal(MatrixComplex[[1i,1i,1],[1i,1i,1],[1,1,1]],
+    assert_equal(MatrixDComplex[[1i,1i,1],[1i,1i,1],[1,1,1]],
                  m1)   
   end
 
@@ -181,8 +181,8 @@ class TestEigen < Test::Unit::TestCase
     assert_equal(MatrixDouble.block_diagonal([[1,1],[1,1]],1),
                  MatrixDouble[ [1,1,0], [1,1,0], [0,0,1] ])
 
-    assert_equal(MatrixComplex.block_diagonal([[1i,1],[1,1]],1+1i),
-                 MatrixComplex[ [1i,1,0], [1,1,0], [0,0,1+1i] ])
+    assert_equal(MatrixDComplex.block_diagonal([[1i,1],[1,1]],1+1i),
+                 MatrixDComplex[ [1i,1,0], [1,1,0], [0,0,1+1i] ])
 
     assert_raise(EigenRuntimeError){ MatrixDouble.hstack(m1, m3) }
     assert_raise(EigenRuntimeError){ MatrixDouble.vstack(m1, m3) }

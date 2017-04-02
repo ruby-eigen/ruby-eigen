@@ -9,7 +9,6 @@
 %include "rb_error_handle.i"
 
 %include "dense/common_methods.i"
-%include "sparse/matrix_methods.i"
 
 %include std_string.i
 %include std_vector.i
