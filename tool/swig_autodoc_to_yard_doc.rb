@@ -41,12 +41,15 @@ class Arg
 
   def convert_type_name(type)
     case type
-    when /double/
+    when "double"
       "Float"
-    when /int/, /size_t/
+    when "int", "size_t"
       "Integer"
-    when /std\:\:string/
+    when "std::string"
       "String"
+    when /\Astd\:\:vector< *(\S+) *,/
+      type = convert_type_name($1)
+      "Array<#{type}>"
     else
       type
     end
