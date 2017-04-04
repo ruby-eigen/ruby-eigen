@@ -1,10 +1,11 @@
 class Arg
 
   def initialize(method, arg, returned_klass)
-    @returned_klass = returned_klass
+    @method = method
+    @returned_klass = convert_type_name(returned_klass)
     @args = arg
   end
-  attr :args, :returned_klass
+  attr :method, :args, :returned_klass
 
   def arg_names_a
     return [] unless @args
@@ -33,7 +34,22 @@ class Arg
     return [] unless @args
     s = @args
     s = s[1..-2]
-    s.split(",").map{|arg| arg.sub(/\A +/,"").sub(/ \S+\z/, "") }
+    s.split(",").map{|arg| 
+      convert_type_name( arg.sub(/\A +/,"").sub(/ \S+\z/, "") )
+    }
+  end
+
+  def convert_type_name(type)
+    case type
+    when /double/
+      "Float"
+    when /int/, /size_t/
+      "Integer"
+    when /std\:\:string/
+      "String"
+    else
+      type
+    end
   end
 
   def def_method
@@ -87,7 +103,6 @@ h.each{|klass, h|
   puts
   puts "class #{klass}"
   h.each{|method, arry|
-
     if arry.size > 1
       puts
       arry.each{|arg|
@@ -97,10 +112,6 @@ h.each{|klass, h|
       puts "  end"
     else
       arg = arry[0]
-      arg_name_a = arg.arg_names_a
-      a = arg.arg_names_s
-      type_names = arg.type_names_a
-      returned_klass = arg.returned_klass
       puts 
       puts arg.def_method
     end
