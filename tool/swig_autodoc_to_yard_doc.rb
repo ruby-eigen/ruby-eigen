@@ -1,3 +1,4 @@
+module SwigCxxToYard
 class Arg
 
   def initialize(klass, method, arg, returned_klass)
@@ -6,12 +7,13 @@ class Arg
     @returned_klass = convert_type_name(returned_klass)
     @args = arg
   end
-  attr_accessor :klass, :method, :args, :returned_klass, :klass_method
+  attr_accessor :klass, :method, :args, :returned_klass, :is_klass_method
 
-  def arg_names_a
+  def arg_names_array
     return [] unless @args
     s = @args
     s = s[1..-2]
+    s = s.gsub(/,std\:\:allocator<.*?>/, "")
     ret = s.split(",").map{|arg| arg.sub(/\A.* /, "") }
     ret.map{|s|
       if /arg(\d+)/ =~ s
@@ -22,8 +24,8 @@ class Arg
     }
   end
 
-  def arg_names_s
-    a = arg_names_a
+  def arg_names_str
+    a = arg_names_array
     if a.size > 0
       "(" + a.join(",") + ")"
     else
@@ -31,10 +33,11 @@ class Arg
     end
   end
 
-  def type_names_a
+  def type_names_array
     return [] unless @args
     s = @args
     s = s[1..-2]
+    s = s.gsub(/,std\:\:allocator<.*?>/, "")
     s.split(",").map{|arg| 
       convert_type_name( arg.sub(/\A +/,"").sub(/ \S+\z/, "") )
     }
@@ -60,25 +63,25 @@ class Arg
 
   def def_method
     ret = ""
-    type_names = type_names_a
-    a = arg_names_a
+    type_names = type_names_array
+    a = arg_names_array()
       a.each_with_index{|s, i|
          ret << "  # @param #{s} [#{type_names[i]}]\n"
       }
     ret << "  # @return [#{@returned_klass}]\n"
-    if @klass_method
-      ret << "  def #{@klass}::#{@method}#{arg_names_s}\n"
+    if @is_klass_method
+      ret << "  def #{@klass}::#{@method}#{arg_names_str}\n"
     else
-      ret << "  def #{@method}#{arg_names_s}\n"
+      ret << "  def #{@method}#{arg_names_str}\n"
     end
     ret << "  end\n"
   end
 
   def overload_method
     ret = ""
-    ret << "  # @overload #{@method}#{arg_names_s}\n"
-    type_names = type_names_a
-    arg_names_a.each_with_index{|s, i|
+    ret << "  # @overload #{@method}#{arg_names_str}\n"
+    type_names = type_names_array
+    arg_names_array().each_with_index{|s, i|
       ret << "  #   @param #{s} [#{type_names[i]}]\n"
     }
     ret << "  #   @return [#{@returned_klass}]\n"
@@ -86,26 +89,27 @@ class Arg
 
 end
 
-class Methd
+class Method
 
-  def initialize(klass, methd)
+  def initialize(klass, methd, is_klass_method = false)
     @klass = klass
-    @methd = methd
+    @name = methd
     @args   = []
+    @is_klass_method = is_klass_method
   end
-  attr_accessor :klass, :methd, :args, :klass_method
+  attr_accessor :klass, :name, :args, :is_klass_method
 
   def push_arg(a)
     @args << a
   end
 
-  def methd
+  def to_s
     ret = "\n"
     if @args.size > 1
       @args.each{|arg|
         ret << arg.overload_method
       }
-      ret << "  def #{@methd}(*args)" << "\n"
+      ret << "  def #{@name}(*args)" << "\n"
       ret << "  end" << "\n"
     else
       @args[0].def_method
@@ -123,7 +127,17 @@ class Klass
   end
   attr_accessor :name, :klass_methods, :instc_methods
 
+  def push_klass_method_arg(a)
+    @klass_methods[a.method].push_arg(a)
+  end
+
+  def push_instc_method_arg(a)
+    @instc_methods[a.method].push_arg(a)
+  end
+
 end
+
+end # module SwigCxxToYard
 
 def klass_name(s)
   if /(.*)\:\:(.*)\.\S+/ =~ s
@@ -143,31 +157,28 @@ docs.each{|s|
 
   if /^  Document-method: (.*)/ =~ s
     klass = klass_name($1)
-    h[klass] ||= Klass.new(klass)
+    h[klass] ||= SwigCxxToYard::Klass.new(klass)
   else
     raise s
   end
 
   case s
   when /^\s+\S+\.new(\(.*?\))?/
-    p :hoge
     method = "new"
     arg = $1
     returned_klass = klass
-    h[klass].klass_methods[method] ||= Methd.new(klass, method)
-    h[klass].klass_methods[method].klass_method = true
-    a = Arg.new(klass, method, arg, returned_klass)
-    h[klass].klass_methods[method].push_arg(a)
+    h[klass].klass_methods[method] ||= SwigCxxToYard::Method.new(klass, method, true)
+    h[klass].push_klass_method_arg( SwigCxxToYard::Arg.new(klass, method, arg, returned_klass) )
   when /^  call-seq:\n    (\S+)(\(.*?\))? -> (.*?)\n/m, /^  call-seq:\n    (\S+)(\(.*?\))?\n/m
     method = $1
     arg = $2
     returned_klass = $3
     if /^A class method./ =~ s
-      h[klass].klass_methods[method] ||= Methd.new(klass, method)
-      h[klass].klass_methods[method].push_arg(Arg.new(klass, method, arg, returned_klass))
+      h[klass].klass_methods[method] ||= SwigCxxToYard::Method.new(klass, method)
+      h[klass].push_klass_method_arg( SwigCxxToYard::Arg.new(klass, method, arg, returned_klass) )
     else
-      h[klass].instc_methods[method] ||= Methd.new(klass, method)
-      h[klass].instc_methods[method].push_arg(Arg.new(klass, method, arg, returned_klass))
+      h[klass].instc_methods[method] ||= SwigCxxToYard::Method.new(klass, method)
+      h[klass].push_instc_method_arg(SwigCxxToYard::Arg.new(klass, method, arg, returned_klass))
     end
   else
     raise s
@@ -183,9 +194,15 @@ h.each{|name, klass|
   puts
 
   klass.instc_methods.each{|name, methd|
-    puts methd.methd
+    puts methd.to_s
     puts
   }
+
+  klass.klass_methods.each{|name, methd|
+    puts methd.to_s
+    puts
+  }
+
   puts "end"
   puts
 }
