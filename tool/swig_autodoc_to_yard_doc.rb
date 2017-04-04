@@ -42,6 +42,8 @@ class Arg
 
   def convert_type_name(type)
     case type
+    when nil
+      "nil"
     when "double"
       "Float"
     when "int", "size_t"
@@ -91,17 +93,43 @@ class Methd
     @methd = methd
     @args   = []
   end
-  attr_accessor :klass, :methd, :args
+  attr_accessor :klass, :methd, :args, :klass_method
 
   def push_arg(a)
     @args << a
   end
+
+  def methd
+    ret = "\n"
+    if @args.size > 1
+      @args.each{|arg|
+        ret << arg.overload_method
+      }
+      ret << "  def #{@methd}(*args)" << "\n"
+      ret << "  end" << "\n"
+    else
+      @args[0].def_method
+    end
+  end
+
+end
+
+class Klass
+
+  def initialize(klass)
+    @name = klass
+    @klass_methods = {}
+    @instc_methods = {}
+  end
+  attr_accessor :name, :klass_methods, :instc_methods
 
 end
 
 def klass_name(s)
   if /(.*)\:\:(.*)\.\S+/ =~ s
     $2
+  else
+    s
   end
 end
 
@@ -115,51 +143,51 @@ docs.each{|s|
 
   if /^  Document-method: (.*)/ =~ s
     klass = klass_name($1)
-    h[klass] ||= {}
+    h[klass] ||= Klass.new(klass)
   else
     raise s
   end
 
   case s
-  when /^    (\S+)(\(.*?\))? -> (.*)/
-    method = $1
-    arg = $2
-    returned_klass = $3
-    h[klass][method] ||= []
-    h[klass][method] << current_arg = Arg.new(klass, method, arg, returned_klass)
-  when /^    \S+\.new(\(.*?\))?/
+  when /^\s+\S+\.new(\(.*?\))?/
+    p :hoge
     method = "new"
     arg = $1
     returned_klass = klass
-    h[klass][method] ||= []
-    h[klass][method] << current_arg = Arg.new(klass, method, arg, returned_klass)
-    current_arg.klass_method = true
+    h[klass].klass_methods[method] ||= Methd.new(klass, method)
+    h[klass].klass_methods[method].klass_method = true
+    a = Arg.new(klass, method, arg, returned_klass)
+    h[klass].klass_methods[method].push_arg(a)
+  when /^  call-seq:\n    (\S+)(\(.*?\))? -> (.*?)\n/m, /^  call-seq:\n    (\S+)(\(.*?\))?\n/m
+    method = $1
+    arg = $2
+    returned_klass = $3
+    if /^A class method./ =~ s
+      h[klass].klass_methods[method] ||= Methd.new(klass, method)
+      h[klass].klass_methods[method].push_arg(Arg.new(klass, method, arg, returned_klass))
+    else
+      h[klass].instc_methods[method] ||= Methd.new(klass, method)
+      h[klass].instc_methods[method].push_arg(Arg.new(klass, method, arg, returned_klass))
+    end
+  else
+    raise s
   end
 
-  /^A class method./ =~ s
-  current_arg.klass_method = true
 }
 
 h = h.delete_if{|k, v| /DFloat/ !~ k}
 puts "module Eigen"
-h.each{|klass, h|
+h.each{|name, klass|
   puts
-  puts "class #{klass}"
-  h.each{|method, arry|
-    if arry.size > 1
-      puts
-      arry.each{|arg|
-        puts arg.overload_method
-      }
-      puts "  def #{method}(*args)"
-      puts "  end"
-    else
-      arg = arry[0]
-      puts 
-      puts arg.def_method
-    end
+  puts "class #{klass.name}"
+  puts
+
+  klass.instc_methods.each{|name, methd|
+    puts methd.methd
+    puts
   }
   puts "end"
+  puts
 }
 puts "end"
 
