@@ -1,11 +1,12 @@
 class Arg
 
-  def initialize(method, arg, returned_klass)
+  def initialize(klass, method, arg, returned_klass)
+    @klass = klass
     @method = method
     @returned_klass = convert_type_name(returned_klass)
     @args = arg
   end
-  attr :method, :args, :returned_klass
+  attr_accessor :klass, :method, :args, :returned_klass, :klass_method
 
   def arg_names_a
     return [] unless @args
@@ -62,9 +63,13 @@ class Arg
       a.each_with_index{|s, i|
          ret << "  # @param #{s} [#{type_names[i]}]\n"
       }
-      ret << "  # @return [#{@returned_klass}]\n"
+    ret << "  # @return [#{@returned_klass}]\n"
+    if @klass_method
+      ret << "  def #{@klass}::#{@method}#{arg_names_s}\n"
+    else
       ret << "  def #{@method}#{arg_names_s}\n"
-      ret << "  end\n"
+    end
+    ret << "  end\n"
   end
 
   def overload_method
@@ -79,6 +84,21 @@ class Arg
 
 end
 
+class Methd
+
+  def initialize(klass, methd)
+    @klass = klass
+    @methd = methd
+    @args   = []
+  end
+  attr_accessor :klass, :methd, :args
+
+  def push_arg(a)
+    @args << a
+  end
+
+end
+
 def klass_name(s)
   if /(.*)\:\:(.*)\.\S+/ =~ s
     $2
@@ -87,17 +107,37 @@ end
 
 klass = nil
 h = {}
-ARGF.each_line{|l|
-  if /\A  Document-method: (.*)/ =~ l
+current_arg = nil
+file_s = ARGF.read
+docs = file_s.scan(/\/\*.*?\*\//m).find_all{|s| /^  Document-method: (.*)/ =~ s }
+
+docs.each{|s|
+
+  if /^  Document-method: (.*)/ =~ s
     klass = klass_name($1)
     h[klass] ||= {}
-  elsif /\A    (\S+)(\(.*?\))? -> (.*)/ =~ l
+  else
+    raise s
+  end
+
+  case s
+  when /^    (\S+)(\(.*?\))? -> (.*)/
     method = $1
     arg = $2
     returned_klass = $3
     h[klass][method] ||= []
-    h[klass][method] << Arg.new(method, arg, returned_klass)
+    h[klass][method] << current_arg = Arg.new(klass, method, arg, returned_klass)
+  when /^    \S+\.new(\(.*?\))?/
+    method = "new"
+    arg = $1
+    returned_klass = klass
+    h[klass][method] ||= []
+    h[klass][method] << current_arg = Arg.new(klass, method, arg, returned_klass)
+    current_arg.klass_method = true
   end
+
+  /^A class method./ =~ s
+  current_arg.klass_method = true
 }
 
 h = h.delete_if{|k, v| /DFloat/ !~ k}
