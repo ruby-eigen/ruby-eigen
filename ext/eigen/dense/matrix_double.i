@@ -14,8 +14,8 @@ public:
   Matrix(size_t, size_t);
   ~Matrix();
 
+%rename("abs") cwiseAbs;
   Matrix cwiseAbs();
-  Matrix cwiseAbs2();
 
   /* real matrix only */
   //  T maxCoeff();
@@ -25,11 +25,11 @@ public:
 
   DENSE_MATRIX_VECTOR_Common_Methods(Matrix, T) 
 
-  RubyEigen::rb_eigen_traits<T>::vector_type col(int);
-  Matrix row(int);
+  RubyEigen::rb_eigen_traits<T>::vector_type col(size_t);
+  Matrix row(size_t);
 
-  int cols();
-  int rows();
+  size_t cols();
+  size_t rows();
 
   RubyEigen::rb_eigen_traits<T>::vector_type diagonal();
   Matrix diagonal(int);
@@ -42,7 +42,6 @@ public:
 
   Matrix transpose();
   Matrix reverse();
-  Matrix replicate(int, int);
 
   bool isDiagonal();
   bool isIdentity();
@@ -50,9 +49,6 @@ public:
   bool isLowerTriangular(double);
   bool isUpperTriangular();
   bool isUpperTriangular(double);
-
-  Matrix middleCols(int, int);
-  Matrix middleRows(int, int);
 
   %rename("dot") operator*;
   Matrix operator*(const Matrix&);

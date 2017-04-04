@@ -1,6 +1,8 @@
 %define DENSE_MATRIX_VECTOR_Common_Methods(TYPE, s_type)
 
   //  bool allFinite();
+
+%rename("has_nan") hasNaN;
   bool hasNaN();
 
   void setRandom();
@@ -10,13 +12,14 @@
   void setZero();
 
   /* component wise op */
-  
+
+%rename("sqrt") cwiseSqrt;
+%rename("cwiseInverse") cwiseInverse;
   TYPE cwiseSqrt();
   TYPE cwiseInverse();
 
 %rename("__mul__") cwiseProduct;
 %rename("__div__") cwiseQuotient;
-
   TYPE cwiseProduct(TYPE &m);
   TYPE cwiseQuotient(TYPE &m); 
 
