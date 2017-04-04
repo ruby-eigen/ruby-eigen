@@ -145,7 +145,6 @@ public:
     }
   }
 
-  void normalize();
   T operatorNorm();
 
   Matrix inverse();
