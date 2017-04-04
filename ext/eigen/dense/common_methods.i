@@ -14,9 +14,7 @@
   /* component wise op */
 
 %rename("sqrt") cwiseSqrt;
-%rename("cwiseInverse") cwiseInverse;
   TYPE cwiseSqrt();
-  TYPE cwiseInverse();
 
 %rename("__mul__") cwiseProduct;
 %rename("__div__") cwiseQuotient;

@@ -41,7 +41,6 @@ public:
   T prod();
 
   Matrix transpose();
-  Matrix reverse();
 
   bool isDiagonal();
   bool isIdentity();
