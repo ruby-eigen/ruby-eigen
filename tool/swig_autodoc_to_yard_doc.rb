@@ -128,6 +128,7 @@ class Klass
   attr_accessor :name, :klass_methods, :instc_methods
 
   def push_klass_method_arg(a)
+    a.is_klass_method = true
     @klass_methods[a.method].push_arg(a)
   end
 
