@@ -12,21 +12,24 @@ public:
   T permutationP();
   T permutationQ();
 
+  T::Scalar determinant();
+  T inverse();
+  bool isInvertible();
+
   T solve(const T &b);
   RubyEigen::Matrix<T::Scalar, RubyEigen::Dynamic, 1> solve(const RubyEigen::Matrix<T::Scalar, RubyEigen::Dynamic, 1>&);
 
   %extend {
 
-    T u() {
+    T matrix_u() {
       return (*$self).matrixLU().triangularView<Eigen::Upper>();
     }
 
-    T l() {
+    T matrix_l() {
       return (*$self).matrixLU().triangularView<Eigen::UnitLower>();
     }
   }
 };
-
 
 %template(DFloatFullPivLU)   RubyEigen::FullPivLU<RubyEigen::DFloatMatrix>;
 %template(SFloatFullPivLU)   RubyEigen::FullPivLU<RubyEigen::SFloatMatrix>;
@@ -63,7 +66,7 @@ public:
 
   %extend {
 
-    T r() {
+    T matrix_r() {
       return (*$self).matrixQR().triangularView<Eigen::Upper>();
     }
 
