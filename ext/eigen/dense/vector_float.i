@@ -99,9 +99,9 @@ public:
 };
 
   %template(DFloatVector) Matrix<double, RubyEigen::Dynamic, 1>;
-  %template(VectorSFloat) Matrix<float,  RubyEigen::Dynamic, 1>;
-  %template(VectorDComplex) Matrix<std::complex<double>, RubyEigen::Dynamic, 1>;
-  %template(VectorSComplex) Matrix<std::complex<float>,  RubyEigen::Dynamic, 1>;
+  %template(SFloatVector) Matrix<float,  RubyEigen::Dynamic, 1>;
+  %template(DComplexVector) Matrix<std::complex<double>, RubyEigen::Dynamic, 1>;
+  %template(SComplexVector) Matrix<std::complex<float>,  RubyEigen::Dynamic, 1>;
 
 
   // complex matrix only 

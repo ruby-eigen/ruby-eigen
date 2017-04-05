@@ -5,6 +5,8 @@
 %rename("%(utitle)s", %$ismember, %$isfunction) "";
 %rename("%(utitle)s", %$ismember, %$isvariable) "";
 
+%feature("autodoc", "3");
+
 %{
 #include <stdexcept>
 #include "rubyeigen_except.h"
@@ -79,7 +81,7 @@ namespace RubyEigen {
   };
 
   template<>
-  struct narray_traits<char>{
+  struct narray_traits<int8_t>{
     static VALUE type() { return numo_cInt8; }
   };
 
@@ -99,7 +101,7 @@ namespace RubyEigen {
   };
 
   template<>
-  struct narray_traits<unsigned char>{
+  struct narray_traits<uint8_t>{
     static VALUE type() { return numo_cUInt8; }
   };
 
@@ -128,12 +130,27 @@ namespace RubyEigen {
   typedef RubyEigen::Matrix<float,  RubyEigen::Dynamic, RubyEigen::Dynamic> SFloatMatrix;
   typedef RubyEigen::Matrix<std::complex<double>, RubyEigen::Dynamic, RubyEigen::Dynamic> DComplexMatrix;
   typedef RubyEigen::Matrix<std::complex<float>,  RubyEigen::Dynamic, RubyEigen::Dynamic> SComplexMatrix;
+  typedef RubyEigen::Matrix<int64_t, RubyEigen::Dynamic, RubyEigen::Dynamic> Int64Matrix;
+  typedef RubyEigen::Matrix<int32_t, RubyEigen::Dynamic, RubyEigen::Dynamic> Int32Matrix;
+  typedef RubyEigen::Matrix<int16_t, RubyEigen::Dynamic, RubyEigen::Dynamic> Int16Matrix;
+  typedef RubyEigen::Matrix<int8_t,  RubyEigen::Dynamic, RubyEigen::Dynamic> Int8Matrix;
+  typedef RubyEigen::Matrix<uint64_t, RubyEigen::Dynamic, RubyEigen::Dynamic> UInt64Matrix;
+  typedef RubyEigen::Matrix<uint32_t, RubyEigen::Dynamic, RubyEigen::Dynamic> UInt32Matrix;
+  typedef RubyEigen::Matrix<uint16_t, RubyEigen::Dynamic, RubyEigen::Dynamic> UInt16Matrix;
+  typedef RubyEigen::Matrix<uint8_t,  RubyEigen::Dynamic, RubyEigen::Dynamic> UInt8Matrix;
 
   typedef RubyEigen::Matrix<double, RubyEigen::Dynamic, 1> DFloatVector;
   typedef RubyEigen::Matrix<float,  RubyEigen::Dynamic, 1> SFloatVector;
   typedef RubyEigen::Matrix<std::complex<double>, RubyEigen::Dynamic, 1> DComplexVector;
   typedef RubyEigen::Matrix<std::complex<float>,  RubyEigen::Dynamic, 1> SComplexVector;
-  typedef RubyEigen::Matrix<RubyEigen::MatrixXi::Scalar, RubyEigen::Dynamic, 1> VectorXi;
+  typedef RubyEigen::Matrix<int64_t, RubyEigen::Dynamic, 1> Int64Vector;
+  typedef RubyEigen::Matrix<int32_t, RubyEigen::Dynamic, 1> Int32Vector;
+  typedef RubyEigen::Matrix<int16_t, RubyEigen::Dynamic, 1> Int16Vector;
+  typedef RubyEigen::Matrix<int8_t,  RubyEigen::Dynamic, 1> Int8Vector;
+  typedef RubyEigen::Matrix<uint64_t, RubyEigen::Dynamic, 1> UInt64Vector;
+  typedef RubyEigen::Matrix<uint32_t, RubyEigen::Dynamic, 1> UInt32Vector;
+  typedef RubyEigen::Matrix<uint16_t, RubyEigen::Dynamic, 1> UInt16Vector;
+  typedef RubyEigen::Matrix<uint8_t,  RubyEigen::Dynamic, 1> UInt8Vector;
 
   typedef RubyEigen::Block<RubyEigen::DFloatMatrix> DFloatMatrixRef;
   typedef RubyEigen::Block<RubyEigen::DComplexMatrix> DComplexMatrixRef;
@@ -185,13 +202,68 @@ namespace RubyEigen {
     typedef float float_type;
   };
 
-};
+  template<>
+  struct rb_eigen_traits<int64_t> {
+    typedef Int64Vector vector_type;
+    typedef Int64Matrix matrix_type;
+  };
+
+  template<>
+  struct rb_eigen_traits<int32_t> {
+    typedef Int32Vector vector_type;
+    typedef Int32Matrix matrix_type;
+  };
+
+  template<>
+  struct rb_eigen_traits<int16_t> {
+    typedef Int16Vector vector_type;
+    typedef Int16Matrix matrix_type;
+  };
+
+  template<>
+  struct rb_eigen_traits<int8_t> {
+    typedef Int8Vector vector_type;
+    typedef Int8Matrix matrix_type;
+  };
+
+  template<>
+  struct rb_eigen_traits<uint64_t> {
+    typedef UInt64Vector vector_type;
+    typedef UInt64Matrix matrix_type;
+  };
+
+  template<>
+  struct rb_eigen_traits<uint32_t> {
+    typedef UInt32Vector vector_type;
+    typedef UInt32Matrix matrix_type;
+  };
+
+  template<>
+  struct rb_eigen_traits<uint16_t> {
+    typedef UInt16Vector vector_type;
+    typedef UInt16Matrix matrix_type;
+  };
+
+  template<>
+  struct rb_eigen_traits<uint8_t> {
+    typedef UInt8Vector vector_type;
+    typedef UInt8Matrix matrix_type;
+  };
+}; // namespace RubyEigen
 %}
 
 %template() RubyEigen::rb_eigen_traits<double>;
 %template() RubyEigen::rb_eigen_traits<float>;
 %template() RubyEigen::rb_eigen_traits<std::complex<double>>;
 %template() RubyEigen::rb_eigen_traits<std::complex<float>>;
+%template() RubyEigen::rb_eigen_traits<int64_t>;
+%template() RubyEigen::rb_eigen_traits<int32_t>;
+%template() RubyEigen::rb_eigen_traits<int16_t>;
+%template() RubyEigen::rb_eigen_traits<int8_t>;
+%template() RubyEigen::rb_eigen_traits<uint64_t>;
+%template() RubyEigen::rb_eigen_traits<uint32_t>;
+%template() RubyEigen::rb_eigen_traits<uint16_t>;
+%template() RubyEigen::rb_eigen_traits<uint8_t>;
 
 %{
 #include "rubyeigen_algo_base.h"
