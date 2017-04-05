@@ -265,6 +265,19 @@ namespace RubyEigen {
 %template() RubyEigen::rb_eigen_traits<uint16_t>;
 %template() RubyEigen::rb_eigen_traits<uint8_t>;
 
+typedef double RubyEigen::DFloatMatrix::Scalar;
+typedef float  RubyEigen::SFloatMatrix::Scalar;
+typedef std::complex<double> RubyEigen::DComplexMatrix::Scalar;
+typedef std::complex<float>  RubyEigen::SComplexMatrix::Scalar;
+typedef int64_t RubyEigen::Int64Matrix::Scalar;
+typedef int32_t RubyEigen::Int32Matrix::Scalar;
+typedef int16_t RubyEigen::Int16Matrix::Scalar;
+typedef int8_t  RubyEigen::Int8Matrix::Scalar;
+typedef uint64_t RubyEigen::UInt64Matrix::Scalar;
+typedef uint32_t RubyEigen::UInt32Matrix::Scalar;
+typedef uint16_t RubyEigen::UInt16Matrix::Scalar;
+typedef uint8_t  RubyEigen::UInt8Matrix::Scalar;
+
 %{
 #include "rubyeigen_algo_base.h"
 %}
