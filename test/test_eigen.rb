@@ -81,7 +81,7 @@ class TestEigen < Test::Unit::TestCase
     m.dot v
     v.dot m
 
-    vc = VectorDComplex.new(2)
+    vc = DComplexVector.new(2)
     vc.set_random
     vc.segment(0,1)
   end
