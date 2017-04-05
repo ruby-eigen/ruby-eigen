@@ -293,9 +293,11 @@ typedef uint8_t  RubyEigen::UInt8Matrix::Scalar;
 %template() std::vector< std::complex<double> >;
 
 %include "dense/extend_matrix.i"
+%include "dense/extend_vector.i"
 %include "dense/matrix_double.i"
 %include "dense/matrix_integer.i"
 %include "dense/vector_float.i"
+%include "dense/vector_integer.i"
 %include "sparse/matrix_real.i"
  //%include "sparse/solver.i"
 

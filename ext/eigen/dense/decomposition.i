@@ -3,6 +3,9 @@ namespace RubyEigen {
 %alias FullPivLU::permutationP "p";
 %alias FullPivLU::permutationQ "q";
 
+%alias FullPivLU::matrix_u "u";
+%alias FullPivLU::matrix_l "l";
+
 template<class T>
 class FullPivLU {
 public:
@@ -50,6 +53,7 @@ public:
 
 
 %alias FullPivHouseholderQR::matrixQ "q";
+%alias FullPivHouseholderQR::matrix_r "r";
 %alias FullPivHouseholderQR::colsPermutation "p";
 
 template<class T>

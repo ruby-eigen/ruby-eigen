@@ -13,6 +13,8 @@ public:
   %rename("dot") operator*;
   Matrix operator*(const Matrix&);
 
+  ExtendMatrixForNArray(T)
+
 };
 %enddef
 
@@ -33,7 +35,5 @@ DefineIntegerMatrix(uint8_t)
   %template(UInt32Matrix) Matrix<uint32_t, RubyEigen::Dynamic, RubyEigen::Dynamic>;
   %template(UInt16Matrix) Matrix<uint16_t, RubyEigen::Dynamic, RubyEigen::Dynamic>;
   %template(UInt8Matrix)  Matrix<uint8_t,  RubyEigen::Dynamic, RubyEigen::Dynamic>;
-
-  ExtendMatrixForNArray(int32_t)
 
 };

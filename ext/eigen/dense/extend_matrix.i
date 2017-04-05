@@ -1,6 +1,6 @@
 %define ExtendMatrixForNArray(s_type)
-%extend Matrix<s_type, RubyEigen::Dynamic, RubyEigen::Dynamic>  {
-    static RubyEigen::Matrix<s_type, RubyEigen::Dynamic, RubyEigen::Dynamic> from_narray(VALUE na) {
+%extend {
+    static RubyEigen::Matrix from_narray(VALUE na) {
       if (!IsNArray(na)) {
         rb_raise(rb_eArgError, "Numo::NArray expected");
       }
