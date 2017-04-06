@@ -112,17 +112,51 @@ namespace RubyEigen {
   }
 
   template<class T>
-  static void adjust_memory_usage(const Matrix<T, RubyEigen::Dynamic, RubyEigen::Dynamic>* m) {
-    adjust_memory_usage(m->rows()*m->cols()*sizeof(T));
+  static void adjust_memory_usage(const Matrix<T, RubyEigen::Dynamic, RubyEigen::Dynamic>* m, bool freeing = false) {
+#ifdef HAVE_RB_GC_ADJUST_MEMORY_USAGE
+    ssize_t n = m->rows()*m->cols()*sizeof(T);
+    if (freeing)
+      n = -n;
+    adjust_memory_usage(n);
+#endif
   }
 
   template<class T>
-  static void adjust_memory_usage(const Matrix<T, RubyEigen::Dynamic, 1>* v) {
-    adjust_memory_usage(v->size()*sizeof(T));
+  static void adjust_memory_usage(const Matrix<T, RubyEigen::Dynamic, 1>* v, bool freeing = false) {
+#ifdef HAVE_RB_GC_ADJUST_MEMORY_USAGE
+    ssize_t n = v->size()*sizeof(T);
+    if (freeing)
+      n = -n;
+    adjust_memory_usage(n);
+#endif
   }
 
+  template<class T>
+  static void rb_free_mat_vec(void* mat){
+    T* m = (T*) mat;
+    adjust_memory_usage(m, true);
+    delete m;
+  }
 }; // namespace RubyEigen
 %}
+
+
+%define Define_free_func(T)
+%freefunc RubyEigen::Matrix<T, RubyEigen::Dynamic, RubyEigen::Dynamic> "RubyEigen::rb_free_mat_vec< RubyEigen::Matrix<T, RubyEigen::Dynamic, RubyEigen::Dynamic> >";
+%freefunc RubyEigen::Matrix<T, RubyEigen::Dynamic, 1> "RubyEigen::rb_free_mat_vec< RubyEigen::Matrix<T, RubyEigen::Dynamic, 1> >";
+%enddef
+Define_free_func(double)
+Define_free_func(float)
+Define_free_func(std::complex<double>)
+Define_free_func(std::complex<float>)
+Define_free_func(int64_t)
+Define_free_func(int32_t)
+Define_free_func(int16_t)
+Define_free_func(int8_t)
+Define_free_func(uint64_t)
+Define_free_func(uint32_t)
+Define_free_func(uint16_t)
+Define_free_func(uint8_t)
 
 %inline %{
 namespace RubyEigen {
