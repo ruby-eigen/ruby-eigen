@@ -186,7 +186,7 @@ end
 
 module Eigen::SpMatrixCommon
 
-  def setFromTriplet(arry)
+  def set_from_triplet(arry)
     arry0 = arry.sort{|a, b|
       ret = a[1] <=> b[1]
       ret == 0 ? a[0] <=> b[0] : ret

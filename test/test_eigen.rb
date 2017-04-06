@@ -202,7 +202,7 @@ class TestEigen < Test::Unit::TestCase
   def test_spmatrix
     m = DFloatSpMatrix.new(5,5)
     a = [[0,1,3], [1,0,22], [1,4,17], [2,0,7], [2,1,5], [2,3,1], [4,2,14], [4,4,8]]
-    m.setFromTriplet(a)
+    m.set_from_triplet(a)
 
     assert_equal(a.size, m.non_zeros)
 
