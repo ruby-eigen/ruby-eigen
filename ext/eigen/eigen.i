@@ -132,6 +132,16 @@ namespace RubyEigen {
   }
 
   template<class T>
+  static void adjust_memory_usage(const SparseMatrix<T>* m, bool freeing = false) {
+#ifdef HAVE_RB_GC_ADJUST_MEMORY_USAGE
+    ssize_t n = m->innerSize()*(sizeof(T)+sizeof(size_t)) + m->outerSize()*sizeof(size_t);
+    if (freeing)
+      n = -n;
+    adjust_memory_usage(n);
+#endif
+  }
+
+  template<class T>
   static void rb_free_mat_vec(void* mat){
     T* m = (T*) mat;
     adjust_memory_usage(m, true);
@@ -144,6 +154,7 @@ namespace RubyEigen {
 %define Define_free_func(T)
 %freefunc RubyEigen::Matrix<T, RubyEigen::Dynamic, RubyEigen::Dynamic> "RubyEigen::rb_free_mat_vec< RubyEigen::Matrix<T, RubyEigen::Dynamic, RubyEigen::Dynamic> >";
 %freefunc RubyEigen::Matrix<T, RubyEigen::Dynamic, 1> "RubyEigen::rb_free_mat_vec< RubyEigen::Matrix<T, RubyEigen::Dynamic, 1> >";
+%freefunc RubyEigen::SparseMatrix<T> "RubyEigen::rb_free_mat_vec< RubyEigen::SparseMatrix<T> >";
 %enddef
 Define_free_func(double)
 Define_free_func(float)

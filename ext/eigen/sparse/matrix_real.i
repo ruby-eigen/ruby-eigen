@@ -6,6 +6,10 @@ public:
   SparseMatrix(size_t, size_t);
   ~SparseMatrix();
 
+%typemap(ret) SparseMatrix<T> %{
+  RubyEigen::adjust_memory_usage(&$1);
+%}
+
   /* real matrix only */
   //  SparseMatrix cwiseAbs();
   //  SparseMatrix cwiseAbs2();
@@ -19,8 +23,8 @@ public:
   int innerSize();
   int nonZeros();
 
-  double squaredNorm();
-  double blueNorm();
+  //  double squaredNorm();
+  //  double blueNorm();
 
 %rename(__reserve__) reserve;
 
@@ -38,8 +42,8 @@ public:
 
   /* component wise op */
   
-  SparseMatrix cwiseSqrt();
-  SparseMatrix cwiseInverse();
+  //  SparseMatrix cwiseSqrt();
+  //  SparseMatrix cwiseInverse();
 
 %rename("__mul__") cwiseProduct;
 %rename("__div__") cwiseQuotient;
@@ -96,6 +100,14 @@ public:
 %template(SFloatSpMatrix) SparseMatrix<float>;
 %template(DComplexSpMatrix) SparseMatrix<std::complex<double>>;
 %template(SComplexSpMatrix) SparseMatrix<std::complex<float>>;
+%template(Int64SpMatrix) SparseMatrix<int64_t>;
+%template(Int32SpMatrix) SparseMatrix<int32_t>;
+%template(Int16SpMatrix) SparseMatrix<int16_t>;
+%template(Int8SpMatrix)  SparseMatrix<int8_t>;
+%template(UInt64SpMatrix) SparseMatrix<uint64_t>;
+%template(UInt32SpMatrix) SparseMatrix<uint32_t>;
+%template(UInt16SpMatrix) SparseMatrix<uint16_t>;
+%template(UInt8SpMatrix)  SparseMatrix<uint8_t>;
 
 }; // namespace RubyEigen 
 
