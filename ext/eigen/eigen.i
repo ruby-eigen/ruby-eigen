@@ -205,6 +205,17 @@ namespace RubyEigen {
 
   typedef SparseMatrix<double> DFloatSpMatrix;
   typedef SparseMatrix<float>  SFloatSpMatrix;
+  typedef SparseMatrix<std::complex<double> > DComplexSpMatrix;
+  typedef SparseMatrix<std::complex<float> >  SComplexSpMatrix;
+  typedef SparseMatrix<int64_t> Int64SpMatrix;
+  typedef SparseMatrix<int32_t> Int32SpMatrix;
+  typedef SparseMatrix<int16_t> Int16SpMatrix;
+  typedef SparseMatrix<int8_t>  Int8SpMatrix;
+  typedef SparseMatrix<uint64_t> UInt64SpMatrix;
+  typedef SparseMatrix<uint32_t> UInt32SpMatrix;
+  typedef SparseMatrix<uint16_t> UInt16SpMatrix;
+  typedef SparseMatrix<uint8_t>  UInt8SpMatrix;
+
   typedef SparseMatrix<double>::InnerIterator DFloatSpMatrixIter;
   typedef SparseMatrix<float>::InnerIterator  SFloatSpMatrixIter;
 
@@ -323,6 +334,19 @@ typedef uint32_t RubyEigen::UInt32Matrix::Scalar;
 typedef uint16_t RubyEigen::UInt16Matrix::Scalar;
 typedef uint8_t  RubyEigen::UInt8Matrix::Scalar;
 
+typedef double RubyEigen::DFloatSpMatrix::Scalar;
+typedef float  RubyEigen::SFloatSpMatrix::Scalar;
+typedef std::complex<double> RubyEigen::DComplexSpMatrix::Scalar;
+typedef std::complex<float>  RubyEigen::SComplexSpMatrix::Scalar;
+typedef int64_t RubyEigen::Int64SpMatrix::Scalar;
+typedef int32_t RubyEigen::Int32SpMatrix::Scalar;
+typedef int16_t RubyEigen::Int16SpMatrix::Scalar;
+typedef int8_t  RubyEigen::Int8SpMatrix::Scalar;
+typedef uint64_t RubyEigen::UInt64SpMatrix::Scalar;
+typedef uint32_t RubyEigen::UInt32SpMatrix::Scalar;
+typedef uint16_t RubyEigen::UInt16SpMatrix::Scalar;
+typedef uint8_t  RubyEigen::UInt8SpMatrix::Scalar;
+
 %{
 #include "rubyeigen_algo_base.h"
 %}
@@ -344,7 +368,7 @@ typedef uint8_t  RubyEigen::UInt8Matrix::Scalar;
 %include "dense/vector_float.i"
 %include "dense/vector_integer.i"
 %include "sparse/matrix_real.i"
- //%include "sparse/solver.i"
+%include "sparse/solver.i"
 
 
 namespace RubyEigen {

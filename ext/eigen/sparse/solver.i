@@ -20,7 +20,11 @@ public:
 
 };
 
-%template(SimplicialLDLTSpDouble) SimplicialLDLT<RubyEigen::SparseMatrix<double> >;
+%template(DFloatSimplicialLDLT) SimplicialLDLT<RubyEigen::SparseMatrix<double> >;
+%template(SFloatSimplicialLDLT) SimplicialLDLT<RubyEigen::SparseMatrix<float> >;
+%template(DComplexSimplicialLDLT) SimplicialLDLT<RubyEigen::SparseMatrix<std::complex<double>>>;
+%template(SComplexSimplicialLDLT) SimplicialLDLT<RubyEigen::SparseMatrix<std::complex<float>>>;
+
 
 template<class T>
 class ConjugateGradient {
@@ -45,6 +49,7 @@ public:
 %template(ConjugateGradientDouble)   ConjugateGradient<RubyEigen::DFloatMatrix>;
 %template(ConjugateGradientSpDouble) ConjugateGradient<RubyEigen::SparseMatrix<double> >;
 
+  /*
 template<class T>
 class BiCGSTAB {
 public:
@@ -115,5 +120,5 @@ public:
   RubyEigen::SparseMatrix<float> solve(const RubyEigen::SparseMatrix<float>&);
   //  RubyEigen::DFloatVector solve(const RubyEigen::VectorXd&);
 };
-
+  */
 };
