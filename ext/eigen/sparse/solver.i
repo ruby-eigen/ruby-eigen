@@ -7,6 +7,7 @@ public:
   SimplicialLDLT(const T&);
   ~SimplicialLDLT();
 
+  void analyzePattern(const T&);
   void compute(const T&);
   T matrixL();
   T matrixU();
@@ -32,9 +33,8 @@ public:
   SimplicialLLT(const T&);
   ~SimplicialLLT();
 
+  void analyzePattern(const T&);
   void compute(const T&);
-  //  T matrixL();
-  //  T matrixU();
 
   T solve(const T&);
   RubyEigen::Matrix<T::Scalar, RubyEigen::Dynamic, 1> solve(const RubyEigen::Matrix<T::Scalar, RubyEigen::Dynamic, 1>&);
@@ -50,12 +50,11 @@ template<class T>
 class SparseLU {
 public:
   SparseLU();
-  SparseLU(const RubyEigen::SparseMatrix<double>&);
+  SparseLU(const T&);
   ~SparseLU();
 
+  void analyzePattern(const T&);
   void compute(const T&);
-  //  T matrixL();
-  //  T matrixU();
 
   RubyEigen::SparseMatrix<T::Scalar> solve(const RubyEigen::SparseMatrix<T::Scalar>&);
   RubyEigen::Matrix<T::Scalar, RubyEigen::Dynamic, 1> solve(const RubyEigen::Matrix<T::Scalar, RubyEigen::Dynamic, 1>&);
@@ -71,8 +70,13 @@ template<class T, class Order>
 class SparseQR {
 public:
   SparseQR();
-  SparseQR(const RubyEigen::SparseMatrix<double>&);
+  SparseQR(const T&);
   ~SparseQR();
+
+  void analyzePattern(const T&);
+  void compute(const T&);
+
+  T matrixR();
 
   int cols();
   int rows();
@@ -80,15 +84,22 @@ public:
 
   std::string lastErrorMessage();
 
-  //  RubyEigen::SparseMatrix<double> matrixQ();
-  //  RubyEigen::SparseMatrix<double> matrixR();
+  RubyEigen::SparseMatrix<T::Scalar> solve(const RubyEigen::SparseMatrix<T::Scalar>&);
+  RubyEigen::Matrix<T::Scalar, RubyEigen::Dynamic, 1> solve(const RubyEigen::Matrix<T::Scalar, RubyEigen::Dynamic, 1>&);
 
-  RubyEigen::SparseMatrix<double> solve(const RubyEigen::SparseMatrix<double>&);
-  RubyEigen::DFloatVector solve(const RubyEigen::DFloatVector&);
-
+  %extend{
+    RubyEigen::SparseMatrix<T::Scalar> matrixQ(){
+      RubyEigen::SparseMatrix<T::Scalar> Q;
+      Q = $self->matrixQ();
+      return Q;
+    }
+  }
 };
 
 %template(DFloatSparseQR) SparseQR<RubyEigen::SparseMatrix<double>, RubyEigen::COLAMDOrdering<int>>;
+%template(SFloatSparseQR) SparseQR<RubyEigen::SparseMatrix<float>, RubyEigen::COLAMDOrdering<int>>;
+%template(DComplexSparseQR) SparseQR<RubyEigen::SparseMatrix<std::complex<double>>, RubyEigen::COLAMDOrdering<int>>;
+%template(SComplexSparseQR) SparseQR<RubyEigen::SparseMatrix<std::complex<float>>, RubyEigen::COLAMDOrdering<int>>;
 
 template<class T>
 class ConjugateGradient {
@@ -135,37 +146,6 @@ public:
 };
 %template(BiCGSTABDouble)   BiCGSTAB<RubyEigen::DFloatMatrix>;
 %template(BiCGSTABSpDouble) BiCGSTAB<RubyEigen::SparseMatrix<double> >;
-
-
-class SparseQRDouble {
-public:
-  SparseQRDouble(const RubyEigen::SparseMatrix<double>&);
-  ~SparseQRDouble();
-
-
-  int cols();
-  int rows();
-  int rank();
-
-  std::string lastErrorMessage();
-
-  %extend{
-    RubyEigen::SparseMatrix<double> matrixQ(){
-      RubyEigen::SparseMatrix<double> Q;
-      Q = $self->matrixQ();
-      return Q;
-    }
-
-    RubyEigen::SparseMatrix<double> matrixR(){
-      RubyEigen::SparseMatrix<double> R;
-      R = $self->matrixR();
-      return R;
-    }
-  }
-
-  RubyEigen::SparseMatrix<double> solve(const RubyEigen::SparseMatrix<double>&);
-  RubyEigen::DFloatVector solve(const RubyEigen::DFloatVector&);
-};
 
   */
 };
