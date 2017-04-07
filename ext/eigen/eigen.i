@@ -16,9 +16,10 @@
 
 %include "dense/common_methods.i"
 
-%include std_string.i
-%include std_vector.i
-%include std_complex.i
+%include <std_string.i>
+%include <std_vector.i>
+%include <std_complex.i>
+%include <stdint.i>
 
 %{
 extern "C" {

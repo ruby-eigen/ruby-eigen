@@ -15,6 +15,17 @@ public:
 
   ExtendMatrixForNArray(T)
 
+  %extend {
+
+    T __getitem__(int i, int j) {
+      return (*$self)(i, j);
+    }
+
+    void __setitem__(int i, int j, T c) {
+      (*$self)(i, j) = c;
+    }
+
+  }
 };
 %enddef
 
