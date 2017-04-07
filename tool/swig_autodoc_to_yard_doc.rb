@@ -109,7 +109,11 @@ class Method
       @args.each{|arg|
         ret << arg.overload_method
       }
-      ret << "  def #{@name}(*args)" << "\n"
+      if @is_klass_method
+        ret << "  def #{@klass}::#{@name}(*args)" << "\n"
+      else
+        ret << "  def #{@name}(*args)" << "\n"
+      end
       ret << "  end" << "\n"
     else
       @args[0].def_method
@@ -163,35 +167,33 @@ docs.each{|s|
     raise s
   end
 
-  case s
-  when /^\s+\S+\.new(\(.*?\))?/
-    method = "new"
-    arg = $1
-    returned_klass = klass
-    h[klass].klass_methods[method] ||= SwigCxxToYard::Method.new(klass, method, true)
-    h[klass].push_klass_method_arg( SwigCxxToYard::Arg.new(klass, method, arg, returned_klass) )
-  when /^  call-seq:\n((    \S.*?\n)+)/m
-    s1 = $1
-    s1.each_line{|l|
-      case l
-      when /\A    (\S+)(\(.*?\))? -> (.*?)\n/, /\A    (\S+?)(\(.*?\))?\n/
-        method = $1
-        arg = $2
-        returned_klass = $3
-        if /^A class method./ =~ s
-          h[klass].klass_methods[method] ||= SwigCxxToYard::Method.new(klass, method)
-          h[klass].push_klass_method_arg( SwigCxxToYard::Arg.new(klass, method, arg, returned_klass) )
-        else
-          h[klass].instc_methods[method] ||= SwigCxxToYard::Method.new(klass, method)
-          h[klass].push_instc_method_arg(SwigCxxToYard::Arg.new(klass, method, arg, returned_klass))
-        end
-      else
-        raise s1
-      end
-      }
-  else
-    raise s
+  unless /^  call-seq:\n((    \S.*?\n)+)/m =~ s
+    next
   end
+  s1 = $1
+  s1.each_line{|l|
+    case l
+    when /\A    \S+\.new(\(.*?\))?/
+      method = "new"
+      arg = $1
+      returned_klass = klass
+      h[klass].klass_methods[method] ||= SwigCxxToYard::Method.new(klass, method, true)
+      h[klass].push_klass_method_arg( SwigCxxToYard::Arg.new(klass, method, arg, returned_klass) )
+    when /\A    (\S+)(\(.*?\))? -> (.*?)\n/, /\A    (\S+?)(\(.*?\))?\n/
+      method = $1
+      arg = $2
+      returned_klass = $3
+      if /^A class method./ =~ s
+        h[klass].klass_methods[method] ||= SwigCxxToYard::Method.new(klass, method)
+        h[klass].push_klass_method_arg( SwigCxxToYard::Arg.new(klass, method, arg, returned_klass) )
+      else
+        h[klass].instc_methods[method] ||= SwigCxxToYard::Method.new(klass, method)
+        h[klass].push_instc_method_arg(SwigCxxToYard::Arg.new(klass, method, arg, returned_klass))
+      end
+    else
+      raise s1
+    end
+  }
 
 }
 
