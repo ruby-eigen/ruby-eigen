@@ -10,7 +10,10 @@ template<class T>
 class FullPivLU {
 public:
   FullPivLU();
+  FullPivLU(const T&);
   ~FullPivLU();
+
+  void compute(const T&);
 
   T permutationP();
   T permutationQ();
@@ -43,7 +46,29 @@ template<class T>
 class PartialPivLU {
 public:
   PartialPivLU();
+  PartialPivLU(const T&);
   ~PartialPivLU();
+
+  void compute(const T&);
+
+  T permutationP();
+
+  T::Scalar determinant();
+  T inverse();
+
+  T solve(const T &b);
+  RubyEigen::Matrix<T::Scalar, RubyEigen::Dynamic, 1> solve(const RubyEigen::Matrix<T::Scalar, RubyEigen::Dynamic, 1>&);
+
+  %extend {
+
+    T matrix_u() {
+      return (*$self).matrixLU().triangularView<Eigen::Upper>();
+    }
+
+    T matrix_l() {
+      return (*$self).matrixLU().triangularView<Eigen::UnitLower>();
+    }
+  }
 };
 
 %template(DFloatPartialPivLU) RubyEigen::PartialPivLU<RubyEigen::DFloatMatrix>;
@@ -60,10 +85,15 @@ template<class T>
 class FullPivHouseholderQR {
 public:
   FullPivHouseholderQR();
+  FullPivHouseholderQR(const T&);
   ~FullPivHouseholderQR();
+
+  void compute(const T&);
 
   T colsPermutation();
   T matrixQ();
+  bool isInvertible();
+  T inverse();
 
   T solve(const T &b);
   RubyEigen::Matrix<T::Scalar, RubyEigen::Dynamic, 1> solve(const RubyEigen::Matrix<T::Scalar, RubyEigen::Dynamic, 1>&);
@@ -87,7 +117,10 @@ template<class T>
 class JacobiSVD {
 public:
   JacobiSVD();
+  JacobiSVD(const T&);
   ~JacobiSVD();
+
+  void compute(const T&);
 
   T matrixU();
   T matrixV();
@@ -109,10 +142,18 @@ template<class T>
 class LDLT {
 public:
   LDLT();
+  LDLT(const T&);
   ~LDLT();
 
+  void compute(const T&);
+
   T matrixL();
+  T matrixU();
+
   RubyEigen::Matrix<T::Scalar, RubyEigen::Dynamic, 1> vectorD();
+
+  T solve(const T&);
+  RubyEigen::Matrix<T::Scalar, RubyEigen::Dynamic, 1> solve(const RubyEigen::Matrix<T::Scalar, RubyEigen::Dynamic, 1>&);
 
 };
 
@@ -126,9 +167,16 @@ template<class T>
 class LLT {
 public:
   LLT();
+  LLT(const T&);
   ~LLT();
 
+  void compute(const T&);
+
   T matrixL();
+  T matrixU();
+
+  T solve(const T&);
+  RubyEigen::Matrix<T::Scalar, RubyEigen::Dynamic, 1> solve(const RubyEigen::Matrix<T::Scalar, RubyEigen::Dynamic, 1>&);
 
 };
 

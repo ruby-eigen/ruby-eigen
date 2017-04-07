@@ -10,22 +10,61 @@ public:
   Matrix(size_t, size_t);
   ~Matrix();
 
+%rename("has_nan") hasNaN;
+  bool hasNaN();
+
+  void setRandom();
+  void setConstant(T);
+  void setIdentity();
+  void setOnes();
+  void setZero();
+
+  size_t cols();
+  size_t rows();
+
+  T sum();
+  T prod();
+
+  Matrix transpose();
+
+  /* component wise op */
+
+%rename("__mul__") cwiseProduct;
+%rename("__div__") cwiseQuotient;
+  Matrix cwiseProduct(const Matrix &m);
+  Matrix cwiseQuotient(const Matrix &m);
+
   %rename("dot") operator*;
   Matrix operator*(const Matrix&);
+  rb_eigen_traits<T>::vector_type operator*(const rb_eigen_traits<T>::vector_type &);
+  Matrix operator*(const T&);
+
+  Matrix operator+(const Matrix &m);
+  Matrix operator-(const Matrix &m);
+  Matrix operator-();
+  Matrix operator/(const T d);
+
+  bool operator==(Matrix &m);
+
+  bool isOnes();
+  bool isZero();
+
+  Matrix adjoint();
 
   ExtendMatrixForNArray(T)
 
   %extend {
 
-    T __getitem__(int i, int j) {
+    T __getitem__(size_t i, size_t j) {
       return (*$self)(i, j);
     }
 
-    void __setitem__(int i, int j, T c) {
+    void __setitem__(size_t i, size_t j, T c) {
       (*$self)(i, j) = c;
     }
 
   }
+
 };
 %enddef
 

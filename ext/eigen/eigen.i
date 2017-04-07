@@ -14,8 +14,6 @@
 
 %include "rb_error_handle.i"
 
-%include "dense/common_methods.i"
-
 %include <std_string.i>
 %include <std_vector.i>
 %include <std_complex.i>
@@ -362,6 +360,7 @@ typedef uint8_t  RubyEigen::UInt8SpMatrix::Scalar;
 %template() std::vector<float>;
 %template() std::vector< std::complex<double> >;
 
+%include "dense/common_methods.i"
 %include "dense/extend_matrix.i"
 %include "dense/extend_vector.i"
 %include "dense/matrix_double.i"

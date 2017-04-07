@@ -15,6 +15,18 @@ public:
 
   ExtendVectorForNArray(T)
 
+  %extend {
+
+    T __getitem__(size_t i) {
+      return (*$self)(i);
+    }
+
+    void __setitem__(size_t i, T c) {
+      (*$self)(i) = c;
+    }
+
+  }
+
 };
 %enddef
 
