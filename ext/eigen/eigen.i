@@ -368,28 +368,11 @@ typedef uint8_t  RubyEigen::UInt8SpMatrix::Scalar;
 %include "dense/vector_float.i"
 %include "dense/vector_integer.i"
 %include "sparse/matrix_real.i"
+
+%include "dense/decomposition.i"
 %include "sparse/solver.i"
 
-
 namespace RubyEigen {
-
-class MatrixBool {
-public:
-  MatrixBool(int, int);
-  ~MatrixBool();
-
-  bool all();
-  bool any();
-  int count();
-
-  %extend{
-
-    DFloatMatrix select(const DFloatMatrix &a, const DFloatMatrix &b) {
-      return (*$self).select(a, b);
-    }
-
-  }
-};
 
 %nodefaultctor Transpose;
 template<class T>
@@ -437,7 +420,5 @@ public:
 
 
 }; /* end of namespace ruby_eigen */
-
-%include "dense/decomposition.i"
 
 
