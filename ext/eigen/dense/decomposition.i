@@ -132,8 +132,8 @@ public:
 
 };
 
-%template(DFlaotJacobiSVD) RubyEigen::JacobiSVD<RubyEigen::DFloatMatrix>;
-%template(SFlaotJacobiSVD) RubyEigen::JacobiSVD<RubyEigen::SFloatMatrix>;
+%template(DFloatJacobiSVD) RubyEigen::JacobiSVD<RubyEigen::DFloatMatrix>;
+%template(SFloatJacobiSVD) RubyEigen::JacobiSVD<RubyEigen::SFloatMatrix>;
 %template(DComplexJacobiSVD) RubyEigen::JacobiSVD<RubyEigen::DComplexMatrix>;
 %template(SComplexJacobiSVD) RubyEigen::JacobiSVD<RubyEigen::SComplexMatrix>;
 
