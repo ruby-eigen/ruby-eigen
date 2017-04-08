@@ -17,10 +17,6 @@ public:
 %rename("abs") cwiseAbs;
   Matrix cwiseAbs();
 
-  /* real matrix only */
-  //  T maxCoeff();
-  //  T minCoeff();
-
   RubyEigen::Matrix real();
 
   DENSE_MATRIX_VECTOR_Common_Methods(Matrix, T) 
@@ -55,45 +51,9 @@ public:
   Matrix operator*(const T&);
   Matrix operator*(const RubyEigen::Transpose<Matrix>&); 
 
+  ExtendMatrixForNArray(T)
+
   %extend {
-
-    static RubyEigen::Matrix from_narray(VALUE na) {
-      if (!IsNArray(na)) {
-        rb_raise(rb_eArgError, "Numo::NArray expected");
-      }
-      if ( !rb_obj_is_kind_of(na, RubyEigen::narray_traits<T>::type()) ) {
-        rb_raise(rb_eArgError, "Numo::NArray type not matched");
-      }
-      if (RNARRAY_NDIM(na)!=2) {
-        rb_raise(rb_eArgError, "NArray#ndim == 2 expected");
-      } else {
-        size_t* shp = RNARRAY_SHAPE(na);
-        size_t rows = shp[0];
-        size_t cols = shp[1];
-        char*  data = RNARRAY_DATA_PTR(na);
-        RubyEigen::adjust_memory_usage(rows*cols*sizeof(T));
-
-        // The storage order of Eigen is a column-major by default. The one of NArray is a row-major.
-        // So we have to transpose here.
-        RubyEigen::Map<RubyEigen::Matrix<T, RubyEigen::Dynamic, RubyEigen::Dynamic> > tmp((T*) data, cols, rows);
-        return tmp.transpose();
-      }
-    }
-
-    VALUE to_narray() {
-      size_t rows     = $self->rows();
-      size_t cols     = $self->cols();
-      size_t len      = rows*cols;
-      size_t shape[2] = {rows, cols};
-      VALUE  na       = rb_narray_new(RubyEigen::narray_traits<T>::type(), 2, shape);
-      char*  data     = (char *) xmalloc(len*sizeof(T));
-      RNARRAY_DATA_PTR(na) = data;
-
-      // The storage order of Eigen is a column-major by default. The one of NArray is a row-major.
-      // So we have to transpose here.
-      RubyEigen::Map<RubyEigen::Matrix<T, RubyEigen::Dynamic, RubyEigen::Dynamic> >((T*) data, cols, rows) = $self->transpose();
-      return na;
-    }
 
     std::vector< T > __get_row_array__(int i) {
       std::vector< T > v((*$self).cols());
@@ -144,8 +104,13 @@ public:
     }
   }
 
+
+  // elementwise operations
+  ExtendForCwiseOp(Matrix)
+
   T operatorNorm();
 
+  // decomposition and solving methods
   Matrix inverse();
   RubyEigen::Matrix<std::complex< RubyEigen::rb_eigen_traits<T>::float_type >, RubyEigen::Dynamic, 1> eigenvalues();
   Matrix conjugate();
@@ -182,28 +147,17 @@ public:
 
 }; // class Matrix
 
+  // floor, round, and ceil
+  ExtendRealFloatMatrixForCwiseOp(double)
+  ExtendRealFloatMatrixForCwiseOp(float)
+
+  // max and min
+  ExtendRealMatrixCwiseOp(double)
+  ExtendRealMatrixCwiseOp(float)
+
   %template(DFloatMatrix) Matrix<double, RubyEigen::Dynamic, RubyEigen::Dynamic>;
   %template(SFloatMatrix) Matrix<float,  RubyEigen::Dynamic, RubyEigen::Dynamic>;
   %template(DComplexMatrix) Matrix<std::complex<double>, RubyEigen::Dynamic, RubyEigen::Dynamic>;
   %template(SComplexMatrix) Matrix<std::complex<float>,  RubyEigen::Dynamic, RubyEigen::Dynamic>;
 
-class DFloatMatrixRef {
-public:
-  DFloatMatrixRef(RubyEigen::DFloatMatrix&, int, int, int, int);
-  ~DFloatMatrixRef();
-
-  /* real matrix only */
-  DFloatMatrix cwiseAbs();
-  DFloatMatrix cwiseAbs2();
-
-  double maxCoeff();
-  double minCoeff();
-
-  RubyEigen::DFloatMatrix real();
-
-  //  DENSE_MATRIX_VECTOR_Common_Methods(MatrixDouble, VectorXd, double)
-  //  DENSE_MATRIX_Methods(MatrixDouble, VectorXd, double)
-  //  DENSE_MATRIX_RC_Methods(MatrixDouble, VectorXd, double)
-};
-
-}; /* end of namespace ruby_eigen */
+}; /* end of namespace RubyEigen */

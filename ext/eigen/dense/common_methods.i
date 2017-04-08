@@ -45,3 +45,82 @@
   TYPE adjoint();
 
 %enddef
+
+%define ExtendForCwiseOp(MV)
+  %extend {
+
+    MV exp() {
+      return $self->array().exp();
+    }
+
+    MV log() {
+      return $self->array().log();
+    }
+
+    MV log1p() {
+      return $self->array().log1p();
+    }
+
+    MV log10() {
+      return $self->array().log10();
+    }
+
+    MV pow(const MV &m) {
+      return $self->array().pow(m.array());
+    }
+
+    MV rsqrt() {
+      return $self->array().rsqrt();
+    }
+
+    MV square() {
+      return $self->array().square();
+    }
+
+    MV cube() {
+      return $self->array().cube();
+    }
+
+    MV abs2() {
+      return $self->array().abs2();
+    }
+
+    MV sin() {
+      return $self->array().sin();
+    }
+
+    MV cos() {
+      return $self->array().cos();
+    }
+
+    MV tan() {
+      return $self->array().tan();
+    }
+
+    MV asin() {
+      return $self->array().asin();
+    }
+
+    MV acos() {
+      return $self->array().acos();
+    }
+
+    MV atan() {
+      return $self->array().atan();
+    }
+
+    MV sinh() {
+      return $self->array().sinh();
+    }
+
+    MV cosh() {
+      return $self->array().cosh();
+    }
+
+    MV tanh() {
+      return $self->array().tanh();
+    }
+
+  }
+%enddef
+

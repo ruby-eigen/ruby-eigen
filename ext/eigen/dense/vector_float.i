@@ -26,6 +26,9 @@ public:
 
   Matrix segment(int i, int len);
 
+  // elementwise operations
+  ExtendForCwiseOp(Matrix)
+
   %extend {
 
     static RubyEigen::Matrix from_narray(VALUE na) {
@@ -95,7 +98,6 @@ public:
 
   }
 
-
 };
 
   %template(DFloatVector) Matrix<double, RubyEigen::Dynamic, 1>;
@@ -108,4 +110,4 @@ public:
   //  RubyEigen::DFloatVector imag();
   //  RubyEigen::DFloatVector real();
 
-}; /* end of namespace ruby_eigen */
+}; // namespace RubyEigen

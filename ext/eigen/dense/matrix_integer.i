@@ -77,6 +77,16 @@ DefineIntegerMatrix(uint32_t)
 DefineIntegerMatrix(uint16_t)
 DefineIntegerMatrix(uint8_t)
 
+   // max and min
+  ExtendRealMatrixCwiseOp(int64_t)
+  ExtendRealMatrixCwiseOp(int32_t)
+  ExtendRealMatrixCwiseOp(int16_t)
+  ExtendRealMatrixCwiseOp(int8_t)
+  ExtendRealMatrixCwiseOp(uint64_t)
+  ExtendRealMatrixCwiseOp(uint32_t)
+  ExtendRealMatrixCwiseOp(uint16_t)
+  ExtendRealMatrixCwiseOp(uint8_t)
+
   %template(Int64Matrix) Matrix<int64_t, RubyEigen::Dynamic, RubyEigen::Dynamic>;
   %template(Int32Matrix) Matrix<int32_t, RubyEigen::Dynamic, RubyEigen::Dynamic>;
   %template(Int16Matrix) Matrix<int16_t, RubyEigen::Dynamic, RubyEigen::Dynamic>;
