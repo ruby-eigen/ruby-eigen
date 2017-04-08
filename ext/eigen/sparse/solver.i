@@ -101,6 +101,7 @@ public:
 %template(DComplexSparseQR) SparseQR<RubyEigen::SparseMatrix<std::complex<double>>, RubyEigen::COLAMDOrdering<int>>;
 %template(SComplexSparseQR) SparseQR<RubyEigen::SparseMatrix<std::complex<float>>, RubyEigen::COLAMDOrdering<int>>;
 
+ /*
 template<class T>
 class ConjugateGradient {
 public:
@@ -121,10 +122,10 @@ public:
   RubyEigen::Matrix<T::Scalar, RubyEigen::Dynamic, 1> solve(const RubyEigen::Matrix<T::Scalar, RubyEigen::Dynamic, 1>&);
 };
 
-%template(DFloatConjugateGradientDouble)   ConjugateGradient<RubyEigen::DFloatMatrix>;
-%template(ConjugateGradientSpDouble) ConjugateGradient<RubyEigen::SparseMatrix<double> >;
+%template(DFloatConjugateGradientDense)   ConjugateGradient<RubyEigen::DFloatMatrix>;
+%template(DFloatConjugateGradientSparse) ConjugateGradient<RubyEigen::SparseMatrix<double> >;
 
-  /*
+
 template<class T>
 class BiCGSTAB {
 public:
