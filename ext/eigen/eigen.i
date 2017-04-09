@@ -199,8 +199,8 @@ namespace RubyEigen {
   typedef RubyEigen::Block<RubyEigen::DFloatMatrix> DFloatMatrixRef;
   typedef RubyEigen::Block<RubyEigen::DComplexMatrix> DComplexMatrixRef;
 
-  typedef Matrix<bool, Dynamic, Dynamic> MatrixBool;
-  typedef Matrix<bool, Dynamic, 1> VectorBool;
+  typedef Matrix<bool, Dynamic, Dynamic> BoolMatrix;
+  typedef Matrix<bool, Dynamic, 1> BoolVector;
 
   typedef SparseMatrix<double> DFloatSpMatrix;
   typedef SparseMatrix<float>  SFloatSpMatrix;
@@ -418,7 +418,26 @@ public:
 
 };
 
+class BoolMatrix {
+public:
+  BoolMatrix(int, int);
+  ~BoolMatrix();
 
-}; /* end of namespace ruby_eigen */
+  bool all();
+  bool any();
+  int count();
+
+  DFloatMatrix select(const DFloatMatrix &, const DFloatMatrix &);
+  SFloatMatrix select(const SFloatMatrix &, const SFloatMatrix &);
+  DComplexMatrix select(const DComplexMatrix&, const DComplexMatrix&);
+  SComplexMatrix select(const SComplexMatrix&, const SComplexMatrix&);
+  DFloatVector select(const DFloatVector&, const DFloatVector&);
+  SFloatVector select(const SFloatVector&, const SFloatVector&);
+  DComplexVector select(const DComplexVector&, const DComplexVector&);
+  SComplexVector select(const SComplexVector&, const SComplexVector&);
+
+};
+
+}; // namespace RubyEigen
 
 

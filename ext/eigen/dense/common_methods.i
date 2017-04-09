@@ -26,6 +26,11 @@
   TYPE operator-();
   TYPE operator/(s_type d);
 
+%rename("eq") cwiseEqual;
+%rename("ne") cwiseNotEqual;
+  BoolMatrix cwiseEqual(const TYPE&);
+  BoolMatrix cwiseNotEqual(const TYPE&);
+
   bool operator==(TYPE &m);
   bool isApprox(TYPE &m);
   bool isApprox(TYPE &m, double);
