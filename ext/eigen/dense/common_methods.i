@@ -1,4 +1,4 @@
-%define DENSE_MATRIX_VECTOR_Common_Methods(TYPE, s_type)
+%define DefineMVCommonMethods(TYPE, s_type)
 
   //  bool allFinite();
 
@@ -11,10 +11,10 @@
   void setOnes();
   void setZero();
 
-  /* component wise op */
+  s_type sum();
+  s_type prod();
 
-%rename("sqrt") cwiseSqrt;
-  TYPE cwiseSqrt();
+  /* component wise op */
 
 %rename("__mul__") cwiseProduct;
 %rename("__div__") cwiseQuotient;
@@ -32,24 +32,33 @@
   BoolMatrix cwiseNotEqual(const TYPE&);
 
   bool operator==(TYPE &m);
-  bool isApprox(TYPE &m);
-  bool isApprox(TYPE &m, double);
-  bool isApproxToConstant(s_type);
-  bool isConstant(s_type);
-
-  bool isMuchSmallerThan(double);
-  bool isMuchSmallerThan(double, double);
-  bool isMuchSmallerThan(TYPE& m);
-  bool isMuchSmallerThan(TYPE& m, double);
 
   bool isOnes();
   bool isOnes(double);
   bool isZero();
   bool isZero(double);
-
   TYPE adjoint();
 
 %enddef
+
+
+%define DefineFloatMVMethods(TYPE, s_type)
+
+%rename("sqrt") cwiseSqrt;
+TYPE cwiseSqrt();
+
+bool isApprox(TYPE &m);
+bool isApprox(TYPE &m, double);
+bool isApproxToConstant(s_type);
+bool isConstant(s_type);
+
+bool isMuchSmallerThan(double);
+bool isMuchSmallerThan(double, double);
+bool isMuchSmallerThan(TYPE& m);
+bool isMuchSmallerThan(TYPE& m, double);
+
+%enddef
+
 
 %define ExtendForCwiseOp(MV)
   %extend {

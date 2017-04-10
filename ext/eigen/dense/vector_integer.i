@@ -10,9 +10,15 @@ public:
   Matrix(size_t, size_t);
   ~Matrix();
 
-  %rename("dot") operator*;
-  Matrix operator*(const Matrix&);
+  rb_eigen_traits<T>::matrix_type asDiagonal();
 
+  T dot(const Matrix&);
+
+  %rename("dot") operator*;
+  rb_eigen_traits<T>::matrix_type operator*(const rb_eigen_traits<T>::matrix_type &);
+  Matrix operator*(const T&);
+
+  DefineMVCommonMethods(Matrix, T)
   ExtendVectorForNArray(T)
 
   %extend {

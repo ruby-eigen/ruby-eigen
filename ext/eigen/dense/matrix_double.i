@@ -19,7 +19,9 @@ public:
 
   RubyEigen::Matrix real();
 
-  DENSE_MATRIX_VECTOR_Common_Methods(Matrix, T) 
+  // define common methods
+  DefineMVCommonMethods(Matrix, T)
+  DefineFloatMVMethods(Matrix, T)
 
   RubyEigen::rb_eigen_traits<T>::vector_type col(size_t);
   Matrix row(size_t);
@@ -32,9 +34,6 @@ public:
 
   T determinant();
   double norm();
-
-  T sum();
-  T prod();
 
   Matrix transpose();
 

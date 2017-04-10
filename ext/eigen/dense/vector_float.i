@@ -11,18 +11,21 @@ public:
 %}
 
   RubyEigen::Matrix real();
+  rb_eigen_traits<T>::matrix_type asDiagonal();
+
+  T dot(const Matrix&);
 
   %rename("dot") operator*;
-  Matrix operator*(const Matrix&);
   rb_eigen_traits<T>::matrix_type operator*(const rb_eigen_traits<T>::matrix_type &);
   Matrix operator*(const T&);
 
-  DENSE_MATRIX_VECTOR_Common_Methods(Matrix, T)
+  // define common methods
+  DefineMVCommonMethods(Matrix, T)
 
   bool isOrthogonal(Matrix& v);
   bool isOrthogonal(Matrix& v, double);
-  double squaredNorm();
-  double stableNorm();
+  //  double squaredNorm();
+  //  double stableNorm();
 
   Matrix segment(int i, int len);
 
