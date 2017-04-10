@@ -60,7 +60,7 @@ bool isMuchSmallerThan(TYPE& m, double);
 %enddef
 
 
-%define ExtendForCwiseOp(MV)
+%define ExtendFloatMVCwiseOps(MV)
   %extend {
 
     MV exp() {

@@ -30,7 +30,7 @@ public:
   Matrix segment(int i, int len);
 
   // elementwise operations
-  ExtendForCwiseOp(Matrix)
+  ExtendFloatMVCwiseOps(Matrix)
 
   ExtendVectorForNArray(T)
 
@@ -75,6 +75,14 @@ public:
   }
 
 };
+
+  // floor, round, and ceil
+  ExtendRealFloatVectorCwiseOps(double)
+  ExtendRealFloatVectorCwiseOps(float)
+
+  // max and min
+  ExtendRealVectorCwiseOps(double)
+  ExtendRealVectorCwiseOps(float)
 
   %template(DFloatVector) Matrix<double, RubyEigen::Dynamic, 1>;
   %template(SFloatVector) Matrix<float,  RubyEigen::Dynamic, 1>;

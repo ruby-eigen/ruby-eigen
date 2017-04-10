@@ -105,7 +105,7 @@ public:
 
 
   // elementwise operations
-  ExtendForCwiseOp(Matrix)
+  ExtendFloatMVCwiseOps(Matrix)
 
   T operatorNorm();
 

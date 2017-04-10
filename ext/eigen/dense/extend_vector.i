@@ -30,3 +30,36 @@
  }
 } // %extend
 %enddef
+
+
+%define ExtendRealFloatVectorCwiseOps(s_type)
+%extend Matrix<s_type, RubyEigen::Dynamic, 1> {
+
+  Matrix<s_type, RubyEigen::Dynamic, 1> ceil() {
+    return $self->array().ceil();
+  }
+
+  Matrix<s_type, RubyEigen::Dynamic, 1> floor() {
+    return $self->array().floor();
+  }
+
+  Matrix<s_type, RubyEigen::Dynamic, 1> round() {
+    return $self->array().round();
+  }
+
+}
+%enddef
+
+%define ExtendRealVectorCwiseOps(s_type)
+%extend Matrix<s_type, RubyEigen::Dynamic, 1> {
+
+  s_type max() {
+    return $self->maxCoeff();
+  }
+
+  s_type min() {
+    return $self->minCoeff();
+  }
+
+}
+%enddef
